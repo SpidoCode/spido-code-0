@@ -321,7 +321,7 @@ theme_override_constants/separation = 6
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-text = "SISTEMA ADA ▼"
+text = "SISTEMA ADA"
 
 [node name="CardADA" type="PanelContainer" parent="HUD/RightSidebarADA" unique_id=627830607]
 unique_name_in_owner = true
@@ -417,14 +417,14 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(85, 24)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "[◀ BLOQUES]"
+text = "BLOQUES"
 
 [node name="BtnMinimizarConsola" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1739064218]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 24)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
-text = "Plegar ▶"
+text = "PLEGAR"
 
 [node name="EquipoCodigo" type="TabContainer" parent="HUD/ConsolaAstronauta/VBox" unique_id=1987048986]
 unique_name_in_owner = true
@@ -573,7 +573,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(70, 24)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
-text = "◀ Plegar"
+text = "PLEGAR"
 
 [node name="PaletaScroll" type="ScrollContainer" parent="HUD/DrawerPaleta/VBox" unique_id=546687741]
 layout_mode = 2
@@ -598,7 +598,7 @@ offset_top = -54.0
 offset_right = 160.0
 offset_bottom = -16.0
 grow_vertical = 0
-text = "▶ BLOQUES"
+text = "BLOQUES"
 
 [node name="BtnAbrirConsolaFlotante" type="Button" parent="HUD" unique_id=1867511666]
 unique_name_in_owner = true
@@ -616,7 +616,7 @@ offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "◀ CONSOLA"
+text = "CONSOLA"
 
 [node name="LabelEstado" type="Label" parent="HUD" unique_id=77553948]
 unique_name_in_owner = true

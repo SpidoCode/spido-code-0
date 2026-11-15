@@ -438,7 +438,6 @@ func _conectar_senales() -> void:
 	if btn_toggle_ada:
 		btn_toggle_ada.pressed.connect(func():
 			card_ada.visible = not card_ada.visible
-			btn_toggle_ada.text = "SISTEMA ADA ▼" if card_ada.visible else "SISTEMA ADA ▲"
 		)
 
 	if btn_cerrar_paleta:
@@ -523,7 +522,7 @@ func _plegar_paleta(plegar: bool) -> void:
 	if is_instance_valid(btn_abrir_paleta_flotante):
 		btn_abrir_paleta_flotante.visible = plegar
 	if is_instance_valid(btn_toggle_paleta):
-		btn_toggle_paleta.text = "[▶ BLOQUES]" if plegar else "[◀ BLOQUES]"
+		btn_toggle_paleta.text = "BLOQUES"
 
 func _plegar_consola(plegar: bool) -> void:
 	if is_instance_valid(consola_astronauta):
