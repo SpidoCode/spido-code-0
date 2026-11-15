@@ -1,6 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://byer3tm7qo247"]
 
-[ext_resource type="FontFile" uid="uid://dngowim4rpcq" path="res://assets/fonts/PixelifySans.ttf" id="1_pixelify"]
+[ext_resource type="FontFile" uid="uid://doyf2yrjwben2" path="res://assets/fonts/Poppins-Regular.ttf" id="1_poppins_reg"]
+[ext_resource type="FontFile" uid="uid://b806q7f5msmcp" path="res://assets/fonts/Poppins-Medium.ttf" id="2_poppins_med"]
+[ext_resource type="FontFile" uid="uid://e4g65u5thb6n" path="res://assets/fonts/Poppins-SemiBold.ttf" id="3_poppins_semi"]
+[ext_resource type="FontFile" uid="uid://5bbcn7okbbew" path="res://assets/fonts/Poppins-Bold.ttf" id="4_poppins_bold"]
+[ext_resource type="FontFile" uid="uid://dngowim4rpcq" path="res://assets/fonts/PixelifySans.ttf" id="5_pixelify"]
 
 [sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
 content_margin_left = 18.0
@@ -232,18 +236,19 @@ shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
 shadow_offset = Vector2(4, 4)
 
 [resource]
-default_font = ExtResource("1_pixelify")
-default_font_size = 16
+default_font = ExtResource("2_poppins_med")
+default_font_size = 15
 Button/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 Button/colors/font_disabled_color = Color(0.75, 0.78, 0.78, 0.9)
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
 Button/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 0.8)
 Button/colors/font_pressed_color = Color(0.956863, 0.964706, 0.94902, 1)
 Button/colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
-Button/constants/outline_size = 2
-Button/constants/shadow_offset_x = 2
-Button/constants/shadow_offset_y = 2
-Button/font_sizes/font_size = 18
+Button/constants/outline_size = 1
+Button/constants/shadow_offset_x = 1
+Button/constants/shadow_offset_y = 1
+Button/fonts/font = ExtResource("3_poppins_semi")
+Button/font_sizes/font_size = 16
 Button/styles/disabled = SubResource("ButtonDisabled")
 Button/styles/focus = SubResource("ButtonHover")
 Button/styles/hover = SubResource("ButtonHover")
@@ -251,18 +256,23 @@ Button/styles/normal = SubResource("ButtonNormal")
 Button/styles/pressed = SubResource("ButtonPressed")
 CodeEdit/colors/caret_color = Color(0.545098, 0.796078, 0.568627, 1)
 CodeEdit/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+CodeEdit/fonts/font = ExtResource("2_poppins_med")
+CodeEdit/font_sizes/font_size = 14
 CodeEdit/styles/normal = SubResource("CodeArea")
 HSeparator/styles/separator = SubResource("Separator")
 Label/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 Label/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
 Label/colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
-Label/constants/outline_size = 2
-Label/constants/shadow_offset_x = 2
-Label/constants/shadow_offset_y = 2
-Label/font_sizes/font_size = 16
+Label/constants/outline_size = 1
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = ExtResource("2_poppins_med")
+Label/font_sizes/font_size = 15
 LineEdit/colors/caret_color = Color(0.545098, 0.796078, 0.568627, 1)
 LineEdit/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 LineEdit/colors/font_placeholder_color = Color(0.75, 0.78, 0.78, 0.8)
+LineEdit/fonts/font = ExtResource("1_poppins_reg")
+LineEdit/font_sizes/font_size = 15
 LineEdit/styles/focus = SubResource("InputFocus")
 LineEdit/styles/normal = SubResource("InputNormal")
 Panel/styles/panel = SubResource("PanelBase")
@@ -274,9 +284,11 @@ RichTextLabel/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
 RichTextLabel/colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
 RichTextLabel/constants/line_separation = 3
 RichTextLabel/constants/outline_size = 1
-RichTextLabel/constants/shadow_offset_x = 2
-RichTextLabel/constants/shadow_offset_y = 2
-RichTextLabel/font_sizes/normal_font_size = 16
+RichTextLabel/constants/shadow_offset_x = 1
+RichTextLabel/constants/shadow_offset_y = 1
+RichTextLabel/fonts/normal_font = ExtResource("1_poppins_reg")
+RichTextLabel/fonts/bold_font = ExtResource("4_poppins_bold")
+RichTextLabel/font_sizes/normal_font_size = 15
 SecondaryButton/base_type = &"Button"
 SecondaryButton/styles/disabled = SubResource("ButtonDisabled")
 SecondaryButton/styles/focus = SubResource("SecondaryHover")
@@ -285,7 +297,8 @@ SecondaryButton/styles/normal = SubResource("SecondaryNormal")
 SecondaryButton/styles/pressed = SubResource("SecondaryPressed")
 TooltipLabel/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 TooltipLabel/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
-TooltipLabel/constants/outline_size = 2
-TooltipLabel/font_sizes/font_size = 16
+TooltipLabel/constants/outline_size = 1
+TooltipLabel/fonts/font = ExtResource("1_poppins_reg")
+TooltipLabel/font_sizes/font_size = 14
 TooltipPanel/styles/panel = SubResource("TooltipPanel")
 VSeparator/styles/separator = SubResource("Separator")
