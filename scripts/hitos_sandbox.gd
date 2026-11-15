@@ -7,8 +7,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 1,
 			"clave": "PRIMEROS_PASOS",
 			"titulo": "1. Calibración: Avanzar y Recoger",
-			"descripcion": "Estás en la plataforma base de 5x5 con centro en (0, 0). Programa a tu astronauta para avanzar 1 paso al oeste (-1, 0) y recolectar tu primera tuerca con [Tomar Pieza].",
-			"meta_texto": "Toma la tuerca en la bahía (-1, 0)",
+			"descripcion": "Estás en la plataforma base del hangar. Programa a tu astronauta para avanzar hacia la pieza y recolectar tu primera tuerca con [Tomar Pieza].",
+			"meta_texto": "Toma la tuerca de la bahía de suministros",
 			"bloques_disponibles": ["AVANZAR", "TOMAR_PIEZA"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 5,
@@ -28,8 +28,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 2,
 			"clave": "GIRO_Y_DEPOSITO",
 			"titulo": "2. Circuito: Transportar y Depositar",
-			"descripcion": "Con la tuerca en manos, gira hacia el contenedor en (1, 0) (usa [Girar Derecha 90°] dos veces), avanza 2 pasos y presiona [Ensamblar / Depositar] para vender la tuerca.",
-			"meta_texto": "Deposita la tuerca en el contenedor (1, 0)",
+			"descripcion": "Con la tuerca en tus manos, gira hacia el contenedor de depósito, avanza hasta él y presiona [Ensamblar / Depositar] para vender la tuerca.",
+			"meta_texto": "Deposita la tuerca en el contenedor",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 5,
@@ -40,7 +40,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"tipo_meta": "DEPOSITAR_TUERCA",
 			"recompensa_creditos": 20,
 			"mensaje_ada": "¡Primera tuerca depositada con éxito en el contenedor!",
-			"pista": "Avanza, toma la tuerca, gira al este, camina al contenedor y usa Ensamblar/Depositar.",
+			"pista": "Avanza, toma la tuerca, gira en dirección al contenedor y usa [Ensamblar / Depositar].",
 			"piezas": [
 				{"tipo": "TUERCA", "celda": Vector2i(-1, 0)}
 			]
@@ -70,7 +70,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 4,
 			"clave": "INSTALAR_SPIDO",
 			"titulo": "4. Estación Spido: Montar el Chasis",
-			"descripcion": "En MEJORAS compra la 'Mesa Central Spido' (30 Tuercas) que se instalará en (0, -2). Lleva la placa de chasis desde la bahía y móntala en Spido con [Ensamblar].",
+			"descripcion": "En MEJORAS compra la 'Mesa Central Spido' (30 Tuercas) para iniciar el montaje. Lleva la placa de chasis desde la bahía y móntala en Spido con [Ensamblar].",
 			"meta_texto": "Instala la Mesa Spido y monta el Chasis",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
@@ -84,7 +84,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"piezas_requeridas": 1,
 			"recompensa_creditos": 40,
 			"mensaje_ada": "¡Chasis fijado a la mesa central! El cuerpo de Spido comienza a tomar forma.",
-			"pista": "Recoge el chasis en (-1, 0) y llévalo frente a la mesa en (0, -1) para ensamblarlo.",
+			"pista": "Recoge el chasis de la bahía y llévalo frente a la mesa para ensamblarlo en Spido.",
 			"piezas": [
 				{"tipo": "CHASIS", "celda": Vector2i(-1, 0)}
 			]
@@ -92,9 +92,9 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 5,
 			"clave": "EQUIPO_CONCURRENTE",
-			"titulo": "5. Expansión 7x7 y 2º Astronauta (Mesón Patas)",
-			"descripcion": "Expande el terreno a 7x7 y adquiere a Astro 2 y el Mesón de Patas en MEJORAS. Mientras Astro 1 abastece el mesón en (-2, 0), Astro 2 traslada las patas a Spido.",
-			"meta_texto": "Expande a 7x7 y ensambla las Ruedas/Patas en Spido",
+			"titulo": "5. Expansión y 2º Astronauta (Mesón Patas)",
+			"descripcion": "Expande el terreno y adquiere a Astro 2 junto con el Mesón de Patas en MEJORAS. Mientras Astro 1 abastece el mesón de trabajo, Astro 2 traslada las patas a Spido.",
+			"meta_texto": "Expande el terreno y ensambla las Ruedas/Patas en Spido",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 2,
 			"tamano_sector": 7,
@@ -108,7 +108,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"piezas_requeridas": 2,
 			"recompensa_creditos": 60,
 			"mensaje_ada": "¡Trabajo concurrente impecable! Dos astronautas colaborando en paralelo.",
-			"pista": "Astro 1 alimenta el mesón en (-2, 0) y Astro 2 retira las patas y las monta en Spido.",
+			"pista": "Astro 1 alimenta el mesón de trabajo y Astro 2 traslada las piezas para montarlas en Spido.",
 			"piezas": [
 				{"tipo": "TUERCA", "celda": Vector2i(-2, 2)}
 			]
@@ -116,8 +116,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 6,
 			"clave": "DESPERTAR_SPIDO",
-			"titulo": "6. Hangar Total 13x13 y Despertar",
-			"descripcion": "¡Hangar 13x13 completamente abierto y perfectamente simétrico! Todos los módulos están ensamblados. Párate frente a Spido en (0, -1) y corre [DIAGNOSTICO] para encenderlo.",
+			"titulo": "6. Hangar Completo y Despertar de Spido",
+			"descripcion": "¡Hangar completamente expandido a máxima capacidad! Todos los módulos están listos. Coloca a tu astronauta frente a Spido y ejecuta [DIAGNOSTICO] para encenderlo.",
 			"meta_texto": "Ejecuta DIAGNOSTICO frente a Spido",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR", "DIAGNOSTICO"],
 			"cantidad_astronautas": 2,
@@ -129,7 +129,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"tipo_meta": "DIAGNOSTICO",
 			"recompensa_creditos": 100,
 			"mensaje_ada": "¡Sistemas en línea! Spido ha despertado y la fábrica espacial es un éxito total.",
-			"pista": "Párate en (0, -1) mirando al Norte y corre el bloque Diagnóstico.",
+			"pista": "Párate frente a la mesa de Spido mirando hacia él y ejecuta el bloque Diagnóstico.",
 			"piezas": []
 		}
 	]

@@ -122,7 +122,7 @@ const ARBOL_MEJORAS = [
 	# 2. ESPACIO Y TERRENO MODULAR
 	{
 		"fase": "TERRENO BASE 5x5",
-		"desc": "Plataforma inicial de 5x5 casillas con centro exacto en (0, 0).",
+		"desc": "Plataforma inicial de 5x5 casillas para inducción y calibración.",
 		"costo": 0,
 		"cat": "espacio",
 		"id": "ESPACIO_5X5",
@@ -156,21 +156,21 @@ const ARBOL_MEJORAS = [
 	# 3. MESAS Y ESTACIONES DE MONTAJE
 	{
 		"fase": "MESA CENTRAL SPIDO",
-		"desc": "Instala la mesa en (0, -2) donde se fija el chasis y se ensambla la estructura de Spido.",
+		"desc": "Instala la mesa central del taller donde se fija el chasis y se ensambla la estructura de Spido.",
 		"costo": 30,
 		"cat": "estacion",
 		"id": "MESA_SPIDO"
 	},
 	{
 		"fase": "MESÓN DE PATAS",
-		"desc": "Instala el mesón en (-2, 0) que forja sistemas de tracción y extremidades mecánicas.",
+		"desc": "Instala el mesón de trabajo que forja sistemas de tracción y extremidades mecánicas.",
 		"costo": 60,
 		"cat": "estacion",
 		"id": "MESON_PATAS"
 	},
 	{
 		"fase": "MESÓN DE SENSORES",
-		"desc": "Instala el mesón en (2, 0) para ensamblar los circuitos de visión y sensores ópticos.",
+		"desc": "Instala el mesón especializado para ensamblar los circuitos de visión y sensores ópticos.",
 		"costo": 120,
 		"cat": "estacion",
 		"id": "MESON_SENSORES"
@@ -1034,15 +1034,15 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 				"MESA_SPIDO":
 					if mundo_3d and mundo_3d.mesa_spid:
 						mundo_3d.mesa_spid.visible = true
-					_actualizar_estado("¡Mesa Central de Spido instalada en el hangar (0, -2)!")
+					_actualizar_estado("¡Mesa Central de Spido instalada en el hangar!")
 				"MESON_PATAS":
 					if mundo_3d and mundo_3d.meson_patas:
 						mundo_3d.meson_patas.visible = true
-					_actualizar_estado("¡Mesón de Patas & Tracción instalado en (-2, 0)!")
+					_actualizar_estado("¡Mesón de Patas & Tracción instalado en el hangar!")
 				"MESON_SENSORES":
 					if mundo_3d and mundo_3d.meson_sensores:
 						mundo_3d.meson_sensores.visible = true
-					_actualizar_estado("¡Mesón de Sensores Ópticos instalado en (2, 0)!")
+					_actualizar_estado("¡Mesón de Sensores Ópticos instalado en el hangar!")
 		"astronauta":
 			var a_id = item.get("astro_id", 2)
 			if a_id == 4:
