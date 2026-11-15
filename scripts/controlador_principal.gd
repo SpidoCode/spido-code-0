@@ -288,7 +288,7 @@ func _aplicar_hito_actual() -> void:
 	var hito = hitos[indice_hito_actual]
 
 	# Cabecera de la Tarjeta de Misión
-	label_nivel_titulo.text = "◆ FASE %d: %s" % [indice_hito_actual, hito.titulo.to_upper()]
+	label_nivel_titulo.text = "FASE %d: %s" % [indice_hito_actual, hito.titulo.to_upper()]
 	label_concepto.text = hito.meta_texto.to_upper()
 	if is_instance_valid(label_mision_desc):
 		label_mision_desc.text = hito.descripcion

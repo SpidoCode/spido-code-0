@@ -215,7 +215,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
 theme_override_font_sizes/font_size = 14
-text = "◆ FASE 0: INDUCCIÓN BÁSICA"
+text = "FASE 0: INDUCCIÓN BÁSICA"
 vertical_alignment = 1
 
 [node name="LabelConcepto" type="Label" parent="HUD/TopLeftContainer/TarjetaMision/VBox" unique_id=1544947122]
@@ -238,10 +238,11 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="IndicadorPunto" type="Label" parent="HUD/TopLeftContainer/TarjetaMision/VBox/HBoxEstadoFase" unique_id=1040938795]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.95, 0.55, 1)
 theme_override_font_sizes/font_size = 12
-text = "●"
+text = ""
 
 [node name="LabelEstadoFase" type="Label" parent="HUD/TopLeftContainer/TarjetaMision/VBox/HBoxEstadoFase" unique_id=2009212181]
 unique_name_in_owner = true
@@ -350,7 +351,7 @@ text = "A.D.A."
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.95, 0.55, 1)
 theme_override_font_sizes/font_size = 12
-text = "● EN CURSO"
+text = "EN CURSO"
 
 [node name="LabelADATexto" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=790022577]
 unique_name_in_owner = true
@@ -401,7 +402,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
 theme_override_font_sizes/font_size = 15
-text = "◆ CONSOLA ASTRONAUTA"
+text = "CONSOLA ASTRONAUTA"
 
 [node name="BtnPista" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1174410878]
 unique_name_in_owner = true
@@ -565,7 +566,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
 theme_override_font_sizes/font_size = 14
-text = "◆ PALETA DE BLOQUES"
+text = "PALETA DE BLOQUES"
 
 [node name="BtnCerrarPaleta" type="Button" parent="HUD/DrawerPaleta/VBox/HBoxTit" unique_id=1434780341]
 unique_name_in_owner = true
