@@ -145,7 +145,7 @@ theme_override_constants/separation = 14
 [node name="Subtitulo" type="Label" parent="Panel/Contenedor"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "◆ INICIA SESIÓN O CREA TU CUENTA ◆"
+text = "INICIA SESIÓN O CREA TU CUENTA"
 horizontal_alignment = 1
 
 [node name="Email" type="LineEdit" parent="Panel/Contenedor"]
