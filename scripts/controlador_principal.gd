@@ -698,7 +698,13 @@ func _ejecutar_un_ciclo(astronautas: Array) -> bool:
 	return true
 
 func _on_duplicar_pressed() -> void:
-	pass
+	if en_ejecucion: return
+	var lienzos = [lienzo, lienzo_a2, lienzo_a3, lienzo_a4, lienzo_a5]
+	var idx = tabs_codigo.current_tab
+	if idx >= 0 and idx < lienzos.size():
+		var ok = lienzos[idx].duplicar_secuencia()
+		if ok:
+			_actualizar_estado("Secuencia algorítmica duplicada para Astronauta %d." % (idx + 1))
 
 func _on_velocidad_pressed() -> void:
 	match factor_velocidad:

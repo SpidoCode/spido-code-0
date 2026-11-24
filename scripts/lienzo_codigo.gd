@@ -135,6 +135,9 @@ func obtener_secuencia_comandos() -> Array[BloqueItem]:
 			lista.append(h)
 	return lista
 
+func limpiar() -> void:
+	limpiar_todo()
+
 func limpiar_todo() -> void:
 	if not is_instance_valid(contenedor_bloques):
 		contenedor_bloques = get_node_or_null("Scroll/ContenedorBloques")
