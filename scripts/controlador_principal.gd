@@ -227,17 +227,17 @@ const PASOS_GUIA = [
 ]
 
 const COMANDOS_DISPONIBLES = {
-	"AVANZAR": {"tit": "Avanzar", "prefijo": "[AVZ]", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"AVANZAR_2": {"tit": "Avanzar 2 Pasos (Auto)", "prefijo": "[2x AVZ]", "color": Color(0.35, 0.75, 0.85, 1.0)},
-	"AVANZAR_3": {"tit": "Avanzar 3 Pasos (Auto)", "prefijo": "[3x AVZ]", "color": Color(0.25, 0.65, 0.85, 1.0)},
-	"RETROCEDER": {"tit": "Retroceder 1 Paso", "prefijo": "[RET]", "color": Color(0.34902, 0.388235, 0.447059, 1.0)},
-	"GIRAR_DER": {"tit": "Girar Derecha 90°", "prefijo": "[DER]", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRAR_IZQ": {"tit": "Girar Izquierda 90°", "prefijo": "[IZQ]", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRO_180": {"tit": "Girar 180°", "prefijo": "[180°]", "color": Color(0.85, 0.65, 0.35, 1.0)},
-	"BUCLE": {"tit": "Bucle Continuo", "prefijo": "[LOOP]", "color": Color(0.95, 0.75, 0.18, 1.0)},
-	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "[TOM]", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"ENSAMBLAR": {"tit": "Ensamblar / Depositar", "prefijo": "[ENS]", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
-	"DIAGNOSTICO": {"tit": "Diagnóstico Spido", "prefijo": "[TEST]", "color": Color(0.2, 0.85, 1.0, 1.0)}
+	"AVANZAR": {"tit": "Avanzar", "prefijo": "[AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"AVANZAR_2": {"tit": "Avanzar 2 Pasos (Auto)", "prefijo": "[2x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"AVANZAR_3": {"tit": "Avanzar 3 Pasos (Auto)", "prefijo": "[3x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"RETROCEDER": {"tit": "Retroceder 1 Paso", "prefijo": "[RET]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"GIRAR_DER": {"tit": "Girar Derecha 90°", "prefijo": "[DER]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRAR_IZQ": {"tit": "Girar Izquierda 90°", "prefijo": "[IZQ]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRO_180": {"tit": "Girar 180°", "prefijo": "[180°]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"BUCLE": {"tit": "Bucle Continuo", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
+	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "[TOM]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
+	"ENSAMBLAR": {"tit": "Ensamblar / Depositar", "prefijo": "[ENS]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
+	"DIAGNOSTICO": {"tit": "Diagnóstico Spido", "prefijo": "[TEST]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}
 }
 
 func _ready() -> void:
@@ -403,7 +403,8 @@ func _actualizar_paleta(bloques_permitidos: Array) -> void:
 			else:
 				bloque = BloqueItem.new()
 
-			bloque.configurar(id_cmd, data.tit, data.prefijo, data.color, true)
+			var cat = data.get("cat", "movimiento")
+			bloque.configurar(id_cmd, data.tit, data.prefijo, data.color, true, 1, cat)
 			if not bloque.solicitado_anadir.is_connected(_on_bloque_paleta_anadido):
 				bloque.solicitado_anadir.connect(_on_bloque_paleta_anadido)
 			paleta_contenedor.add_child(bloque)
@@ -413,7 +414,14 @@ func _on_bloque_paleta_anadido(item_paleta: BloqueItem) -> void:
 	var lienzos = [lienzo, lienzo_a2, lienzo_a3, lienzo_a4, lienzo_a5]
 	if idx >= 0 and idx < lienzos.size():
 		var l: LienzoCodigo = lienzos[idx]
-		l.agregar_comando(item_paleta.id_comando, item_paleta.parametro_valor)
+		l.agregar_comando(
+			item_paleta.id_comando,
+			item_paleta.parametro_valor,
+			item_paleta.titulo,
+			item_paleta.prefijo,
+			item_paleta.categoria,
+			item_paleta.color_borde
+		)
 		_actualizar_estado("Bloque '%s' añadido al Astronauta %d." % [item_paleta.titulo, idx + 1])
 
 func _conectar_senales() -> void:
@@ -589,6 +597,15 @@ func _on_ejecutar_pressed() -> void:
 	btn_ejecutar.modulate = Color(0.9, 0.4, 0.4)
 	_bloquear_interfaz(true)
 	btn_ejecutar.disabled = false
+
+	# Resaltar bloque de inicio estilo Scratch al comenzar ejecución
+	for l in [lienzo, lienzo_a2, lienzo_a3, lienzo_a4, lienzo_a5]:
+		if is_instance_valid(l) and l.has_method("resaltar_inicio"):
+			l.resaltar_inicio(true)
+	await get_tree().create_timer(0.15).timeout
+	for l in [lienzo, lienzo_a2, lienzo_a3, lienzo_a4, lienzo_a5]:
+		if is_instance_valid(l) and l.has_method("resaltar_inicio"):
+			l.resaltar_inicio(false)
 
 	var ciclo = 1
 	var astronautas = [
