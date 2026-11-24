@@ -95,8 +95,8 @@ var estaciones_desbloqueadas: Array[String] = []
 const ARBOL_MEJORAS = [
 	# 1. BLOQUES DE ALGORITMIA
 	{
-		"fase": "BLOQUE [LOOP] BUCLE",
-		"desc": "Repite tu algoritmo de forma autónoma e infinita. ¡El corazón de la automatización!",
+		"fase": "BLOQUE [LOOP] POR SIEMPRE",
+		"desc": "Repite tu algoritmo en bucle continuo de principio a fin. ¡El corazón de la automatización!",
 		"costo": 20,
 		"cat": "bloque",
 		"id": "BLOQUE_BUCLE",
@@ -208,7 +208,6 @@ var indice_hito_actual: int = 0
 var hitos_completados: Array[int] = []
 
 var en_ejecucion: bool = false
-var modo_bucle: bool = false
 var detener_solicitado: bool = false
 var factor_velocidad: int = 1
 var indice_paso_actual: int = 0
@@ -234,7 +233,7 @@ const COMANDOS_DISPONIBLES = {
 	"GIRAR_DER": {"tit": "Girar Derecha 90°", "prefijo": "[DER]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
 	"GIRAR_IZQ": {"tit": "Girar Izquierda 90°", "prefijo": "[IZQ]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
 	"GIRO_180": {"tit": "Girar 180°", "prefijo": "[180°]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"BUCLE": {"tit": "Bucle Continuo", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
+	"BUCLE": {"tit": "Por Siempre (Bucle)", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
 	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "[TOM]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
 	"ENSAMBLAR": {"tit": "Ensamblar / Depositar", "prefijo": "[ENS]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
 	"DIAGNOSTICO": {"tit": "Diagnóstico Spido", "prefijo": "[TEST]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}

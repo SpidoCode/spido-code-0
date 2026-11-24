@@ -515,7 +515,7 @@ visible = false
 custom_minimum_size = Vector2(85, 36)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
-text = "Bucle: OFF"
+text = "DUPLICAR"
 
 [node name="BtnVelocidad" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=1193255383]
 unique_name_in_owner = true
