@@ -502,13 +502,11 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 	# 3. Configurar mesa de ensamblaje Spido
 	var mostrar_mesa = config.get("mostrar_mesa", false)
 	if mesa_spid:
+		var pos_mesa = config.get("pos_mesa", Vector2i(0, -2))
+		mesa_spid.posicionar_en_celda(pos_mesa)
 		mesa_spid.visible = mostrar_mesa
-		if mostrar_mesa:
-			var pos_mesa = config.get("pos_mesa", Vector2i(0, -2))
-			mesa_spid.celda_mesa = pos_mesa
-			mesa_spid.position = Vector3(pos_mesa.x * 2.0, 0, pos_mesa.y * 2.0)
-			if not preservar_estado:
-				mesa_spid.reiniciar()
+		if mostrar_mesa and not preservar_estado:
+			mesa_spid.reiniciar()
 
 	# 4. Configurar baliza meta
 	var tipo_meta = config.get("tipo_meta", "BALIZA")

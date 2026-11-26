@@ -19,8 +19,13 @@ var spid_brazos: Node3D = null
 var spid_bateria: MeshInstance3D = null
 
 func _ready() -> void:
+	posicionar_en_celda(celda_mesa)
 	_crear_componentes_extra_si_faltan()
 	reiniciar()
+
+func posicionar_en_celda(celda: Vector2i) -> void:
+	celda_mesa = celda
+	position = Vector3(celda.x * 2.0, 0, celda.y * 2.0)
 
 func _crear_componentes_extra_si_faltan() -> void:
 	var soporte = find_child("SoporteSpid", true, false)

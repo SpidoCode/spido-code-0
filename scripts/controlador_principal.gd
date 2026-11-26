@@ -369,6 +369,7 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 
 		# Mesa de Spido solo si fue comprada en tienda
 		if mundo_3d.mesa_spid:
+			mundo_3d.mesa_spid.posicionar_en_celda(hito.get("pos_mesa", Vector2i(0, -2)))
 			mundo_3d.mesa_spid.visible = ("MESA_SPIDO" in estaciones_desbloqueadas)
 
 		# Posición inicial solo al iniciar o resetear explícitamente
@@ -1268,6 +1269,7 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 			match item.id:
 				"MESA_SPIDO":
 					if mundo_3d and mundo_3d.mesa_spid:
+						mundo_3d.mesa_spid.posicionar_en_celda(Vector2i(0, -2))
 						mundo_3d.mesa_spid.visible = true
 						mundo_3d.mesa_spid.scale = Vector3.ZERO
 						create_tween().tween_property(mundo_3d.mesa_spid, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

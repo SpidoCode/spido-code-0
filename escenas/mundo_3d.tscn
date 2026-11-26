@@ -39,7 +39,7 @@ light_energy = 1.15
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1784270914]
-transform = Transform3D(1, 0, 0, 0, 0.7880111, 0.6156611, 0, -0.6156611, 0.7880111, -0.265234, 8.335998, 11.427958)
+transform = Transform3D(1, 0, 0, 0, 0.7880111, 0.6156611, 0, -0.6156611, 0.7880111, -0.265234, 14.837415, 19.947815)
 fov = 48.0
 
 [node name="MesaEnsamblaje" parent="." unique_id=744348960 instance=ExtResource("3_mesa")]
