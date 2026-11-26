@@ -43,7 +43,7 @@ var contenedor_decoracion: Node3D = null
 var tamano_sector_actual: int = 3
 var limites_sector: Dictionary = {"min_x": -1, "max_x": 1, "min_z": -1, "max_z": 1}
 var nodo_tolva: Node3D = null
-var celda_tolva: Vector2i = Vector2i(1, 0)
+var celda_tolva: Vector2i = Vector2i(-1, 1)
 var tuercas_recolectadas_sesion: int = 0
 var contenedor_cajas_suministro: Node3D = null
 var celdas_suministro: Dictionary = {}
@@ -150,18 +150,18 @@ func es_celda_ocupada_por_astronauta(celda: Vector2i, ignorar_astro: Node = null
 	return false
 
 func _inicializar_mesones() -> void:
-	# 1. Mesa de Fabricación Inicial (Celda (-1, 0) para Tablero 3x3 base)
+	# 1. Mesa de Fabricación Inicial (Celda (-1, -1) para Tablero 3x3 base arriba a la izquierda)
 	if not meson_patas:
 		meson_patas = MesonSubensamblajeClass.new()
 		meson_patas.name = "MesonPatas"
-		meson_patas.celda_mesa = Vector2i(-1, 0)
+		meson_patas.celda_mesa = Vector2i(-1, -1)
 		meson_patas.tipo_estacion = "PATAS"
 		meson_patas.insumo_requerido = "CUALQUIERA"
 		meson_patas.cantidad_requerida = 1
 		meson_patas.capacidad_almacenamiento_maxima = 10
 		meson_patas.producto_salida = "PATAS"
 		add_child(meson_patas)
-		mesones_por_celda[Vector2i(-1, 0)] = meson_patas
+		mesones_por_celda[Vector2i(-1, -1)] = meson_patas
 		meson_patas.visible = false
 
 	# 2. Máquina de Cinta Automática (Fase 2: Tablero 5x5 al tope arriba en Z=-2)
@@ -337,8 +337,8 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 	actualizar_sector(tam_sec)
 
 	# 1. Configurar astronauta principal (Ingeniero)
-	var pos_astro = config.get("pos_astronauta", Vector2i(0, 0))
-	var ori_astro = config.get("ori_astronauta", 3)
+	var pos_astro = config.get("pos_astronauta", Vector2i(-1, 0))
+	var ori_astro = config.get("ori_astronauta", 2)
 	if astronauta:
 		if preservar_estado:
 			astronauta.fijar_checkpoint_actual()

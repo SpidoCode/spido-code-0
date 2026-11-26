@@ -409,7 +409,7 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 
 		# Posición inicial solo al iniciar o resetear explícitamente
 		if reposicionar_astros and mundo_3d.astronauta and hito.has("pos_astronauta"):
-			mundo_3d.astronauta.configurar_inicio(hito.get("pos_astronauta", Vector2i(0, 0)), hito.get("ori_astronauta", 3))
+			mundo_3d.astronauta.configurar_inicio(hito.get("pos_astronauta", Vector2i(-1, 0)), hito.get("ori_astronauta", 2))
 
 		if mundo_3d.baliza_meta:
 			var mostrar_b = hito.get("mostrar_baliza", false)

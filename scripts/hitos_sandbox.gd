@@ -7,22 +7,22 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 1,
 			"clave": "PRIMEROS_PASOS",
 			"titulo": "1. Fase 1: Abastecedor (Tablero 3x3)",
-			"descripcion": "Estás en la bahía de ensamblaje (3x3) mirando a la izquierda hacia la Mesa Inicial (-1, 0). Da media vuelta para tomar una tuerca de la Caja de Suministros (a tu espalda en 1, 0) con [Tomar Pieza], gira y deposítala en la Mesa con [Depositar].",
-			"meta_texto": "Toma la tuerca de la caja (1, 0) y deposítala en la Mesa Inicial (-1, 0)",
+			"descripcion": "Estás al medio a la izquierda (-1, 0) mirando al Sur hacia la Caja de Suministros (-1, 1). Toma una tuerca con [Tomar Pieza], da media vuelta hacia el Norte y deposítala en la Mesa arriba a la izquierda (-1, -1) con [Depositar].",
+			"meta_texto": "Toma la tuerca al Sur (-1, 1) y deposítala en la Mesa al Norte (-1, -1)",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 3,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3, # Mirando al Oeste hacia la mesa en (-1, 0)
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2, # Mirando al Sur hacia la caja en (-1, 1)
 			"mostrar_mesa": false,
 			"mostrar_baliza": false,
 			"mostrar_meson_patas": true,
 			"tipo_meta": "DEPOSITAR_INSUMO",
 			"recompensa_creditos": 20,
 			"mensaje_ada": "¡Excelente maniobra! Has entregado la primera materia prima en la Mesa de Fabricación Inicial.",
-			"pista": "Usa [Tomar Pieza], gira dos veces a la izquierda o derecha, avanza hacia la mesa inicial y pulsa [Depositar].",
+			"pista": "Usa [Tomar Pieza] hacia la caja al Sur, da media vuelta hacia el Norte y pulsa [Depositar] en la mesa.",
 			"piezas": [
-				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
+				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]
 		},
 		{
@@ -34,8 +34,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 3,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3,
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2,
 			"mostrar_mesa": false,
 			"mostrar_baliza": false,
 			"mostrar_meson_patas": true,
@@ -44,7 +44,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"mensaje_ada": "¡Pieza base fabricada! Pero repetir viajes manualmente agota bloques. En MEJORAS adquiere el [BLOQUE BUCLE] recién desbloqueado.",
 			"pista": "Programa el viaje de retorno a la caja de suministros y vuelve a la mesa con la segunda tuerca.",
 			"piezas": [
-				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
+				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]
 		},
 		{
@@ -56,8 +56,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 3,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3,
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2,
 			"mostrar_mesa": false,
 			"mostrar_baliza": false,
 			"mostrar_meson_patas": true,
@@ -66,7 +66,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"mensaje_ada": "¡Producción continua activa! Ahora expande la bahía a 5x5 casillas e instala la Máquina de Cinta con Astro 2 en MEJORAS.",
 			"pista": "Compra el bloque Bucle en MEJORAS y envuelve tu secuencia para automatizar a Astro 1.",
 			"piezas": [
-				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
+				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]
 		},
 		{
@@ -78,8 +78,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 2,
 			"tamano_sector": 5,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3,
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2,
 			"pos_astronauta_2": Vector2i(-1, -1),
 			"ori_astronauta_2": 0,
 			"mostrar_mesa": false,
@@ -90,7 +90,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"mensaje_ada": "¡Flujo de procesamiento industrial completado! Los componentes procesados están listos para el montaje robótico.",
 			"pista": "Astro 2 retira la pieza de la mesa inicial, la deposita en la entrada de la cinta en (-1, -2) y recoge el producto en (1, -2).",
 			"piezas": [
-				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
+				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]
 		},
 		{
@@ -102,8 +102,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 3,
 			"tamano_sector": 7,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3,
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2,
 			"pos_astronauta_2": Vector2i(-1, -1),
 			"ori_astronauta_2": 0,
 			"pos_astronauta_3": Vector2i(0, 1),
@@ -117,7 +117,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"mensaje_ada": "¡Spido ensamblado y operativo! Ahora instala la Compuerta de Entrega para activar el despacho continuo de producción.",
 			"pista": "Astro 3 toma componentes procesados y los acopla en la Mesa Final de Spido en (0, 2).",
 			"piezas": [
-				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
+				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]
 		},
 		{
@@ -129,8 +129,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR", "DIAGNOSTICO"],
 			"cantidad_astronautas": 3,
 			"tamano_sector": 7,
-			"pos_astronauta": Vector2i(0, 0),
-			"ori_astronauta": 3,
+			"pos_astronauta": Vector2i(-1, 0),
+			"ori_astronauta": 2,
 			"pos_astronauta_2": Vector2i(-1, -1),
 			"ori_astronauta_2": 0,
 			"pos_astronauta_3": Vector2i(0, 1),
