@@ -60,7 +60,7 @@ func _process(_delta: float) -> void:
 
 func actualizar_sector(tamano: int) -> void:
 	tamano_sector_actual = tamano
-	var radio = int(tamano / 2)
+	var radio = int(tamano / 2.0)
 	limites_sector = {"min_x": -radio, "max_x": radio, "min_z": -radio, "max_z": radio}
 
 	_construir_tablero_ajedrez()
@@ -236,7 +236,7 @@ func _construir_tablero_ajedrez() -> void:
 	add_child(contenedor_tablero)
 
 	# Dimensiones dinámicas basadas en el sector desbloqueado (5x5, 7x7, 9x9, 13x13)
-	var radio = int(tamano_sector_actual / 2)
+	var radio = int(tamano_sector_actual / 2.0)
 	var cant_casillas = radio * 2 + 1
 	var tam_marco = cant_casillas * 2.0 + 0.6
 	var pos_riel = (cant_casillas * 2.0) * 0.5 + 0.15
@@ -722,8 +722,8 @@ func obtener_producto_de_meson(celda: Vector2i) -> Node3D:
 				var nueva_pieza = escena_p.instantiate() as PiezaTaller
 				nueva_pieza.tipo_pieza = prod_tipo
 				nueva_pieza.name = prod_tipo
-				nueva_pieza.global_position = meson.global_position + Vector3(0, 0.8, 0)
 				contenedor_piezas.add_child(nueva_pieza)
+				nueva_pieza.global_position = meson.global_position + Vector3(0, 0.8, 0)
 				return nueva_pieza
 	return null
 
@@ -741,8 +741,8 @@ func obtener_producto_de_cinta(celda: Vector2i) -> Node3D:
 				var nueva_pieza = escena_p.instantiate() as PiezaTaller
 				nueva_pieza.tipo_pieza = prod_tipo
 				nueva_pieza.name = prod_tipo
-				nueva_pieza.global_position = Vector3(celda.x * 2.0, 0.8, celda.y * 2.0)
 				contenedor_piezas.add_child(nueva_pieza)
+				nueva_pieza.global_position = Vector3(celda.x * 2.0, 0.8, celda.y * 2.0)
 				return nueva_pieza
 	return null
 
@@ -760,8 +760,8 @@ func obtener_producto_de_bandeja(celda: Vector2i) -> Node3D:
 				var nueva_pieza = escena_p.instantiate() as PiezaTaller
 				nueva_pieza.tipo_pieza = prod_tipo
 				nueva_pieza.name = prod_tipo
-				nueva_pieza.global_position = bandeja_intermedia.position + Vector3(0, 0.6, 0)
 				contenedor_piezas.add_child(nueva_pieza)
+				nueva_pieza.global_position = bandeja_intermedia.position + Vector3(0, 0.6, 0)
 				return nueva_pieza
 	return null
 

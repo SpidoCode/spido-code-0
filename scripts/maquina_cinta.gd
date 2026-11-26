@@ -211,7 +211,7 @@ func _animar_ingreso_entrada() -> void:
 		tw.tween_property(luz_in, "light_energy", 3.0, 0.15)
 		tw.tween_property(luz_in, "light_energy", 1.2, 0.25)
 
-func _procesar_transporte_cinta(tipo_pieza: String) -> void:
+func _procesar_transporte_cinta(_tipo_pieza: String) -> void:
 	var offset_in_x = (celda_entrada.x * 2.0) - position.x
 	var offset_out_x = (celda_salida.x * 2.0) - position.x
 
