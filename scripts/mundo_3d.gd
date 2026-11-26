@@ -39,6 +39,8 @@ var limites_sector: Dictionary = {"min_x": -2, "max_x": 2, "min_z": -2, "max_z":
 var nodo_tolva: Node3D = null
 var celda_tolva: Vector2i = Vector2i(1, 0)
 var tuercas_recolectadas_sesion: int = 0
+var contenedor_cajas_suministro: Node3D = null
+var celdas_suministro: Dictionary = {}
 
 func _ready() -> void:
 	_inicializar_roles_astronautas()
@@ -57,9 +59,6 @@ func actualizar_sector(tamano: int) -> void:
 
 	_construir_tablero_ajedrez()
 
-	if is_instance_valid(nodo_tolva):
-		nodo_tolva.visible = true
-
 func _construir_tolva() -> void:
 	if is_instance_valid(nodo_tolva):
 		nodo_tolva.queue_free()
@@ -67,6 +66,7 @@ func _construir_tolva() -> void:
 	nodo_tolva = Node3D.new()
 	nodo_tolva.name = "TolvaTuercas"
 	nodo_tolva.position = Vector3(celda_tolva.x * 2.0, 0, celda_tolva.y * 2.0)
+	nodo_tolva.visible = false
 	add_child(nodo_tolva)
 
 	var base = MeshInstance3D.new()
@@ -527,6 +527,8 @@ func _recrear_piezas(lista_piezas: Array, filtrar_ya_ensambladas: bool = true) -
 		child.queue_free()
 	piezas_por_celda.clear()
 
+	_actualizar_cajas_suministros(lista_piezas)
+
 	for p_data in lista_piezas:
 		var tipo = p_data.get("tipo", "CHASIS")
 		if filtrar_ya_ensambladas and mesa_spid and tipo in mesa_spid.etapas_completadas:
@@ -544,6 +546,87 @@ func _recrear_piezas(lista_piezas: Array, filtrar_ya_ensambladas: bool = true) -
 
 	await get_tree().process_frame
 	registrar_piezas()
+
+func _actualizar_cajas_suministros(lista_piezas: Array) -> void:
+	if not contenedor_cajas_suministro:
+		contenedor_cajas_suministro = Node3D.new()
+		contenedor_cajas_suministro.name = "ContenedorCajasSuministro"
+		add_child(contenedor_cajas_suministro)
+
+	for child in contenedor_cajas_suministro.get_children():
+		child.queue_free()
+	celdas_suministro.clear()
+
+	for p_data in lista_piezas:
+		var celda: Vector2i = p_data.get("celda", Vector2i.ZERO)
+		if celdas_suministro.has(celda):
+			continue
+		celdas_suministro[celda] = true
+
+		var caja_nodo = Node3D.new()
+		caja_nodo.name = "CajaSuministro_%d_%d" % [celda.x, celda.y]
+		caja_nodo.position = Vector3(celda.x * 2.0, 0, celda.y * 2.0)
+		contenedor_cajas_suministro.add_child(caja_nodo)
+
+		# 1. Base metálica industrial de la caja (naranja taller con acabado Sci-Fi)
+		var base_m = MeshInstance3D.new()
+		var m_box = BoxMesh.new()
+		m_box.size = Vector3(1.3, 0.42, 1.3)
+		base_m.mesh = m_box
+		var mat_caja = StandardMaterial3D.new()
+		mat_caja.albedo_color = Color(0.82, 0.45, 0.14, 1) # Naranja taller industrial
+		mat_caja.metallic = 0.65
+		mat_caja.roughness = 0.35
+		base_m.material_override = mat_caja
+		base_m.position = Vector3(0, 0.21, 0)
+		caja_nodo.add_child(base_m)
+
+		# 2. Marco perimetral y esquineros oscuros reforzados
+		var marco_m = MeshInstance3D.new()
+		var m_fr = BoxMesh.new()
+		m_fr.size = Vector3(1.34, 0.1, 1.34)
+		marco_m.mesh = m_fr
+		var mat_fr = StandardMaterial3D.new()
+		mat_fr.albedo_color = Color(0.18, 0.2, 0.24, 1)
+		mat_fr.metallic = 0.8
+		mat_fr.roughness = 0.4
+		marco_m.material_override = mat_fr
+		marco_m.position = Vector3(0, 0.38, 0)
+		caja_nodo.add_child(marco_m)
+
+		# 3. Cavidad interior donde reposan las piezas
+		var interior_m = MeshInstance3D.new()
+		var m_int = BoxMesh.new()
+		m_int.size = Vector3(0.95, 0.06, 0.95)
+		interior_m.mesh = m_int
+		var mat_int = StandardMaterial3D.new()
+		mat_int.albedo_color = Color(0.12, 0.14, 0.17, 1)
+		mat_int.emission_enabled = true
+		mat_int.emission = Color(0.85, 0.55, 0.1, 1)
+		mat_int.emission_energy_multiplier = 0.4
+		interior_m.material_override = mat_int
+		interior_m.position = Vector3(0, 0.41, 0)
+		caja_nodo.add_child(interior_m)
+
+		# 4. Luz tenue dorada/ámbar
+		var luz_caja = OmniLight3D.new()
+		luz_caja.light_color = Color(1.0, 0.85, 0.3)
+		luz_caja.light_energy = 0.8
+		luz_caja.omni_range = 2.0
+		luz_caja.position = Vector3(0, 0.65, 0)
+		caja_nodo.add_child(luz_caja)
+
+		# 5. Etiqueta 3D flotante identificadora
+		var lbl = Label3D.new()
+		lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		lbl.no_depth_test = true
+		lbl.text = "BAHÍA DE SUMINISTROS"
+		lbl.font_size = 20
+		lbl.outline_size = 5
+		lbl.outline_color = Color(0.05, 0.08, 0.12, 0.9)
+		lbl.modulate = Color(1.0, 0.85, 0.3)
+		lbl.position = Vector3(0, 1.25, 0)
+		caja_nodo.add_child(lbl)
 
 func registrar_piezas() -> void:
 	piezas_por_celda.clear()
@@ -565,6 +648,8 @@ func es_celda_solida(celda: Vector2i) -> bool:
 		var m = mesones_por_celda[celda]
 		if is_instance_valid(m) and m.visible:
 			return true
+	if celdas_suministro.has(celda):
+		return true
 	return false
 
 func obtener_meson_en(celda: Vector2i) -> Node3D:

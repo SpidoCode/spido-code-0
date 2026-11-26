@@ -3,7 +3,7 @@ extends Node3D
 
 @export var tipo_pieza: String = "CHASIS" # CHASIS, RUEDAS, SENSOR
 @export var celda_inicial: Vector2i = Vector2i(-2, 0)
-@export var altura_suelo: float = 0.4
+@export var altura_suelo: float = 0.55
 
 var padre_original: Node = null
 var pos_inicial: Vector3
@@ -12,6 +12,9 @@ func _ready() -> void:
 	padre_original = get_parent()
 	pos_inicial = Vector3(celda_inicial.x * 2.0, altura_suelo, celda_inicial.y * 2.0)
 	position = pos_inicial
+	var ped = find_child("Pedestal", true, false)
+	if ped:
+		ped.visible = false
 	_actualizar_aspecto()
 	_iniciar_efecto_rotacion()
 

@@ -354,6 +354,8 @@ func _aplicar_hito_actual() -> void:
 			mundo_3d.astronauta_5.configurar_inicio(hito.get("pos_astronauta_5", Vector2i(-2, 0)), 0)
 
 		# Mostrar mesones de subensamblaje si el hito los requiere o si ya se compraron
+		if mundo_3d.nodo_tolva:
+			mundo_3d.nodo_tolva.visible = hito.get("mostrar_tolva", false)
 		if mundo_3d.meson_patas:
 			var debe_patas = ("MESON_PATAS" in estaciones_desbloqueadas) or hito.get("mostrar_meson_patas", false) or (indice_hito_actual >= 1) or (mundo_3d.tamano_sector_actual >= 7)
 			mundo_3d.meson_patas.visible = debe_patas
@@ -836,6 +838,9 @@ func _verificar_hitos_sandbox() -> void:
 			if mundo_3d and mundo_3d.meson_patas and (mundo_3d.meson_patas.insumos_actuales >= 1 or mundo_3d.meson_patas.producto_disponible):
 				completado = true
 			elif mundo_3d and mundo_3d.tuercas_recolectadas_sesion >= 1:
+				completado = true
+		"FABRICAR_PATAS":
+			if mundo_3d and mundo_3d.meson_patas and (mundo_3d.meson_patas.producto_disponible or mundo_3d.meson_patas.insumos_actuales >= 2):
 				completado = true
 		"DEPOSITAR_TUERCA":
 			if mundo_3d and mundo_3d.tuercas_recolectadas_sesion >= 1:
