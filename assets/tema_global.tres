@@ -1,6 +1,5 @@
 [gd_resource type="Theme" format=3 uid="uid://byer3tm7qo247"]
 
-[ext_resource type="FontFile" uid="uid://dngowim4rpcq" path="res://assets/fonts/PixelifySans.ttf" id="1_pixelify"]
 [ext_resource type="FontFile" uid="uid://b806q7f5msmcp" path="res://assets/fonts/Poppins-Medium.ttf" id="2_poppins"]
 
 [sub_resource type="StyleBoxFlat" id="ButtonDisabled"]

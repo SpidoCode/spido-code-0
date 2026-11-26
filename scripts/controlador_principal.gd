@@ -36,6 +36,7 @@ extends Control
 # Badges Superiores Derechos
 @onready var label_spido_piezas: Label = %LabelSpidoPiezas
 @onready var label_creditos: Label = %LabelCreditos
+@onready var oscurecedor_tienda: ColorRect = %OscurecedorTienda if has_node("%OscurecedorTienda") else null
 
 # Terminal A.D.A.
 @onready var btn_toggle_ada: Button = %BtnToggleADA
@@ -445,6 +446,7 @@ func _conectar_senales() -> void:
 	if btn_toggle_ada:
 		btn_toggle_ada.pressed.connect(func():
 			card_ada.visible = not card_ada.visible
+			btn_toggle_ada.text = "SISTEMA ADA  ▲" if card_ada.visible else "SISTEMA ADA  ▼"
 		)
 
 	if btn_cerrar_paleta:
@@ -920,11 +922,13 @@ func ganar_creditos(cantidad: int, motivo: String = "") -> void:
 
 func actualizar_creditos_ui() -> void:
 	if is_instance_valid(label_creditos):
-		label_creditos.text = "%d Tuercas" % creditos
+		label_creditos.text = "%d" % creditos
 	if is_instance_valid(label_saldo_tienda):
 		label_saldo_tienda.text = "Saldo: %d Tuercas" % creditos
 
 func _abrir_tienda(abrir: bool) -> void:
+	if is_instance_valid(oscurecedor_tienda):
+		oscurecedor_tienda.visible = abrir
 	if is_instance_valid(modal_tienda):
 		modal_tienda.visible = abrir
 		if abrir:
@@ -938,16 +942,16 @@ func _renderizar_centro_mejoras() -> void:
 	for child in grid_mejoras.get_children():
 		child.queue_free()
 
+	var SURFACE_COLOR := Color(0.34902, 0.388235, 0.447059, 1.0)
+	var GREEN_DARK := Color(0.435294, 0.686275, 0.470588, 1.0)
+	var GREEN_LIGHT := Color(0.545098, 0.796078, 0.568627, 1.0)
+	var GREEN_HOVER := Color(0.631373, 0.85098, 0.65098, 1.0)
+	var TEXT_COLOR := Color(0.956863, 0.964706, 0.94902, 1.0)
+	var SHADOW_COLOR := Color(0.12549, 0.156863, 0.2, 0.95)
+
 	for item in ARBOL_MEJORAS:
 		var panel = PanelContainer.new()
-		var st = StyleBoxFlat.new()
-		st.bg_color = Color(0.12, 0.15, 0.20, 0.95)
-		st.set_corner_radius_all(14)
-		st.set_content_margin_all(12)
-		st.border_width_left = 2
-		st.border_width_top = 2
-		st.border_width_right = 2
-		st.border_width_bottom = 2
+		panel.custom_minimum_size = Vector2(280, 175)
 
 		var ya_desbloqueado = false
 		match item.cat:
@@ -961,71 +965,136 @@ func _renderizar_centro_mejoras() -> void:
 				var a_id = item.get("astro_id", 2)
 				ya_desbloqueado = astronautas_desbloqueados.has(a_id)
 
-		var color_cat = Color(0.35, 0.95, 0.65)
+		var st = StyleBoxFlat.new()
+		st.bg_color = SURFACE_COLOR
+		st.border_color = GREEN_DARK if (ya_desbloqueado or creditos >= item.costo) else Color(0.27, 0.30, 0.35, 1.0)
+		st.set_border_width_all(3)
+		st.set_corner_radius_all(14)
+		st.shadow_color = SHADOW_COLOR
+		st.shadow_size = 6
+		st.shadow_offset = Vector2(0, 4)
+		st.content_margin_left = 14
+		st.content_margin_right = 14
+		st.content_margin_top = 12
+		st.content_margin_bottom = 12
+		panel.add_theme_stylebox_override("panel", st)
+
+		var vbox = VBoxContainer.new()
+		vbox.add_theme_constant_override("separation", 6)
+
 		var texto_cat = "[ MEJORA ]"
 		match item.cat:
 			"bloque":
-				color_cat = Color(0.95, 0.75, 0.20)
 				texto_cat = "BLOQUE DE CÓDIGO"
 			"espacio":
-				color_cat = Color(0.25, 0.85, 0.95)
 				texto_cat = "TERRENO MODULAR"
 			"estacion":
-				color_cat = Color(0.95, 0.55, 0.20)
 				texto_cat = "ESTACIÓN DE MONTAJE"
 			"astronauta":
-				color_cat = Color(0.35, 0.95, 0.65)
 				texto_cat = "ASTRONAUTA CONCURRENTE"
-
-		if ya_desbloqueado:
-			st.border_color = Color(0.35, 0.85, 0.55, 0.9)
-		elif creditos >= item.costo:
-			st.border_color = color_cat
-		else:
-			st.border_color = Color(0.25, 0.32, 0.42, 0.8)
-
-		panel.add_theme_stylebox_override("panel", st)
-		panel.custom_minimum_size = Vector2(270, 150)
-
-		var vbox = VBoxContainer.new()
-		vbox.add_theme_constant_override("separation", 5)
 
 		var lbl_cat = Label.new()
 		lbl_cat.text = texto_cat
-		lbl_cat.add_theme_color_override("font_color", color_cat)
-		lbl_cat.add_theme_font_size_override("font_size", 10)
+		lbl_cat.add_theme_color_override("font_color", GREEN_LIGHT)
+		lbl_cat.add_theme_font_size_override("font_size", 11)
 		vbox.add_child(lbl_cat)
 
 		var lbl_tit = Label.new()
 		lbl_tit.text = item.fase
-		lbl_tit.add_theme_color_override("font_color", Color(0.55, 0.85, 0.6) if ya_desbloqueado else Color(0.95, 0.96, 0.98))
-		lbl_tit.add_theme_font_size_override("font_size", 13)
+		lbl_tit.add_theme_color_override("font_color", GREEN_LIGHT if ya_desbloqueado else TEXT_COLOR)
+		lbl_tit.add_theme_color_override("font_outline_color", SHADOW_COLOR)
+		lbl_tit.add_theme_constant_override("outline_size", 2)
+		lbl_tit.add_theme_font_size_override("font_size", 14)
 		vbox.add_child(lbl_tit)
 
 		var lbl_desc = Label.new()
 		lbl_desc.text = item.desc
-		lbl_desc.add_theme_color_override("font_color", Color(0.72, 0.78, 0.82))
-		lbl_desc.add_theme_font_size_override("font_size", 11)
+		lbl_desc.add_theme_color_override("font_color", Color(0.85, 0.90, 0.92, 1.0))
+		lbl_desc.add_theme_font_size_override("font_size", 12)
 		lbl_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lbl_desc.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		vbox.add_child(lbl_desc)
 
 		var btn_accion = Button.new()
-		btn_accion.custom_minimum_size = Vector2(0, 32)
-		btn_accion.theme_type_variation = &"SecondaryButton" if not ya_desbloqueado else &""
+		btn_accion.custom_minimum_size = Vector2(0, 42)
+		btn_accion.focus_mode = Control.FOCUS_NONE
 
 		if ya_desbloqueado:
 			btn_accion.text = "DESBLOQUEADO"
 			btn_accion.disabled = true
-			btn_accion.modulate = Color(0.5, 0.85, 0.5)
+			var st_dis = StyleBoxFlat.new()
+			st_dis.bg_color = Color(0.270588, 0.301961, 0.352941, 0.9)
+			st_dis.border_color = GREEN_DARK
+			st_dis.set_border_width_all(2)
+			st_dis.set_corner_radius_all(12)
+			st_dis.content_margin_top = 6
+			st_dis.content_margin_bottom = 6
+			btn_accion.add_theme_stylebox_override("disabled", st_dis)
+			btn_accion.add_theme_color_override("font_disabled_color", GREEN_LIGHT)
+			btn_accion.add_theme_font_size_override("font_size", 13)
 		elif creditos >= item.costo:
 			btn_accion.text = "ADQUIRIR (%d Tuercas)" % item.costo
-			btn_accion.modulate = color_cat
+			var st_norm = StyleBoxFlat.new()
+			st_norm.bg_color = GREEN_LIGHT
+			st_norm.border_color = GREEN_DARK
+			st_norm.border_width_left = 3
+			st_norm.border_width_top = 3
+			st_norm.border_width_right = 3
+			st_norm.border_width_bottom = 6
+			st_norm.set_corner_radius_all(12)
+			st_norm.shadow_color = SHADOW_COLOR
+			st_norm.shadow_size = 2
+			st_norm.shadow_offset = Vector2(0, 5)
+			st_norm.content_margin_top = 5
+			st_norm.content_margin_bottom = 5
+
+			var st_hov = StyleBoxFlat.new()
+			st_hov.bg_color = GREEN_HOVER
+			st_hov.border_color = GREEN_DARK
+			st_hov.border_width_left = 3
+			st_hov.border_width_top = 3
+			st_hov.border_width_right = 3
+			st_hov.border_width_bottom = 6
+			st_hov.set_corner_radius_all(12)
+			st_hov.shadow_color = SHADOW_COLOR
+			st_hov.shadow_size = 2
+			st_hov.shadow_offset = Vector2(0, 6)
+			st_hov.content_margin_top = 5
+			st_hov.content_margin_bottom = 5
+
+			var st_pres = StyleBoxFlat.new()
+			st_pres.bg_color = GREEN_DARK
+			st_pres.border_color = GREEN_DARK
+			st_pres.border_width_left = 3
+			st_pres.border_width_top = 3
+			st_pres.border_width_right = 3
+			st_pres.border_width_bottom = 2
+			st_pres.set_corner_radius_all(12)
+			st_pres.content_margin_top = 9
+			st_pres.content_margin_bottom = 3
+
+			btn_accion.add_theme_stylebox_override("normal", st_norm)
+			btn_accion.add_theme_stylebox_override("hover", st_hov)
+			btn_accion.add_theme_stylebox_override("pressed", st_pres)
+			btn_accion.add_theme_color_override("font_color", TEXT_COLOR)
+			btn_accion.add_theme_color_override("font_hover_color", TEXT_COLOR)
+			btn_accion.add_theme_color_override("font_outline_color", SHADOW_COLOR)
+			btn_accion.add_theme_constant_override("outline_size", 2)
+			btn_accion.add_theme_font_size_override("font_size", 14)
 			btn_accion.pressed.connect(func(): _comprar_mejora_arbol(item))
 		else:
 			btn_accion.text = "REQUIERE: %d Tuercas" % item.costo
 			btn_accion.disabled = true
-			btn_accion.modulate = Color(0.7, 0.75, 0.8)
+			var st_req = StyleBoxFlat.new()
+			st_req.bg_color = Color(0.270588, 0.301961, 0.352941, 0.7)
+			st_req.border_color = Color(0.24, 0.27, 0.32, 1.0)
+			st_req.set_border_width_all(2)
+			st_req.set_corner_radius_all(12)
+			st_req.content_margin_top = 6
+			st_req.content_margin_bottom = 6
+			btn_accion.add_theme_stylebox_override("disabled", st_req)
+			btn_accion.add_theme_color_override("font_disabled_color", Color(0.70, 0.75, 0.80, 1.0))
+			btn_accion.add_theme_font_size_override("font_size", 13)
 
 		vbox.add_child(btn_accion)
 		panel.add_child(vbox)

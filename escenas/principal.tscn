@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" path="res://escenas/lienzo_codigo.tscn" id="5_lienzo"]
 [ext_resource type="Script" uid="uid://bjjc1je5nqmfy" path="res://scripts/ada_visualizador.gd" id="6_adaviz"]
 [ext_resource type="Theme" uid="uid://byer3tm7qo247" path="res://assets/tema_global.tres" id="7_tema"]
+[ext_resource type="Texture2D" uid="uid://cnqxjbt5caor1" path="res://assets/ui/icono_pieza.png" id="8_pieza"]
+[ext_resource type="Texture2D" uid="uid://boikltqn7yv03" path="res://assets/ui/icono_tuerca.png" id="9_tuerca"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardMision"]
 content_margin_left = 14.0
@@ -56,24 +58,104 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardADA"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_contadores"]
 content_margin_left = 14.0
-content_margin_top = 12.0
+content_margin_top = 8.0
 content_margin_right = 14.0
-content_margin_bottom = 12.0
-bg_color = Color(0.12549, 0.156863, 0.207843, 0.94)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.270588, 0.345098, 0.439216, 0.9)
+content_margin_bottom = 8.0
+bg_color = Color(0.270588, 0.301961, 0.352941, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.34902, 0.388235, 0.447059, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-shadow_color = Color(0.06, 0.08, 0.1, 0.7)
-shadow_size = 4
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
+shadow_size = 6
 shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_normal"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.545098, 0.796078, 0.568627, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 6
+border_color = Color(0.435294, 0.686275, 0.470588, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
+shadow_size = 2
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_hover"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.631373, 0.85098, 0.65098, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 6
+border_color = Color(0.435294, 0.686275, 0.470588, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
+shadow_size = 2
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_pressed"]
+content_margin_left = 8.0
+content_margin_top = 10.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.435294, 0.686275, 0.470588, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.345098, 0.564706, 0.384314, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardADA"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
+bg_color = Color(0.270588, 0.301961, 0.352941, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.34902, 0.388235, 0.447059, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.95)
+shadow_size = 4
+shadow_offset = Vector2(8, 8)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Consola"]
 content_margin_left = 12.0
@@ -115,18 +197,18 @@ content_margin_left = 24.0
 content_margin_top = 20.0
 content_margin_right = 24.0
 content_margin_bottom = 20.0
-bg_color = Color(0.12549, 0.156863, 0.207843, 0.98)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.34902, 0.447059, 0.54902, 1)
+bg_color = Color(0.270588, 0.301961, 0.352941, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.34902, 0.388235, 0.447059, 1)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
-shadow_color = Color(0.05, 0.07, 0.09, 0.95)
-shadow_size = 8
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.95)
+shadow_size = 12
 shadow_offset = Vector2(0, 8)
 
 [node name="Principal" type="Control" unique_id=196062371]
@@ -268,41 +350,61 @@ theme_override_colors/font_color = Color(0.6, 0.68, 0.75, 1)
 theme_override_font_sizes/font_size = 12
 text = "FASE 0/6 // Controles y Montaje (0%)"
 
-[node name="TopRightContainer" type="HBoxContainer" parent="HUD" unique_id=2103102108]
+[node name="ContenedorContadores" type="PanelContainer" parent="HUD" unique_id=2103102108]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -270.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 54.0
+offset_left = -340.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 91.0
 grow_horizontal = 0
-theme_override_constants/separation = 8
-alignment = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_contadores")
 
-[node name="BadgeSpido" type="PanelContainer" parent="HUD/TopRightContainer" unique_id=774878976]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ContenedorContadores" unique_id=1782200164]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_Badge")
+theme_override_constants/separation = 12
+alignment = 1
 
-[node name="LabelSpidoPiezas" type="Label" parent="HUD/TopRightContainer/BadgeSpido" unique_id=590701507]
+[node name="IconoPieza" type="TextureRect" parent="HUD/ContenedorContadores/HBoxContainer" unique_id=1979789161]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+texture = ExtResource("8_pieza")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelSpidoPiezas" type="Label" parent="HUD/ContenedorContadores/HBoxContainer" unique_id=590701507]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.95, 0.6, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
 text = "0/5"
 vertical_alignment = 1
 
-[node name="BadgeTuercas" type="PanelContainer" parent="HUD/TopRightContainer" unique_id=816462134]
+[node name="VSeparator" type="VSeparator" parent="HUD/ContenedorContadores/HBoxContainer" unique_id=1827506585]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_Badge")
+theme_override_constants/separation = 6
 
-[node name="LabelCreditos" type="Label" parent="HUD/TopRightContainer/BadgeTuercas" unique_id=782046220]
-unique_name_in_owner = true
+[node name="IconoTuerca" type="TextureRect" parent="HUD/ContenedorContadores/HBoxContainer" unique_id=1827506586]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
-theme_override_font_sizes/font_size = 14
-text = "0 Tuercas"
+texture = ExtResource("9_tuerca")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelCreditos" type="Label" parent="HUD/ContenedorContadores/HBoxContainer" unique_id=782046220]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "0"
 vertical_alignment = 1
 
 [node name="RightSidebarADA" type="VBoxContainer" parent="HUD" unique_id=746682798]
@@ -310,21 +412,30 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -270.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = 440.0
+offset_left = -340.0
+offset_top = 101.0
+offset_right = -20.0
+offset_bottom = 471.0
 grow_horizontal = 0
-theme_override_constants/separation = 6
+theme_override_constants/separation = 10
 
 [node name="BtnToggleADA" type="Button" parent="HUD/RightSidebarADA" unique_id=1547970552]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "SISTEMA ADA"
+tooltip_text = "Mostrar u ocultar los mensajes del sistema A.D.A."
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_ada_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ada_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ada_btn_pressed")
+text = "SISTEMA ADA  ▲"
 
 [node name="CardADA" type="PanelContainer" parent="HUD/RightSidebarADA" unique_id=627830607]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 310)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_CardADA")
 
@@ -639,6 +750,17 @@ text = "Astronauta listo en el hangar de montaje."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="OscurecedorTienda" type="ColorRect" parent="HUD" unique_id=1627895990]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.04, 0.06, 0.68)
+
 [node name="ModalTienda" type="PanelContainer" parent="HUD" unique_id=1527895991]
 unique_name_in_owner = true
 visible = false
@@ -648,17 +770,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -460.0
-offset_top = -280.0
-offset_right = 460.0
-offset_bottom = 280.0
+offset_left = -560.0
+offset_top = -320.0
+offset_right = 560.0
+offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_Modal")
 
 [node name="VBox" type="VBoxContainer" parent="HUD/ModalTienda" unique_id=1913958113]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="HBoxHeader" type="HBoxContainer" parent="HUD/ModalTienda/VBox" unique_id=1732456167]
 layout_mode = 2
@@ -669,20 +791,23 @@ size_flags_horizontal = 3
 
 [node name="Titulo" type="Label" parent="HUD/ModalTienda/VBox/HBoxHeader/VBoxTit" unique_id=877861303]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.96, 0.98, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 24
 text = "CENTRO DE MEJORAS"
 
 [node name="Subtitulo" type="Label" parent="HUD/ModalTienda/VBox/HBoxHeader/VBoxTit" unique_id=1470246089]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.76, 0.8, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_font_sizes/font_size = 14
 text = "Amplía tu terreno y equipamiento. Cada etapa incorpora nuevas herramientas de automatización."
 
 [node name="BtnCerrarTienda" type="Button" parent="HUD/ModalTienda/VBox/HBoxHeader" unique_id=641726436]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(90, 34)
+custom_minimum_size = Vector2(110, 42)
 layout_mode = 2
+theme_type_variation = &"SecondaryButton"
 text = "CERRAR"
 
 [node name="HBoxSubHeader" type="HBoxContainer" parent="HUD/ModalTienda/VBox" unique_id=840521096]
