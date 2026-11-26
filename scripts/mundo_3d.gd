@@ -39,9 +39,9 @@ var idx_astronauta_activo: int = 0
 var contenedor_tablero: Node3D = null
 var contenedor_decoracion: Node3D = null
 
-# Sistema de Sectores Progresivos (Plataforma Modular Dinámica 3x3 -> 5x5 -> 7x7)
-var tamano_sector_actual: int = 3
-var limites_sector: Dictionary = {"min_x": -1, "max_x": 1, "min_z": -1, "max_z": 1}
+# Sistema de Sectores (Plataforma y Tablero Fijo)
+var tamano_sector_actual: int = 7
+var limites_sector: Dictionary = {"min_x": -3, "max_x": 3, "min_z": -3, "max_z": 3}
 var nodo_tolva: Node3D = null
 var celda_tolva: Vector2i = Vector2i(1, 0)
 var tuercas_recolectadas_sesion: int = 0
@@ -53,40 +53,23 @@ func _ready() -> void:
 	_inicializar_mesones()
 	_construir_decoracion_nave()
 	_construir_tolva()
-	actualizar_sector(3)
+	actualizar_sector(7)
 
 func _process(_delta: float) -> void:
 	pass
 
-func actualizar_sector(tamano: int) -> void:
-	tamano_sector_actual = tamano
-	var radio = int(tamano / 2.0)
+func actualizar_sector(tamano: int = 7) -> void:
+	# Mantener el tablero y límites en una medida fija (mínimo 7x7) para cubrir todas las estaciones
+	tamano_sector_actual = max(7, tamano)
+	var radio = int(tamano_sector_actual / 2.0)
 	limites_sector = {"min_x": -radio, "max_x": radio, "min_z": -radio, "max_z": radio}
 
 	_construir_tablero_ajedrez()
-	_ajustar_camara_a_sector(tamano)
+	# La cámara se mantiene 100% fija en la posición que el usuario acomode en el editor
 
-func _ajustar_camara_a_sector(tamano: int) -> void:
-	var cam: Camera3D = find_child("Camera3D", true, false)
-	if not cam: return
-	var objetivo_y = 8.5
-	var objetivo_z = 11.5
-	match tamano:
-		3:
-			objetivo_y = 7.5
-			objetivo_z = 10.0
-		5:
-			objetivo_y = 10.8
-			objetivo_z = 14.8
-		7:
-			objetivo_y = 14.2
-			objetivo_z = 19.2
-		_:
-			objetivo_y = 16.5
-			objetivo_z = 22.5
-	var tw = create_tween().set_parallel(true)
-	tw.tween_property(cam, "position:y", objetivo_y, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tw.tween_property(cam, "position:z", objetivo_z, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+func _ajustar_camara_a_sector(_tamano: int) -> void:
+	# Desactivado: la cámara es fija y no se mueve automáticamente al avanzar misiones
+	pass
 
 func _construir_tolva() -> void:
 	if is_instance_valid(nodo_tolva):
