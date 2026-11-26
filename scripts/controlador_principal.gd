@@ -89,7 +89,7 @@ const ESCENA_MENU_PRINCIPAL := "res://escenas/menu_inicio.tscn"
 const HitosSandboxClass = preload("res://scripts/hitos_sandbox.gd")
 
 var creditos: int = 0
-var bloques_adquiridos: Array[String] = ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"]
+var bloques_adquiridos: Array[String] = []
 var astronautas_desbloqueados: Array[int] = [1]
 var estaciones_desbloqueadas: Array[String] = []
 
@@ -165,14 +165,14 @@ const ARBOL_MEJORAS = [
 	{
 		"fase": "MESÓN DE PATAS",
 		"desc": "Instala el mesón de trabajo que forja sistemas de tracción y extremidades mecánicas.",
-		"costo": 60,
+		"costo": 0,
 		"cat": "estacion",
 		"id": "MESON_PATAS"
 	},
 	{
 		"fase": "MESÓN DE SENSORES",
 		"desc": "Instala el mesón especializado para ensamblar los circuitos de visión y sensores ópticos.",
-		"costo": 120,
+		"costo": 60,
 		"cat": "estacion",
 		"id": "MESON_SENSORES"
 	},
@@ -181,7 +181,7 @@ const ARBOL_MEJORAS = [
 	{
 		"fase": "ASTRO 2: TRACCIÓN",
 		"desc": "Despierta al 2º astronauta con su propia pestaña de código para trabajo en paralelo.",
-		"costo": 70,
+		"costo": 35,
 		"cat": "astronauta",
 		"id": "ASTRO_2",
 		"astro_id": 2
@@ -189,7 +189,7 @@ const ARBOL_MEJORAS = [
 	{
 		"fase": "ASTRO 3: SENSORES",
 		"desc": "Despierta al 3º astronauta para alimentar la estación óptica y acelerar el montaje.",
-		"costo": 130,
+		"costo": 65,
 		"cat": "astronauta",
 		"id": "ASTRO_3",
 		"astro_id": 3
@@ -197,7 +197,7 @@ const ARBOL_MEJORAS = [
 	{
 		"fase": "ASTROS 4 & 5: ESCUADRÓN",
 		"desc": "Despierta a Astro 4 (Brazos) y Astro 5 (Energía) para automatización total.",
-		"costo": 220,
+		"costo": 120,
 		"cat": "astronauta",
 		"id": "ASTRO_4_5",
 		"astro_id": 4
@@ -355,7 +355,7 @@ func _aplicar_hito_actual() -> void:
 
 		# Mostrar mesones de subensamblaje si el hito los requiere o si ya se compraron
 		if mundo_3d.meson_patas:
-			var debe_patas = ("MESON_PATAS" in estaciones_desbloqueadas) or (indice_hito_actual >= 4) or (mundo_3d.tamano_sector_actual >= 7)
+			var debe_patas = ("MESON_PATAS" in estaciones_desbloqueadas) or hito.get("mostrar_meson_patas", false) or (indice_hito_actual >= 1) or (mundo_3d.tamano_sector_actual >= 7)
 			mundo_3d.meson_patas.visible = debe_patas
 		if mundo_3d.meson_sensores:
 			var debe_sensores = ("MESON_SENSORES" in estaciones_desbloqueadas) or (indice_hito_actual >= 5) or (mundo_3d.tamano_sector_actual >= 9)
@@ -832,6 +832,11 @@ func _verificar_hitos_sandbox() -> void:
 		"TOMAR_PIEZA":
 			if ha_recogido_pieza_en_fase or (mundo_3d and mundo_3d.astronauta and is_instance_valid(mundo_3d.astronauta.pieza_en_mano)):
 				completado = true
+		"DEPOSITAR_INSUMO":
+			if mundo_3d and mundo_3d.meson_patas and (mundo_3d.meson_patas.insumos_actuales >= 1 or mundo_3d.meson_patas.producto_disponible):
+				completado = true
+			elif mundo_3d and mundo_3d.tuercas_recolectadas_sesion >= 1:
+				completado = true
 		"DEPOSITAR_TUERCA":
 			if mundo_3d and mundo_3d.tuercas_recolectadas_sesion >= 1:
 				completado = true
@@ -858,7 +863,7 @@ func _verificar_hitos_sandbox() -> void:
 			if mundo_3d and mundo_3d.mesa_spid:
 				completado = (mundo_3d.mesa_spid.etapas_completadas.size() >= 2)
 		"DIAGNOSTICO":
-			if mundo_3d and mundo_3d.mesa_spid and mundo_3d.mesa_spid.diagnostico_ok:
+			if mundo_3d and mundo_3d.mesa_spid and (mundo_3d.mesa_spid.diagnostico_ejecutado or mundo_3d.mesa_spid.get("diagnostico_ok")):
 				completado = true
 
 	if completado and not (indice_hito_actual in hitos_completados):

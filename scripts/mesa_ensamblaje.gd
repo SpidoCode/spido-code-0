@@ -91,7 +91,7 @@ func ensamblar_componente(tipo: String) -> bool:
 
 	var tween = create_tween()
 	match tipo:
-		"CHASIS":
+		"CHASIS", "BASE":
 			spid_chasis.visible = true
 			spid_chasis.scale = Vector3.ZERO
 			tween.tween_property(spid_chasis, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -99,19 +99,19 @@ func ensamblar_componente(tipo: String) -> bool:
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.3, 0.7, 0.4)
 				luz_plataforma.light_energy = 1.0
-		"RUEDAS":
+		"RUEDAS", "PATAS":
 			spid_ruedas.visible = true
 			spid_ruedas.scale = Vector3.ZERO
 			tween.tween_property(spid_ruedas, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sistemas de traccion y 4 ruedas montadas.")
+			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sistemas de tracción y extremidades mecánicas montadas.")
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.2, 0.8, 0.9)
 				luz_plataforma.light_energy = 1.3
-		"SENSOR":
+		"SENSOR", "SENSORES", "CHIP":
 			spid_sensor.visible = true
 			spid_sensor.scale = Vector3.ZERO
 			tween.tween_property(spid_sensor, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sensor optico y procesador A.D.A. conectado.")
+			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sensor óptico y procesador A.D.A. conectado.")
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.9, 0.8, 0.2)
 				luz_plataforma.light_energy = 1.6

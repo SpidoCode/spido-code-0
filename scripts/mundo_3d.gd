@@ -137,9 +137,9 @@ func _inicializar_mesones() -> void:
 		meson_patas.name = "MesonPatas"
 		meson_patas.celda_mesa = Vector2i(-2, 0)
 		meson_patas.tipo_estacion = "PATAS"
-		meson_patas.insumo_requerido = "TORNILLO"
-		meson_patas.cantidad_requerida = 1
-		meson_patas.producto_salida = "RUEDAS"
+		meson_patas.insumo_requerido = "CUALQUIERA"
+		meson_patas.cantidad_requerida = 2
+		meson_patas.producto_salida = "PATAS"
 		add_child(meson_patas)
 		mesones_por_celda[Vector2i(-2, 0)] = meson_patas
 		meson_patas.visible = false
@@ -572,6 +572,21 @@ func obtener_meson_en(celda: Vector2i) -> Node3D:
 		var m = mesones_por_celda[celda]
 		if is_instance_valid(m) and m.visible:
 			return m
+	return null
+
+func obtener_producto_de_meson(celda: Vector2i) -> Node3D:
+	var meson = obtener_meson_en(celda)
+	if is_instance_valid(meson) and meson.has_method("tiene_producto_listo") and meson.tiene_producto_listo():
+		var prod_tipo = meson.retirar_producto()
+		if not prod_tipo.is_empty():
+			var escena_p = load("res://escenas/pieza_taller.tscn")
+			if escena_p:
+				var nueva_pieza = escena_p.instantiate() as PiezaTaller
+				nueva_pieza.tipo_pieza = prod_tipo
+				nueva_pieza.name = prod_tipo
+				nueva_pieza.global_position = meson.global_position + Vector3(0, 0.8, 0)
+				contenedor_piezas.add_child(nueva_pieza)
+				return nueva_pieza
 	return null
 
 func obtener_pieza_en(celda: Vector2i) -> PiezaTaller:

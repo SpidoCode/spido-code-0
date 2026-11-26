@@ -7,9 +7,9 @@ signal producto_retirado(tipo_producto: String)
 
 @export var celda_mesa: Vector2i = Vector2i(-2, 0)
 @export var tipo_estacion: String = "PATAS" # PATAS, SENSORES, BRAZOS
-@export var producto_salida: String = "RUEDAS"
-@export var insumo_requerido: String = "TORNILLO"
-@export var cantidad_requerida: int = 1
+@export var producto_salida: String = "PATAS"
+@export var insumo_requerido: String = "CUALQUIERA"
+@export var cantidad_requerida: int = 2
 
 var insumos_actuales: int = 0
 var producto_disponible: bool = false
@@ -67,12 +67,15 @@ func _construir_visuales_si_faltan() -> void:
 		malla_producto_preview.material_override = mat_p
 		soporte_salida.add_child(malla_producto_preview)
 
-func recibir_insumo(tipo_pieza: String) -> bool:
+func puede_recibir_insumo(tipo_pieza: String) -> bool:
 	if producto_disponible:
-		# La bandeja de salida está llena, primero deben retirar el producto
 		return false
-
 	if tipo_pieza != insumo_requerido and insumo_requerido != "CUALQUIERA":
+		return false
+	return true
+
+func recibir_insumo(tipo_pieza: String) -> bool:
+	if not puede_recibir_insumo(tipo_pieza):
 		return false
 
 	insumos_actuales += 1
