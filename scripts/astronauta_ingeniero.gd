@@ -69,6 +69,9 @@ func resaltar_seleccion(activo: bool) -> void:
 		tween.tween_property(self, "position:y", position.y, 0.12).set_trans(Tween.TRANS_BOUNCE)
 
 func configurar_inicio(pos_grid: Vector2i, ori: int) -> void:
+	if is_instance_valid(pieza_en_mano):
+		pieza_en_mano.queue_free()
+		pieza_en_mano = null
 	grid_x_inicial = pos_grid.x
 	grid_z_inicial = pos_grid.y
 	grid_x = grid_x_inicial

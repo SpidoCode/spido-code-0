@@ -596,6 +596,8 @@ func _on_ejecutar_pressed() -> void:
 	en_ejecucion = true
 	detener_solicitado = false
 	_limpiar_error()
+	errores_durante_ejecucion = 0
+	ultimo_error = ""
 	btn_ejecutar.text = "Detener"
 	btn_ejecutar.modulate = Color(0.9, 0.4, 0.4)
 	_bloquear_interfaz(true)
@@ -650,7 +652,7 @@ func _on_ejecutar_pressed() -> void:
 
 	if errores_durante_ejecucion == 0:
 		_actualizar_estado("Ejecución completada sin errores.")
-		_verificar_hitos_sandbox()
+	_verificar_hitos_sandbox()
 
 func _ejecutar_un_ciclo(astronautas: Array) -> bool:
 	var secuencias = [
@@ -815,8 +817,8 @@ func _on_tab_codigo_changed(tab_idx: int) -> void:
 	var rol = nombres[tab_idx] if tab_idx < nombres.size() else "Operador"
 	_actualizar_estado("Editando algoritmo para Astronauta %d: %s." % [tab_idx + 1, rol])
 
-func _verificar_hitos_sandbox() -> void:
-	if en_ejecucion:
+func _verificar_hitos_sandbox(forzar: bool = false) -> void:
+	if en_ejecucion and not forzar:
 		return
 	if indice_hito_actual < 0 or indice_hito_actual >= hitos.size():
 		return
@@ -923,6 +925,7 @@ func _on_pieza_recogida(tipo: String) -> void:
 func _on_pieza_ensamblada(tipo: String) -> void:
 	ganar_creditos(30, "¡%s acoplada en Spido!" % tipo)
 	_actualizar_badge_spido()
+	_verificar_hitos_sandbox(true)
 
 func ganar_creditos(cantidad: int, motivo: String = "") -> void:
 	creditos += cantidad

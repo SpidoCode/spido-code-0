@@ -648,8 +648,6 @@ func es_celda_solida(celda: Vector2i) -> bool:
 		var m = mesones_por_celda[celda]
 		if is_instance_valid(m) and m.visible:
 			return true
-	if celdas_suministro.has(celda):
-		return true
 	return false
 
 func obtener_meson_en(celda: Vector2i) -> Node3D:
