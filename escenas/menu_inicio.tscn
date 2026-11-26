@@ -82,23 +82,23 @@ shadow_size = 2
 shadow_offset = Vector2(0, 7)
 
 [sub_resource type="StyleBoxFlat" id="PanelPerfil"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
 bg_color = Color(0.270588, 0.301961, 0.352941, 0.96)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.34902, 0.388235, 0.447059, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 shadow_color = Color(0.12549, 0.156863, 0.2, 0.95)
-shadow_size = 4
-shadow_offset = Vector2(7, 7)
+shadow_size = 2
+shadow_offset = Vector2(3, 4)
 
 [node name="MenuInicio" type="Control"]
 layout_mode = 3
@@ -188,27 +188,37 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -218.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = 87.0
+offset_left = -32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 32.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("PanelPerfil")
 
-[node name="ButtonLogin" type="Button" parent="PanelPerfil"]
+[node name="ContenedorPerfil" type="HBoxContainer" parent="PanelPerfil"]
 layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Identidad" type="Label" parent="PanelPerfil/ContenedorPerfil"]
+visible = false
+custom_minimum_size = Vector2(248, 0)
+layout_mode = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
-theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("ButtonNormal")
-theme_override_styles/pressed = SubResource("ButtonPressed")
-theme_override_styles/hover = SubResource("ButtonHover")
-text = "Iniciar Sesión"
+theme_override_font_sizes/font_size = 18
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="ButtonLogin" type="Button" parent="PanelPerfil/ContenedorPerfil"]
+custom_minimum_size = Vector2(144, 42)
+layout_mode = 2
+theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 18
+text = "Iniciar sesión"
 
 [node name="Dialogo" type="AcceptDialog" parent="."]
 
 [connection signal="pressed" from="PanelMenu/ContenedorPrincipal/BotonJugar" to="." method="_on_boton_jugar_pressed"]
 [connection signal="pressed" from="PanelMenu/ContenedorPrincipal/BotonConfiguracion" to="." method="_on_boton_configuracion_pressed"]
 [connection signal="pressed" from="PanelMenu/ContenedorPrincipal/BotonSalir" to="." method="_on_boton_salir_pressed"]
-[connection signal="pressed" from="PanelPerfil/ButtonLogin" to="." method="_on_boton_login_pressed"]
+[connection signal="pressed" from="PanelPerfil/ContenedorPerfil/ButtonLogin" to="." method="_on_boton_login_pressed"]
