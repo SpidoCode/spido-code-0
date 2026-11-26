@@ -94,6 +94,7 @@ var creditos: int = 0
 var bloques_adquiridos: Array[String] = []
 var astronautas_desbloqueados: Array[int] = [1]
 var estaciones_desbloqueadas: Array[String] = ["MESON_PATAS"]
+var mejoras_hardware_adquiridas: Array[String] = []
 
 const ARBOL_MEJORAS = [
 	# 1. BLOQUES DE ALGORITMIA
@@ -128,52 +129,42 @@ const ARBOL_MEJORAS = [
 		"req_texto": "Requiere Fase 3"
 	},
 
-	# 2. ESPACIO Y TERRENO MODULAR
+	# 2. ESPACIO Y TERRENO MODULAR (GDD §03: 3x3 -> 5x5 -> 7x7)
 	{
-		"fase": "TERRENO BASE 5x5",
-		"desc": "Plataforma inicial de 5x5 casillas para inducción y calibración.",
+		"fase": "TERRENO BASE 3x3",
+		"desc": "Plataforma inicial de 3x3 casillas para abastecimiento y calibración.",
 		"costo": 0,
 		"cat": "espacio",
-		"id": "ESPACIO_5X5",
-		"tamano": 5,
+		"id": "ESPACIO_3X3",
+		"tamano": 3,
 		"indice_requerido": 0,
 		"req_texto": "Inicial"
 	},
 	{
+		"fase": "EXPANSIÓN TERRENO 5x5",
+		"desc": "Expande el taller a 5x5 casillas para instalar la Máquina de Cinta y a Astro 2.",
+		"costo": 40,
+		"cat": "espacio",
+		"id": "ESPACIO_5X5",
+		"tamano": 5,
+		"indice_requerido": 2,
+		"req_texto": "Requiere Bucle Continuo (Fase 1)"
+	},
+	{
 		"fase": "EXPANSIÓN TERRENO 7x7",
-		"desc": "Agranda físicamente la plataforma a 7x7 casillas (49 casillas) con nuevos rieles exteriores.",
-		"costo": 50,
+		"desc": "Expande el taller a 7x7 casillas para la Mesa de Ensamble Final y la Compuerta.",
+		"costo": 70,
 		"cat": "espacio",
 		"id": "ESPACIO_7X7",
 		"tamano": 7,
 		"indice_requerido": 3,
-		"req_texto": "Requiere acoplar Patas en Spido (Fase 3)"
-	},
-	{
-		"fase": "EXPANSIÓN TERRENO 9x9",
-		"desc": "Expande el taller a 9x9 casillas (81 casillas) para albergar líneas de producción simultáneas.",
-		"costo": 100,
-		"cat": "espacio",
-		"id": "ESPACIO_9X9",
-		"tamano": 9,
-		"indice_requerido": 4,
-		"req_texto": "Requiere Sensores en Spido (Fase 4)"
-	},
-	{
-		"fase": "HANGAR COMPLETO 13x13",
-		"desc": "Abre el hangar simétrico completo de 13x13 casillas (169 casillas) a máxima capacidad.",
-		"costo": 200,
-		"cat": "espacio",
-		"id": "ESPACIO_13X13",
-		"tamano": 13,
-		"indice_requerido": 5,
-		"req_texto": "Requiere Fase 5"
+		"req_texto": "Requiere Procesar en Cinta (Fase 2)"
 	},
 
-	# 3. MESAS Y ESTACIONES DE MONTAJE
+	# 3. ESTACIONES Y MAQUINARIA DE PRODUCCIÓN (GDD §03 & §04)
 	{
-		"fase": "MESÓN DE PATAS",
-		"desc": "Máquina industrial de trabajo que forja sistemas de tracción y extremidades mecánicas.",
+		"fase": "MESA FABRICACIÓN INICIAL",
+		"desc": "Mesa de manufactura inicial que procesa tuercas y crea piezas base para la nave.",
 		"costo": 0,
 		"cat": "estacion",
 		"id": "MESON_PATAS",
@@ -181,54 +172,82 @@ const ARBOL_MEJORAS = [
 		"req_texto": "Inicial"
 	},
 	{
-		"fase": "MESA CENTRAL SPIDO",
-		"desc": "Instala la mesa central del taller donde se fija el chasis y se ensambla la estructura de Spido.",
+		"fase": "MÁQUINA DE CINTA AUTOMÁTICA",
+		"desc": "Cinta transportadora continua con entrada y salida que procesa componentes de alta resistencia.",
 		"costo": 30,
 		"cat": "estacion",
-		"id": "MESA_SPIDO",
+		"id": "MAQUINA_CINTA",
 		"indice_requerido": 2,
-		"req_texto": "Requiere automatizar Bucle (Fase 2)"
+		"req_texto": "Requiere Expansión 5x5 (Fase 2)"
 	},
 	{
-		"fase": "MESÓN DE SENSORES",
-		"desc": "Instala el mesón especializado para ensamblar los circuitos de visión y sensores ópticos.",
-		"costo": 60,
+		"fase": "BANDEJA INTERMEDIA",
+		"desc": "Almacén intermedio entre la salida de la cinta y la mesa de ensamble final.",
+		"costo": 20,
 		"cat": "estacion",
-		"id": "MESON_SENSORES",
+		"id": "BANDEJA_INTERMEDIA",
 		"indice_requerido": 3,
-		"req_texto": "Requiere acoplar Patas en Spido (Fase 3)"
+		"req_texto": "Requiere Máquina de Cinta (Fase 2)"
+	},
+	{
+		"fase": "MESA DE ENSAMBLE FINAL",
+		"desc": "Banco central de montaje donde se ensambla y activa la estructura completa de Spido.",
+		"costo": 45,
+		"cat": "estacion",
+		"id": "MESA_SPIDO",
+		"indice_requerido": 3,
+		"req_texto": "Requiere Expansión 7x7 (Fase 3)"
+	},
+	{
+		"fase": "COMPUERTA DE ENTREGA",
+		"desc": "Escotilla presurizada de despacho espacial. Cada robot despachado genera créditos continuos.",
+		"costo": 50,
+		"cat": "estacion",
+		"id": "COMPUERTA_ENTREGA",
+		"indice_requerido": 4,
+		"req_texto": "Requiere Mesa de Ensamble Final (Fase 3)"
 	},
 
 	# 4. ASTRONAUTAS Y LÓGICA CONCURRENTE
 	{
-		"fase": "ASTRO 2: TRACCIÓN",
-		"desc": "Despierta al 2º astronauta con su propia pestaña de código para trabajo en paralelo.",
+		"fase": "ASTRO 2: OPERADOR DE CINTA",
+		"desc": "Despierta al 2º astronauta para alimentar la cinta automática y trasladar componentes.",
 		"costo": 35,
 		"cat": "astronauta",
 		"id": "ASTRO_2",
 		"astro_id": 2,
 		"indice_requerido": 2,
-		"req_texto": "Requiere automatizar Bucle (Fase 2)"
+		"req_texto": "Requiere Expansión 5x5 (Fase 2)"
 	},
 	{
-		"fase": "ASTRO 3: SENSORES",
-		"desc": "Despierta al 3º astronauta para alimentar la estación óptica y acelerar el montaje.",
-		"costo": 65,
+		"fase": "ASTRO 3: ENSAMBLADOR FINAL",
+		"desc": "Despierta al 3º astronauta para montar componentes en Spido y despachar a compuerta.",
+		"costo": 60,
 		"cat": "astronauta",
 		"id": "ASTRO_3",
 		"astro_id": 3,
 		"indice_requerido": 4,
-		"req_texto": "Requiere Mesón de Sensores (Fase 4)"
+		"req_texto": "Requiere Expansión 7x7 (Fase 3)"
+	},
+
+	# 5. MEJORAS FÍSICAS Y HARDWARE (GDD §06)
+	{
+		"fase": "PROPULSORES RÁPIDOS",
+		"desc": "Acelera la velocidad de paso y giro de todos los astronautas un 40%.",
+		"costo": 40,
+		"cat": "hardware",
+		"id": "MEJORA_VELOCIDAD",
+		"indice_requerido": 2,
+		"req_texto": "Requiere Fase 2"
 	},
 	{
-		"fase": "ASTROS 4 & 5: ESCUADRÓN",
-		"desc": "Despierta a Astro 4 (Brazos) y Astro 5 (Energía) para automatización total.",
-		"costo": 120,
-		"cat": "astronauta",
-		"id": "ASTRO_4_5",
-		"astro_id": 4,
-		"indice_requerido": 5,
-		"req_texto": "Requiere Fase 5"
+		"fase": "OVERCLOCK DE CINTA",
+		"desc": "Reduce a la mitad el tiempo de procesamiento de la cinta transportadora.",
+		"costo": 50,
+		"cat": "hardware",
+		"id": "MEJORA_CINTA",
+		"indice_requerido": 3,
+		"req_texto": "Requiere Máquina de Cinta"
 	}
 ]
 
@@ -396,9 +415,15 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 		if mundo_3d.astronauta_5:
 			mundo_3d.astronauta_5.visible = (5 in astronautas_desbloqueados)
 
-		# Mesones solo si fueron comprados o desbloqueados en tienda
+		# Estaciones y maquinaria según desbloqueo de tienda
 		if mundo_3d.meson_patas:
 			mundo_3d.meson_patas.visible = ("MESON_PATAS" in estaciones_desbloqueadas)
+		if mundo_3d.maquina_cinta:
+			mundo_3d.maquina_cinta.visible = ("MAQUINA_CINTA" in estaciones_desbloqueadas)
+		if mundo_3d.bandeja_intermedia:
+			mundo_3d.bandeja_intermedia.visible = ("BANDEJA_INTERMEDIA" in estaciones_desbloqueadas)
+		if mundo_3d.compuerta_entrega:
+			mundo_3d.compuerta_entrega.visible = ("COMPUERTA_ENTREGA" in estaciones_desbloqueadas)
 		if mundo_3d.meson_sensores:
 			mundo_3d.meson_sensores.visible = ("MESON_SENSORES" in estaciones_desbloqueadas)
 
@@ -539,8 +564,26 @@ func _conectar_senales() -> void:
 			)
 
 		if mundo_3d.meson_patas:
-			mundo_3d.meson_patas.insumo_recibido.connect(func(_t, act, req): ganar_creditos(15, "Insumo depositado en Mesón de Patas (%d/%d)" % [act, req]))
-			mundo_3d.meson_patas.producto_fabricado.connect(func(prod): ganar_creditos(25, "¡%s fabricada en Mesón de Patas!" % prod))
+			mundo_3d.meson_patas.insumo_recibido.connect(func(_t, act, req): ganar_creditos(15, "Insumo depositado en Mesa Inicial (%d/%d)" % [act, req]))
+			mundo_3d.meson_patas.producto_fabricado.connect(func(prod): ganar_creditos(25, "¡Pieza Base fabricada (%s) en Mesa Inicial!" % prod))
+		if mundo_3d.maquina_cinta:
+			mundo_3d.maquina_cinta.pieza_procesada.connect(func(prod):
+				ganar_creditos(30, "¡%s forjado en la Cinta Automática!" % prod)
+				_verificar_hitos_sandbox(true)
+			)
+		if mundo_3d.bandeja_intermedia:
+			mundo_3d.bandeja_intermedia.componente_depositado.connect(func(stock):
+				ganar_creditos(20, "Componente asegurado en Bandeja Intermedia (%d)" % stock)
+				_verificar_hitos_sandbox(true)
+			)
+		if mundo_3d.compuerta_entrega:
+			mundo_3d.compuerta_entrega.robot_despachado.connect(func(recompensa):
+				ganar_creditos(recompensa, "¡ROBOT SPIDO DESPACHADO! Producción continua recibida")
+				if mundo_3d.mesa_spid:
+					mundo_3d.mesa_spid.reiniciar()
+				_actualizar_badge_spido()
+				_verificar_hitos_sandbox(true)
+			)
 		if mundo_3d.meson_sensores:
 			mundo_3d.meson_sensores.insumo_recibido.connect(func(_t, act, req): ganar_creditos(15, "Insumo depositado en Mesón de Sensores (%d/%d)" % [act, req]))
 			mundo_3d.meson_sensores.producto_fabricado.connect(func(prod): ganar_creditos(25, "¡%s fabricado en Mesón de Sensores!" % prod))
@@ -932,6 +975,13 @@ func _verificar_hitos_sandbox(forzar: bool = false) -> void:
 		"COMPRAR_EXPANSION_5X5":
 			if mundo_3d and mundo_3d.tamano_sector_actual >= 5:
 				completado = true
+		"PROCESAR_CINTA":
+			if mundo_3d:
+				if (mundo_3d.maquina_cinta and mundo_3d.maquina_cinta.productos_almacenados >= 1) or (mundo_3d.bandeja_intermedia and mundo_3d.bandeja_intermedia.stock_actual >= 1):
+					completado = true
+		"DESPACHO_COMPUERTA":
+			if mundo_3d and mundo_3d.compuerta_entrega and mundo_3d.compuerta_entrega.robots_despachados_total >= 1:
+				completado = true
 		"ENSAMBLAR":
 			if mundo_3d and mundo_3d.mesa_spid:
 				completado = (mundo_3d.mesa_spid.etapas_completadas.size() >= hito.get("piezas_requeridas", 1))
@@ -1057,6 +1107,8 @@ func _esta_mejora_desbloqueada(item: Dictionary) -> bool:
 		"astronauta":
 			var a_id = item.get("astro_id", 2)
 			return a_id in astronautas_desbloqueados
+		"hardware":
+			return mejoras_hardware_adquiridas.has(item.id)
 	return false
 
 func _esta_mejora_disponible_para_compra(item: Dictionary) -> bool:
@@ -1277,13 +1329,46 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 				"MESON_PATAS":
 					if mundo_3d and mundo_3d.meson_patas:
 						mundo_3d.meson_patas.visible = true
-					_actualizar_estado("¡Forjadora de Patas instalada en el hangar!")
+					_actualizar_estado("¡Mesa de Fabricación Inicial lista en el hangar!")
+				"MAQUINA_CINTA":
+					if mundo_3d and mundo_3d.maquina_cinta:
+						mundo_3d.maquina_cinta.visible = true
+						mundo_3d.maquina_cinta.scale = Vector3.ZERO
+						create_tween().tween_property(mundo_3d.maquina_cinta, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+					_actualizar_estado("¡Máquina de Cinta Automática instalada en la bahía!")
+				"BANDEJA_INTERMEDIA":
+					if mundo_3d and mundo_3d.bandeja_intermedia:
+						mundo_3d.bandeja_intermedia.visible = true
+						mundo_3d.bandeja_intermedia.scale = Vector3.ZERO
+						create_tween().tween_property(mundo_3d.bandeja_intermedia, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+					_actualizar_estado("¡Bandeja Intermedia de componentes instalada!")
+				"COMPUERTA_ENTREGA":
+					if mundo_3d and mundo_3d.compuerta_entrega:
+						mundo_3d.compuerta_entrega.visible = true
+						mundo_3d.compuerta_entrega.scale = Vector3.ZERO
+						create_tween().tween_property(mundo_3d.compuerta_entrega, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+					_actualizar_estado("¡Compuerta de Entrega presurizada en línea!")
 				"MESON_SENSORES":
 					if mundo_3d and mundo_3d.meson_sensores:
 						mundo_3d.meson_sensores.visible = true
 						mundo_3d.meson_sensores.scale = Vector3.ZERO
 						create_tween().tween_property(mundo_3d.meson_sensores, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 					_actualizar_estado("¡Mesón de Sensores Ópticos instalado en el hangar!")
+		"hardware":
+			if not item.id in mejoras_hardware_adquiridas:
+				mejoras_hardware_adquiridas.append(item.id)
+			match item.id:
+				"MEJORA_VELOCIDAD":
+					if mundo_3d:
+						for a in [mundo_3d.astronauta, mundo_3d.astronauta_2, mundo_3d.astronauta_3, mundo_3d.astronauta_4, mundo_3d.astronauta_5]:
+							if is_instance_valid(a):
+								a.tiempo_movimiento = 0.20
+								a.tiempo_giro = 0.14
+					_actualizar_estado("¡Propulsores rápidos calibrados! Los astronautas se desplazan 40% más rápido.")
+				"MEJORA_CINTA":
+					if mundo_3d and mundo_3d.maquina_cinta:
+						mundo_3d.maquina_cinta.tiempo_procesamiento = 0.5
+					_actualizar_estado("¡Overclock de cinta aplicado! Tiempo de procesamiento reducido a 0.5s.")
 		"astronauta":
 			var a_id = item.get("astro_id", 2)
 			if a_id == 4:

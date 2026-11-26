@@ -20,6 +20,9 @@ signal tuerca_depositada(total_recibidas: int)
 @onready var contenedor_piezas: Node3D = $ContenedorPiezas
 
 const MesonSubensamblajeClass = preload("res://scripts/meson_subensamblaje.gd")
+const MaquinaCintaClass = preload("res://scripts/maquina_cinta.gd")
+const BandejaIntermediaClass = preload("res://scripts/bandeja_intermedia.gd")
+const CompuertaEntregaClass = preload("res://scripts/compuerta_entrega.gd")
 
 var piezas_por_celda: Dictionary = {}
 var mesones_por_celda: Dictionary = {}
@@ -27,15 +30,18 @@ var config_nivel_actual: Dictionary = {}
 
 var meson_patas: Node3D = null
 var meson_sensores: Node3D = null
+var maquina_cinta: Node3D = null
+var bandeja_intermedia: Node3D = null
+var compuerta_entrega: Node3D = null
 
 var cursor_seleccion: Node3D = null
 var idx_astronauta_activo: int = 0
 var contenedor_tablero: Node3D = null
 var contenedor_decoracion: Node3D = null
 
-# Sistema de Sectores Progresivos (Plataforma Modular Dinámica)
-var tamano_sector_actual: int = 5
-var limites_sector: Dictionary = {"min_x": -2, "max_x": 2, "min_z": -2, "max_z": 2}
+# Sistema de Sectores Progresivos (Plataforma Modular Dinámica 3x3 -> 5x5 -> 7x7)
+var tamano_sector_actual: int = 3
+var limites_sector: Dictionary = {"min_x": -1, "max_x": 1, "min_z": -1, "max_z": 1}
 var nodo_tolva: Node3D = null
 var celda_tolva: Vector2i = Vector2i(1, 0)
 var tuercas_recolectadas_sesion: int = 0
@@ -47,7 +53,7 @@ func _ready() -> void:
 	_inicializar_mesones()
 	_construir_decoracion_nave()
 	_construir_tolva()
-	actualizar_sector(5)
+	actualizar_sector(3)
 
 func _process(_delta: float) -> void:
 	pass
@@ -58,6 +64,29 @@ func actualizar_sector(tamano: int) -> void:
 	limites_sector = {"min_x": -radio, "max_x": radio, "min_z": -radio, "max_z": radio}
 
 	_construir_tablero_ajedrez()
+	_ajustar_camara_a_sector(tamano)
+
+func _ajustar_camara_a_sector(tamano: int) -> void:
+	var cam: Camera3D = find_child("Camera3D", true, false)
+	if not cam: return
+	var objetivo_y = 8.5
+	var objetivo_z = 11.5
+	match tamano:
+		3:
+			objetivo_y = 7.5
+			objetivo_z = 10.0
+		5:
+			objetivo_y = 10.8
+			objetivo_z = 14.8
+		7:
+			objetivo_y = 14.2
+			objetivo_z = 19.2
+		_:
+			objetivo_y = 16.5
+			objetivo_z = 22.5
+	var tw = create_tween().set_parallel(true)
+	tw.tween_property(cam, "position:y", objetivo_y, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tw.tween_property(cam, "position:z", objetivo_z, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _construir_tolva() -> void:
 	if is_instance_valid(nodo_tolva):
@@ -130,22 +159,55 @@ func es_celda_valida_para_movimiento(celda: Vector2i) -> bool:
 		return false
 	return true
 
+func es_celda_ocupada_por_astronauta(celda: Vector2i, ignorar_astro: Node = null) -> bool:
+	var todos = [astronauta, astronauta_2, astronauta_3, astronauta_4, astronauta_5]
+	for a in todos:
+		if is_instance_valid(a) and a.visible and a != ignorar_astro:
+			if Vector2i(a.grid_x, a.grid_z) == celda:
+				return true
+	return false
+
 func _inicializar_mesones() -> void:
-	# Mesón de Patas & Tracción (Celda (-2, 0))
+	# 1. Mesa de Fabricación Inicial (Celda (-1, 0) para Tablero 3x3 base)
 	if not meson_patas:
 		meson_patas = MesonSubensamblajeClass.new()
 		meson_patas.name = "MesonPatas"
-		meson_patas.celda_mesa = Vector2i(-2, 0)
+		meson_patas.celda_mesa = Vector2i(-1, 0)
 		meson_patas.tipo_estacion = "PATAS"
 		meson_patas.insumo_requerido = "CUALQUIERA"
 		meson_patas.cantidad_requerida = 1
 		meson_patas.capacidad_almacenamiento_maxima = 10
 		meson_patas.producto_salida = "PATAS"
 		add_child(meson_patas)
-		mesones_por_celda[Vector2i(-2, 0)] = meson_patas
+		mesones_por_celda[Vector2i(-1, 0)] = meson_patas
 		meson_patas.visible = false
 
-	# Mesón de Sensores & Circuitos (Celda (2, 0))
+	# 2. Máquina de Cinta Automática (Fase 2: Tablero 5x5)
+	if not maquina_cinta:
+		maquina_cinta = MaquinaCintaClass.new()
+		maquina_cinta.name = "MaquinaCinta"
+		maquina_cinta.celda_entrada = Vector2i(-1, -1)
+		maquina_cinta.celda_salida = Vector2i(1, -1)
+		add_child(maquina_cinta)
+		maquina_cinta.visible = false
+
+	# 3. Bandeja Intermedia (Fase 2: Almacén de componentes procesados)
+	if not bandeja_intermedia:
+		bandeja_intermedia = BandejaIntermediaClass.new()
+		bandeja_intermedia.name = "BandejaIntermedia"
+		bandeja_intermedia.celda = Vector2i(1, 1)
+		add_child(bandeja_intermedia)
+		bandeja_intermedia.visible = false
+
+	# 4. Compuerta de Entrega (Fase 3: Tablero 7x7 - Despacho al Espacio)
+	if not compuerta_entrega:
+		compuerta_entrega = CompuertaEntregaClass.new()
+		compuerta_entrega.name = "CompuertaEntrega"
+		compuerta_entrega.celda = Vector2i(0, -3)
+		add_child(compuerta_entrega)
+		compuerta_entrega.visible = false
+
+	# 5. Mesón de Sensores (Estación de soporte avanzado)
 	if not meson_sensores:
 		meson_sensores = MesonSubensamblajeClass.new()
 		meson_sensores.name = "MesonSensores"
@@ -647,6 +709,12 @@ func es_celda_solida(celda: Vector2i) -> bool:
 		var m = mesones_por_celda[celda]
 		if is_instance_valid(m) and m.visible:
 			return true
+	if is_instance_valid(maquina_cinta) and maquina_cinta.visible and maquina_cinta.es_celda_solida(celda):
+		return true
+	if is_instance_valid(bandeja_intermedia) and bandeja_intermedia.visible and celda == bandeja_intermedia.celda:
+		return true
+	if is_instance_valid(compuerta_entrega) and compuerta_entrega.visible and celda == compuerta_entrega.celda:
+		return true
 	return false
 
 func obtener_meson_en(celda: Vector2i) -> Node3D:
@@ -669,6 +737,49 @@ func obtener_producto_de_meson(celda: Vector2i) -> Node3D:
 				nueva_pieza.global_position = meson.global_position + Vector3(0, 0.8, 0)
 				contenedor_piezas.add_child(nueva_pieza)
 				return nueva_pieza
+	return null
+
+func obtener_cinta_en_entrada(celda: Vector2i) -> Node3D:
+	if is_instance_valid(maquina_cinta) and maquina_cinta.visible and celda == maquina_cinta.celda_entrada:
+		return maquina_cinta
+	return null
+
+func obtener_producto_de_cinta(celda: Vector2i) -> Node3D:
+	if is_instance_valid(maquina_cinta) and maquina_cinta.visible and celda == maquina_cinta.celda_salida and maquina_cinta.tiene_producto_en_salida():
+		var prod_tipo = maquina_cinta.retirar_de_salida()
+		if not prod_tipo.is_empty():
+			var escena_p = load("res://escenas/pieza_taller.tscn")
+			if escena_p:
+				var nueva_pieza = escena_p.instantiate() as PiezaTaller
+				nueva_pieza.tipo_pieza = prod_tipo
+				nueva_pieza.name = prod_tipo
+				nueva_pieza.global_position = maquina_cinta.position + Vector3(1.0, 0.8, 0)
+				contenedor_piezas.add_child(nueva_pieza)
+				return nueva_pieza
+	return null
+
+func obtener_bandeja_intermedia_en(celda: Vector2i) -> Node3D:
+	if is_instance_valid(bandeja_intermedia) and bandeja_intermedia.visible and celda == bandeja_intermedia.celda:
+		return bandeja_intermedia
+	return null
+
+func obtener_producto_de_bandeja(celda: Vector2i) -> Node3D:
+	if is_instance_valid(bandeja_intermedia) and bandeja_intermedia.visible and celda == bandeja_intermedia.celda and bandeja_intermedia.tiene_componentes():
+		var prod_tipo = bandeja_intermedia.retirar_componente()
+		if not prod_tipo.is_empty():
+			var escena_p = load("res://escenas/pieza_taller.tscn")
+			if escena_p:
+				var nueva_pieza = escena_p.instantiate() as PiezaTaller
+				nueva_pieza.tipo_pieza = prod_tipo
+				nueva_pieza.name = prod_tipo
+				nueva_pieza.global_position = bandeja_intermedia.position + Vector3(0, 0.6, 0)
+				contenedor_piezas.add_child(nueva_pieza)
+				return nueva_pieza
+	return null
+
+func obtener_compuerta_entrega_en(celda: Vector2i) -> Node3D:
+	if is_instance_valid(compuerta_entrega) and compuerta_entrega.visible and celda == compuerta_entrega.celda:
+		return compuerta_entrega
 	return null
 
 func obtener_pieza_en(celda: Vector2i) -> PiezaTaller:

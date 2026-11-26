@@ -159,6 +159,16 @@ func avanzar(tiempo_custom: float = -1.0) -> bool:
 	var nueva_z = grid_z + delta.y
 
 	var mundo = get_parent()
+	if mundo and mundo.has_method("es_celda_ocupada_por_astronauta"):
+		if mundo.es_celda_ocupada_por_astronauta(Vector2i(nueva_x, nueva_z), self):
+			_set_color_visor(Color(1.0, 0.75, 0.2)) # Aviso visual de colisión entre agentes (GDD §07)
+			await get_tree().create_timer(0.35).timeout
+			_set_color_visor(color_identidad)
+			if mundo.es_celda_ocupada_por_astronauta(Vector2i(nueva_x, nueva_z), self):
+				accion_fallida.emit("Vía ocupada por otro astronauta. Esperando paso libre...")
+				await _animar_duda()
+				return false
+
 	if mundo and mundo.has_method("es_celda_valida_para_movimiento"):
 		if not mundo.es_celda_valida_para_movimiento(Vector2i(nueva_x, nueva_z)):
 			await _animar_choque()
@@ -262,6 +272,12 @@ func tomar_pieza_cercana() -> bool:
 	if not pieza and mundo and mundo.has_method("obtener_producto_de_meson"):
 		pieza = mundo.obtener_producto_de_meson(celda_objetivo)
 
+	if not pieza and mundo and mundo.has_method("obtener_producto_de_cinta"):
+		pieza = mundo.obtener_producto_de_cinta(celda_objetivo)
+
+	if not pieza and mundo and mundo.has_method("obtener_producto_de_bandeja"):
+		pieza = mundo.obtener_producto_de_bandeja(celda_objetivo)
+
 	if pieza:
 		pieza_en_mano = pieza
 		if mundo and mundo.has_method("notificar_pieza_tomada"):
@@ -332,6 +348,54 @@ func ensamblar_en_mesa() -> bool:
 			accion_fallida.emit("El contenedor solo recibe Tuercas.")
 			await _animar_duda()
 			return false
+	elif mundo and mundo.has_method("obtener_cinta_en_entrada") and mundo.obtener_cinta_en_entrada(celda_objetivo):
+		var cinta = mundo.obtener_cinta_en_entrada(celda_objetivo)
+		var tipo_pieza = pieza_en_mano.get("tipo_pieza") if "tipo_pieza" in pieza_en_mano else "PIEZA_BASE"
+		if not cinta.puede_recibir_en_entrada(tipo_pieza):
+			accion_fallida.emit("La cinta transportadora está ocupada o a máxima capacidad.")
+			await _animar_duda()
+			return false
+
+		pieza_en_mano.queue_free()
+		pieza_en_mano = null
+		_set_color_visor(Color(0.95, 0.65, 0.15))
+		var tween = create_tween()
+		tween.tween_property(self, "position:y", position.y + 0.1, 0.1)
+		tween.tween_property(self, "position:y", position.y, 0.1)
+		await tween.finished
+		cinta.recibir_en_entrada(tipo_pieza)
+		pieza_ensamblada.emit(tipo_pieza)
+		animacion_terminada.emit()
+		return true
+	elif mundo and mundo.has_method("obtener_bandeja_intermedia_en") and mundo.obtener_bandeja_intermedia_en(celda_objetivo):
+		var bandeja = mundo.obtener_bandeja_intermedia_en(celda_objetivo)
+		var tipo_pieza = pieza_en_mano.get("tipo_pieza") if "tipo_pieza" in pieza_en_mano else "COMPONENTE_PROCESADO"
+		if not bandeja.puede_recibir():
+			accion_fallida.emit("La bandeja intermedia está llena.")
+			await _animar_duda()
+			return false
+
+		pieza_en_mano.queue_free()
+		pieza_en_mano = null
+		_set_color_visor(Color(0.2, 0.9, 0.8))
+		var tween = create_tween()
+		tween.tween_property(self, "position:y", position.y + 0.1, 0.1)
+		tween.tween_property(self, "position:y", position.y, 0.1)
+		await tween.finished
+		bandeja.depositar_componente(tipo_pieza)
+		pieza_ensamblada.emit(tipo_pieza)
+		animacion_terminada.emit()
+		return true
+	elif mundo and mundo.has_method("obtener_compuerta_entrega_en") and mundo.obtener_compuerta_entrega_en(celda_objetivo):
+		var compuerta = mundo.obtener_compuerta_entrega_en(celda_objetivo)
+		compuerta.despachar_robot()
+		_set_color_visor(Color(0.2, 1.0, 0.5))
+		var tween = create_tween()
+		tween.tween_property(self, "position:y", position.y + 0.15, 0.1)
+		tween.tween_property(self, "position:y", position.y, 0.15)
+		await tween.finished
+		animacion_terminada.emit()
+		return true
 	else:
 		var meson = null
 		if mundo and mundo.has_method("obtener_meson_en"):

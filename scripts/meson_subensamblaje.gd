@@ -25,8 +25,12 @@ var tolva_entrada: MeshInstance3D
 
 func _ready() -> void:
 	_construir_visuales_si_faltan()
-	position = Vector3(celda_mesa.x * 2.0, 0, celda_mesa.y * 2.0)
+	posicionar_en_celda(celda_mesa)
 	_actualizar_estado_visual()
+
+func posicionar_en_celda(celda: Vector2i) -> void:
+	celda_mesa = celda
+	position = Vector3(celda_mesa.x * 2.0, 0, celda_mesa.y * 2.0)
 
 func _construir_visuales_si_faltan() -> void:
 	if not base_malla:
