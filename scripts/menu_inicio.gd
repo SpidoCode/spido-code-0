@@ -7,6 +7,8 @@ const ESCENA_AUTH := "res://escenas/auth.tscn"
 
 func _ready() -> void:
 	$PanelMenu/ContenedorPrincipal/BotonJugar.grab_focus()
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
