@@ -677,18 +677,6 @@ func _actualizar_cajas_suministros(lista_piezas: Array) -> void:
 		luz_caja.position = Vector3(0, 0.65, 0)
 		caja_nodo.add_child(luz_caja)
 
-		# 5. Etiqueta 3D flotante identificadora
-		var lbl = Label3D.new()
-		lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		lbl.no_depth_test = true
-		lbl.text = "BAHÍA DE SUMINISTROS"
-		lbl.font_size = 20
-		lbl.outline_size = 5
-		lbl.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
-		lbl.modulate = Color(1.0, 0.85, 0.3)
-		lbl.position = Vector3(0, 1.25, 0)
-		caja_nodo.add_child(lbl)
-
 func registrar_piezas() -> void:
 	piezas_por_celda.clear()
 	for child in contenedor_piezas.get_children():

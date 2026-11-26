@@ -69,6 +69,7 @@ func _construir_visuales() -> void:
 	panel_etiqueta.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 	panel_etiqueta.modulate = Color(0.3, 0.9, 1.0, 1.0)
 	panel_etiqueta.position = Vector3(0, 1.25, 0)
+	panel_etiqueta.visible = false
 	add_child(panel_etiqueta)
 
 	contenedor_pilas = Node3D.new()

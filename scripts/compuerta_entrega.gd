@@ -75,6 +75,7 @@ func _construir_visuales() -> void:
 	etiqueta_compuerta.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 	etiqueta_compuerta.modulate = Color(0.3, 1.0, 0.7, 1.0)
 	etiqueta_compuerta.position = Vector3(0, 2.3, 0)
+	etiqueta_compuerta.visible = false
 	add_child(etiqueta_compuerta)
 
 func despachar_robot() -> void:

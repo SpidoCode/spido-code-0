@@ -128,6 +128,7 @@ func _construir_visuales() -> void:
 	etiqueta_in.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 	etiqueta_in.modulate = Color(0.95, 0.75, 0.2, 1.0)
 	etiqueta_in.position = Vector3(offset_in_x, 1.6, 0)
+	etiqueta_in.visible = false
 	add_child(etiqueta_in)
 
 	# 5. Extremo de Salida (Marker Local: derecha +X)
@@ -160,6 +161,7 @@ func _construir_visuales() -> void:
 	etiqueta_out.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 	etiqueta_out.modulate = Color(0.2, 0.95, 0.6, 1.0)
 	etiqueta_out.position = Vector3(offset_out_x, 1.6, 0)
+	etiqueta_out.visible = false
 	add_child(etiqueta_out)
 
 	# 6. Pieza de previsualización en la salida

@@ -492,8 +492,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -660.0
-offset_top = -780.0
+offset_left = -446.0
+offset_top = -696.0
 offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 0
@@ -522,8 +522,8 @@ mouse_default_cursor_shape = 12
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
-theme_override_font_sizes/font_size = 14
-text = "CONSOLA ASTRONAUTA"
+theme_override_font_sizes/font_size = 13
+text = "CONSOLA"
 
 [node name="BtnPista" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1174410878]
 unique_name_in_owner = true
@@ -626,31 +626,35 @@ theme_override_constants/separation = 8
 
 [node name="BtnReiniciar" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=1998988950]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 36)
+custom_minimum_size = Vector2(85, 34)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
-text = "VUELTA A BASE"
+theme_override_font_sizes/font_size = 12
+text = "REINICIAR"
 
 [node name="BtnLimpiar" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=530467116]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(65, 36)
+custom_minimum_size = Vector2(55, 34)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 12
 text = "LIMPIAR"
 
 [node name="BtnDuplicar" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=242185581]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(85, 36)
+custom_minimum_size = Vector2(70, 34)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 12
 text = "DUPLICAR"
 
 [node name="BtnVelocidad" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=1193255383]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 36)
+custom_minimum_size = Vector2(36, 34)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 12
 text = "1x"
 
 [node name="Spacer" type="Control" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=143657832]
@@ -659,15 +663,17 @@ size_flags_horizontal = 3
 
 [node name="BtnPaso" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=1050761407]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(105, 36)
+custom_minimum_size = Vector2(65, 34)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
-text = "PASO A PASO"
+theme_override_font_sizes/font_size = 12
+text = "PASO"
 
 [node name="BtnEjecutar" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=522079552]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(105, 36)
+custom_minimum_size = Vector2(85, 34)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "EJECUTAR"
 
 [node name="DrawerPaleta" type="PanelContainer" parent="HUD" unique_id=14304313]

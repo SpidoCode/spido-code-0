@@ -277,9 +277,9 @@ var consola_maximizada: bool = false
 var redimensionando_consola: bool = false
 var mouse_inicio_redimension_consola: Vector2 = Vector2.ZERO
 var tamano_inicio_consola: Vector2 = Vector2.ZERO
-const TAMANO_CONSOLA_NORMAL = Vector2(660.0, 780.0)
-const TAMANO_CONSOLA_MAXIMA = Vector2(880.0, 960.0)
-const TAMANO_CONSOLA_MINIMO = Vector2(460.0, 400.0)
+const TAMANO_CONSOLA_NORMAL = Vector2(430.0, 680.0)
+const TAMANO_CONSOLA_MAXIMA = Vector2(620.0, 840.0)
+const TAMANO_CONSOLA_MINIMO = Vector2(360.0, 380.0)
 
 const COMANDOS_DISPONIBLES = {
 	"AVANZAR": {"tit": "Avanzar", "prefijo": "", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
@@ -318,6 +318,11 @@ func _ready() -> void:
 		modal_tienda.visible = false
 	_plegar_paleta(false)
 	_plegar_consola(false)
+	if is_instance_valid(consola_astronauta):
+		consola_astronauta.offset_left = -TAMANO_CONSOLA_NORMAL.x - 16.0
+		consola_astronauta.offset_top = -TAMANO_CONSOLA_NORMAL.y - 16.0
+		consola_astronauta.offset_right = -16.0
+		consola_astronauta.offset_bottom = -16.0
 
 	if is_instance_valid(btn_duplicar):
 		btn_duplicar.visible = false
