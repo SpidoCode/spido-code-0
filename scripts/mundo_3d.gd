@@ -44,12 +44,11 @@ func _ready() -> void:
 	_inicializar_roles_astronautas()
 	_inicializar_mesones()
 	_construir_decoracion_nave()
-	_crear_cursor_seleccion()
 	_construir_tolva()
 	actualizar_sector(5)
 
-func _process(delta: float) -> void:
-	_actualizar_cursor_seguimiento(delta)
+func _process(_delta: float) -> void:
+	pass
 
 func actualizar_sector(tamano: int) -> void:
 	tamano_sector_actual = tamano
@@ -432,50 +431,10 @@ func _crear_cluster_cristal(pos_base: Vector3, col_energia: Color) -> void:
 	contenedor_decoracion.add_child(luz)
 
 func _crear_cursor_seleccion() -> void:
-	if is_instance_valid(cursor_seleccion):
-		cursor_seleccion.queue_free()
+	pass
 
-	cursor_seleccion = Node3D.new()
-	cursor_seleccion.name = "CursorSeleccion"
-	add_child(cursor_seleccion)
-
-	var suelo_cursor = MeshInstance3D.new()
-	var m_cursor = BoxMesh.new()
-	m_cursor.size = Vector3(1.92, 0.02, 1.92)
-	suelo_cursor.mesh = m_cursor
-
-	var mat_cursor = StandardMaterial3D.new()
-	mat_cursor.albedo_color = Color(0.2, 0.85, 0.5, 0.45)
-	mat_cursor.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat_cursor.emission_enabled = true
-	mat_cursor.emission = Color(0.3, 0.95, 0.55)
-	mat_cursor.emission_energy_multiplier = 1.3
-	suelo_cursor.material_override = mat_cursor
-	suelo_cursor.position = Vector3(0, 0.04, 0)
-	cursor_seleccion.add_child(suelo_cursor)
-
-	var flecha = MeshInstance3D.new()
-	var m_fl = PrismMesh.new()
-	m_fl.size = Vector3(0.5, 0.5, 0.04)
-	flecha.mesh = m_fl
-	flecha.material_override = mat_cursor
-	flecha.rotation.x = -PI * 0.5
-	flecha.position = Vector3(0, 0.05, -0.45)
-	cursor_seleccion.add_child(flecha)
-
-func _actualizar_cursor_seguimiento(delta: float) -> void:
-	if not is_instance_valid(cursor_seleccion):
-		return
-
-	var astro = _obtener_astronauta_por_indice(idx_astronauta_activo)
-	if is_instance_valid(astro) and astro.visible:
-		cursor_seleccion.visible = true
-		var target_pos = astro.position
-		target_pos.y = 0.0
-		cursor_seleccion.position = cursor_seleccion.position.lerp(target_pos, clamp(16.0 * delta, 0.0, 1.0))
-		cursor_seleccion.rotation.y = lerp_angle(cursor_seleccion.rotation.y, astro.rotation.y, clamp(16.0 * delta, 0.0, 1.0))
-	else:
-		cursor_seleccion.visible = false
+func _actualizar_cursor_seguimiento(_delta: float) -> void:
+	pass
 
 func _obtener_astronauta_por_indice(idx: int) -> AstronautaIngeniero:
 	var lista = [astronauta, astronauta_2, astronauta_3, astronauta_4, astronauta_5, astronauta_6, astronauta_7, astronauta_8, astronauta_9, astronauta_10]
