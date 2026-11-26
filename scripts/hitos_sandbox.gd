@@ -97,8 +97,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 5,
 			"clave": "ENSAMBLADOR_FINAL_7X7",
 			"titulo": "5. Fase 3: Ensamblador Final en Spido (7x7)",
-			"descripcion": "Expande a 7x7 casillas, instala la Mesa de Ensamble Final Spido (2, 2) y despierta a Astro 3 en (2, 1). Programa a Astro 3 para trasladar componentes y montar a Spido.",
-			"meta_texto": "Instala la Mesa de Spido (2, 2), activa a Astro 3 (2, 1) y monta los componentes",
+			"descripcion": "Expande a 7x7 casillas, instala la Mesa de Ensamble Final Spido (2, 2) y despierta a Astro 3 en (2, 1). Programa a Astro 3 para trasladar 6 piezas y completar el montaje de Spido.",
+			"meta_texto": "Monta las 6 piezas en la Mesa de Spido (2, 2)",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 3,
 			"tamano_sector": 7,
@@ -112,10 +112,10 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"pos_mesa": Vector2i(2, 2),
 			"mostrar_meson_patas": true,
 			"tipo_meta": "ENSAMBLAR",
-			"piezas_requeridas": 1,
+			"piezas_requeridas": 6,
 			"recompensa_creditos": 80,
-			"mensaje_ada": "¡Spido ensamblado y operativo! Ahora instala la Compuerta de Entrega para activar el despacho continuo de producción.",
-			"pista": "Astro 3 toma componentes procesados y los acopla en la Mesa Final de Spido al Sur en (2, 2).",
+			"mensaje_ada": "¡Spido completamente ensamblado con sus 6 componentes! Ahora instala la Compuerta de Entrega para activar el despacho continuo de producción.",
+			"pista": "Astro 3 toma componentes procesados y los acopla en la Mesa Final de Spido al Sur en (2, 2) hasta completar las 6 piezas.",
 			"piezas": [
 				{"tipo": "TUERCA", "celda": Vector2i(-1, 1)}
 			]

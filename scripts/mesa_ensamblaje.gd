@@ -8,13 +8,17 @@ signal diagnostico_realizado
 @export var celda_mesa: Vector2i = Vector2i(0, -2)
 
 var etapas_completadas: Array[String] = []
-var orden_esperado: Array[String] = ["CHASIS", "RUEDAS", "SENSOR", "BRAZOS", "BATERIA"]
+var orden_esperado: Array[String] = ["CHASIS", "PATAS_DELANTERAS", "PATAS_TRASERAS", "SENSOR", "BRAZOS", "BATERIA"]
 var diagnostico_ejecutado: bool = false
 
 @onready var spid_chasis: MeshInstance3D = $SoporteSpid/SpidChasis
 @onready var spid_ruedas: Node3D = $SoporteSpid/SpidRuedas
 @onready var spid_sensor: MeshInstance3D = $SoporteSpid/SpidSensor
 @onready var luz_plataforma: OmniLight3D = $LuzPlataforma
+@onready var rueda_fl: MeshInstance3D = $SoporteSpid/SpidRuedas/RuedaFL
+@onready var rueda_fr: MeshInstance3D = $SoporteSpid/SpidRuedas/RuedaFR
+@onready var rueda_bl: MeshInstance3D = $SoporteSpid/SpidRuedas/RuedaBL
+@onready var rueda_br: MeshInstance3D = $SoporteSpid/SpidRuedas/RuedaBR
 var spid_brazos: Node3D = null
 var spid_bateria: MeshInstance3D = null
 
@@ -78,73 +82,104 @@ func reiniciar() -> void:
 	etapas_completadas.clear()
 	diagnostico_ejecutado = false
 	if spid_chasis: spid_chasis.visible = false
-	if spid_ruedas: spid_ruedas.visible = false
+	if spid_ruedas: spid_ruedas.visible = true
+	if rueda_fl: rueda_fl.visible = false
+	if rueda_fr: rueda_fr.visible = false
+	if rueda_bl: rueda_bl.visible = false
+	if rueda_br: rueda_br.visible = false
 	if spid_sensor: spid_sensor.visible = false
 	if spid_brazos: spid_brazos.visible = false
 	if spid_bateria: spid_bateria.visible = false
 	if luz_plataforma:
 		luz_plataforma.light_color = Color(0.2, 0.4, 0.3)
 		luz_plataforma.light_energy = 0.5
-	spid_actualizado.emit(0, orden_esperado.size(), "Mesa lista. Esperando montaje del Chasis.")
+	spid_actualizado.emit(0, orden_esperado.size(), "Mesa lista. Esperando montaje de Spido (0/6).")
 
-func ensamblar_componente(tipo: String) -> bool:
-	if tipo in etapas_completadas:
-		# Ya estaba ensamblado este componente
+func ensamblar_componente(_tipo: String = "") -> bool:
+	var etapa = etapas_completadas.size()
+	if etapa >= 6:
 		return true
 
-	etapas_completadas.append(tipo)
+	etapas_completadas.append("PIEZA_%d" % (etapa + 1))
+	var nueva_etapa = etapas_completadas.size()
 
 	var tween = create_tween()
-	match tipo:
-		"CHASIS", "BASE":
-			spid_chasis.visible = true
-			spid_chasis.scale = Vector3.ZERO
-			tween.tween_property(spid_chasis, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Chasis de Spido fijado en el banco de montaje.")
+	match nueva_etapa:
+		1:
+			# 1/6: Chasis base
+			if spid_chasis:
+				spid_chasis.visible = true
+				spid_chasis.scale = Vector3.ZERO
+				tween.tween_property(spid_chasis, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.3, 0.7, 0.4)
 				luz_plataforma.light_energy = 1.0
-		"RUEDAS", "PATAS":
-			spid_ruedas.visible = true
-			spid_ruedas.scale = Vector3.ZERO
-			tween.tween_property(spid_ruedas, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sistemas de tracción y extremidades mecánicas montadas.")
+			spid_actualizado.emit(1, 6, "1/6: Chasis de Spido fijado en el banco de montaje.")
+		2:
+			# 2/6: Extremidades delanteras
+			if rueda_fl:
+				rueda_fl.visible = true
+				rueda_fl.scale = Vector3.ZERO
+				tween.tween_property(rueda_fl, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			if rueda_fr:
+				rueda_fr.visible = true
+				rueda_fr.scale = Vector3.ZERO
+				tween.parallel().tween_property(rueda_fr, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.2, 0.8, 0.9)
 				luz_plataforma.light_energy = 1.3
-		"SENSOR", "SENSORES", "CHIP":
-			spid_sensor.visible = true
-			spid_sensor.scale = Vector3.ZERO
-			tween.tween_property(spid_sensor, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Sensor óptico y procesador A.D.A. conectado.")
+			spid_actualizado.emit(2, 6, "2/6: Extremidades delanteras montadas.")
+		3:
+			# 3/6: Extremidades traseras
+			if rueda_bl:
+				rueda_bl.visible = true
+				rueda_bl.scale = Vector3.ZERO
+				tween.tween_property(rueda_bl, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			if rueda_br:
+				rueda_br.visible = true
+				rueda_br.scale = Vector3.ZERO
+				tween.parallel().tween_property(rueda_br, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			if luz_plataforma:
+				luz_plataforma.light_color = Color(0.2, 0.85, 0.85)
+				luz_plataforma.light_energy = 1.5
+			spid_actualizado.emit(3, 6, "3/6: Extremidades traseras montadas.")
+		4:
+			# 4/6: Sensor ocular A.D.A.
+			if spid_sensor:
+				spid_sensor.visible = true
+				spid_sensor.scale = Vector3.ZERO
+				tween.tween_property(spid_sensor, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.9, 0.8, 0.2)
-				luz_plataforma.light_energy = 1.6
-		"BRAZOS":
+				luz_plataforma.light_energy = 1.8
+			spid_actualizado.emit(4, 6, "4/6: Sensor óptico y procesador A.D.A. conectado.")
+		5:
+			# 5/6: Brazos manipuladores
 			if spid_brazos:
 				spid_brazos.visible = true
 				spid_brazos.scale = Vector3.ZERO
-				tween.tween_property(spid_brazos, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Brazos manipuladores acoplados con exito.")
+				tween.tween_property(spid_brazos, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			if luz_plataforma:
 				luz_plataforma.light_color = Color(0.95, 0.5, 0.2)
-				luz_plataforma.light_energy = 1.9
-		"BATERIA", "NUCLEO":
+				luz_plataforma.light_energy = 2.1
+			spid_actualizado.emit(5, 6, "5/6: Brazos manipuladores acoplados con éxito.")
+		6:
+			# 6/6: Núcleo de energía / Batería
 			if spid_bateria:
 				spid_bateria.visible = true
 				spid_bateria.scale = Vector3.ZERO
-				tween.tween_property(spid_bateria, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			spid_actualizado.emit(etapas_completadas.size(), orden_esperado.size(), "Nucleo de energia instalado y cargado.")
+				tween.tween_property(spid_bateria, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			if luz_plataforma:
-				luz_plataforma.light_color = Color(0.3, 0.9, 1.0)
-				luz_plataforma.light_energy = 2.4
+				luz_plataforma.light_color = Color(0.3, 1.0, 0.6)
+				luz_plataforma.light_energy = 2.5
+			spid_actualizado.emit(6, 6, "6/6: ¡Núcleo cargado y Spido completamente ensamblado!")
 
 	await tween.finished
 
-	if etapas_completadas.size() >= orden_esperado.size():
+	if nueva_etapa >= 6:
 		await _activar_spid()
 		spid_completado.emit()
-	elif etapas_completadas.size() >= 3:
+	elif nueva_etapa >= 3:
 		_pulso_parcial()
 
 	return true

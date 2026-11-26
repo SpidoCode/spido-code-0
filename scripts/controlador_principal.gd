@@ -635,7 +635,7 @@ func _actualizar_badge_spido() -> void:
 	var montadas = 0
 	if mundo_3d and mundo_3d.mesa_spid:
 		montadas = mundo_3d.mesa_spid.etapas_completadas.size()
-	label_spido_piezas.text = "%d/5" % montadas
+	label_spido_piezas.text = "%d/6" % montadas
 
 func _plegar_paleta(plegar: bool) -> void:
 	if is_instance_valid(drawer_paleta):
