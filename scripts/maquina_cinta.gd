@@ -5,8 +5,8 @@ signal pieza_ingresada(tipo: String)
 signal pieza_procesada(tipo: String)
 signal pieza_retirada(tipo: String)
 
-@export var celda_entrada: Vector2i = Vector2i(-1, -2)
-@export var celda_salida: Vector2i = Vector2i(1, -2)
+@export var celda_entrada: Vector2i = Vector2i(0, -2)
+@export var celda_salida: Vector2i = Vector2i(2, -2)
 @export var tiempo_procesamiento: float = 1.0
 @export var capacidad_almacenamiento_maxima: int = 8
 

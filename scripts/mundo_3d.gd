@@ -168,8 +168,8 @@ func _inicializar_mesones() -> void:
 	if not maquina_cinta:
 		maquina_cinta = MaquinaCintaClass.new()
 		maquina_cinta.name = "MaquinaCinta"
-		maquina_cinta.celda_entrada = Vector2i(-1, -2)
-		maquina_cinta.celda_salida = Vector2i(1, -2)
+		maquina_cinta.celda_entrada = Vector2i(0, -2)
+		maquina_cinta.celda_salida = Vector2i(2, -2)
 		add_child(maquina_cinta)
 		maquina_cinta.visible = false
 
@@ -354,7 +354,7 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 			if preservar_estado and ya_estaba_activo:
 				astronauta_2.fijar_checkpoint_actual()
 			else:
-				astronauta_2.configurar_inicio(config.get("pos_astronauta_2", Vector2i(1, 0)), config.get("ori_astronauta_2", 0))
+				astronauta_2.configurar_inicio(config.get("pos_astronauta_2", Vector2i(0, -1)), config.get("ori_astronauta_2", 0))
 
 	if astronauta_3:
 		var mostrar_astronauta_3 = config.get("cantidad_astronautas", 1) >= 3
