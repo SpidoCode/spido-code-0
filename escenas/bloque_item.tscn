@@ -22,10 +22,11 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="Prefijo" type="Label" parent="Margin/HBox"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
 theme_override_font_sizes/font_size = 12
-text = "[AVZ]"
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 

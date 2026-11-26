@@ -41,7 +41,7 @@ const COLORES_CATEGORIA = {
 
 @export var id_comando: String = "AVANZAR"
 @export var titulo: String = "Avanzar"
-@export var prefijo: String = "[AVZ]"
+@export var prefijo: String = ""
 @export var categoria: String = "movimiento"
 @export var tipo_forma: TipoForma = TipoForma.FORMA_ESTANDAR
 @export var color_borde: Color = Color(0.545098, 0.796078, 0.568627, 1.0)
@@ -147,6 +147,7 @@ func _configurar_colores_categoria() -> void:
 func actualizar_vista() -> void:
 	if is_instance_valid(label_prefijo):
 		label_prefijo.text = prefijo
+		label_prefijo.visible = not prefijo.is_empty()
 		label_prefijo.modulate = color_borde
 	if is_instance_valid(label_titulo):
 		label_titulo.text = titulo
@@ -297,16 +298,17 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	preview.custom_minimum_size = custom_minimum_size
 
 	var hbox = HBoxContainer.new()
-	var l_pref = Label.new()
-	l_pref.text = prefijo
-	l_pref.modulate = color_borde
+	if not prefijo.is_empty():
+		var l_pref = Label.new()
+		l_pref.text = prefijo
+		l_pref.modulate = color_borde
+		hbox.add_child(l_pref)
 	var l_tit = Label.new()
 	if id_comando == "AVANZAR":
 		l_tit.text = "%s (%d)" % [titulo, parametro_valor]
 	else:
 		l_tit.text = titulo
 	l_tit.modulate = Color(0.956863, 0.964706, 0.94902, 1.0)
-	hbox.add_child(l_pref)
 	hbox.add_child(l_tit)
 	preview.add_child(hbox)
 

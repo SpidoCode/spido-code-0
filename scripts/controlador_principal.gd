@@ -237,17 +237,17 @@ const TAMANO_CONSOLA_MAXIMA = Vector2(880.0, 960.0)
 const TAMANO_CONSOLA_MINIMO = Vector2(460.0, 400.0)
 
 const COMANDOS_DISPONIBLES = {
-	"AVANZAR": {"tit": "Avanzar", "prefijo": "[AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"AVANZAR_2": {"tit": "Avanzar 2", "prefijo": "[2x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"AVANZAR_3": {"tit": "Avanzar 3", "prefijo": "[3x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"RETROCEDER": {"tit": "Retroceder", "prefijo": "[RET]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"GIRAR_DER": {"tit": "Girar Der", "prefijo": "[DER]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRAR_IZQ": {"tit": "Girar Izq", "prefijo": "[IZQ]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRO_180": {"tit": "Giro 180°", "prefijo": "[180°]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"BUCLE": {"tit": "Bucle", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
-	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "[TOM]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
-	"ENSAMBLAR": {"tit": "Depositar", "prefijo": "[DEP]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
-	"DIAGNOSTICO": {"tit": "Diagnóstico", "prefijo": "[DIAG]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}
+	"AVANZAR": {"tit": "Avanzar", "prefijo": "", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"AVANZAR_2": {"tit": "Avanzar 2", "prefijo": "", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"AVANZAR_3": {"tit": "Avanzar 3", "prefijo": "", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"RETROCEDER": {"tit": "Retroceder", "prefijo": "", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"GIRAR_DER": {"tit": "Girar Der", "prefijo": "", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRAR_IZQ": {"tit": "Girar Izq", "prefijo": "", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRO_180": {"tit": "Giro 180°", "prefijo": "", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"BUCLE": {"tit": "Bucle", "prefijo": "", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
+	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
+	"ENSAMBLAR": {"tit": "Depositar", "prefijo": "", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
+	"DIAGNOSTICO": {"tit": "Diagnóstico", "prefijo": "", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}
 }
 
 func _ready() -> void:

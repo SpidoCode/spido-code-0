@@ -35,8 +35,8 @@ func asegurar_bloque_inicio() -> void:
 
 	bloque_inicio.configurar(
 		"INICIO",
-		"Al Presionar Ejecutar",
-		"[INICIO]",
+		"INICIO",
+		"",
 		Color(0.631373, 0.85098, 0.65098, 1.0),
 		false,
 		1,
