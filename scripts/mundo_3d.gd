@@ -337,8 +337,8 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 	actualizar_sector(tam_sec)
 
 	# 1. Configurar astronauta principal (Ingeniero)
-	var pos_astro = config.get("pos_astronauta", Vector2i(0, 2))
-	var ori_astro = config.get("ori_astronauta", 0)
+	var pos_astro = config.get("pos_astronauta", Vector2i(0, 0))
+	var ori_astro = config.get("ori_astronauta", 3)
 	if astronauta:
 		if preservar_estado:
 			astronauta.fijar_checkpoint_actual()
