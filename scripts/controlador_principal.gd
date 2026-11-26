@@ -952,6 +952,7 @@ func _renderizar_centro_mejoras() -> void:
 	for item in ARBOL_MEJORAS:
 		var panel = PanelContainer.new()
 		panel.custom_minimum_size = Vector2(280, 175)
+		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 		var ya_desbloqueado = false
 		match item.cat:

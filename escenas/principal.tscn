@@ -770,9 +770,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -560.0
+offset_left = -468.0
 offset_top = -320.0
-offset_right = 560.0
+offset_right = 468.0
 offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -802,6 +802,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 theme_override_font_sizes/font_size = 14
 text = "Amplía tu terreno y equipamiento. Cada etapa incorpora nuevas herramientas de automatización."
+autowrap_mode = 3
 
 [node name="BtnCerrarTienda" type="Button" parent="HUD/ModalTienda/VBox/HBoxHeader" unique_id=641726436]
 unique_name_in_owner = true
@@ -833,6 +834,7 @@ layout_mode = 2
 [node name="ScrollMejoras" type="ScrollContainer" parent="HUD/ModalTienda/VBox" unique_id=1699862864]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="GridMejoras" type="GridContainer" parent="HUD/ModalTienda/VBox/ScrollMejoras" unique_id=2127539592]
 unique_name_in_owner = true
