@@ -138,7 +138,8 @@ func _inicializar_mesones() -> void:
 		meson_patas.celda_mesa = Vector2i(-2, 0)
 		meson_patas.tipo_estacion = "PATAS"
 		meson_patas.insumo_requerido = "CUALQUIERA"
-		meson_patas.cantidad_requerida = 2
+		meson_patas.cantidad_requerida = 1
+		meson_patas.capacidad_almacenamiento_maxima = 10
 		meson_patas.producto_salida = "PATAS"
 		add_child(meson_patas)
 		mesones_por_celda[Vector2i(-2, 0)] = meson_patas

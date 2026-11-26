@@ -855,8 +855,9 @@ func _verificar_hitos_sandbox(forzar: bool = false) -> void:
 				lienzo_a4.obtener_secuencia_comandos(),
 				lienzo_a5.obtener_secuencia_comandos()
 			]
-			if bloques_adquiridos.has("BUCLE") and _tiene_bloque_bucle_activo(secuencias_actuales):
-				completado = true
+			if (bloques_adquiridos.has("BUCLE") or bloques_adquiridos.has("BLOQUE_BUCLE")) and _tiene_bloque_bucle_activo(secuencias_actuales):
+				if mundo_3d and mundo_3d.meson_patas and mundo_3d.meson_patas.productos_almacenados >= 2:
+					completado = true
 		"COMPRAR_EXPANSION_5X5":
 			if mundo_3d and mundo_3d.tamano_sector_actual >= 5:
 				completado = true

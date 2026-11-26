@@ -51,8 +51,8 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"id": 3,
 			"clave": "BUCLE_FARMEO",
 			"titulo": "3. Automatización Continua: El Bucle",
-			"descripcion": "Abre MEJORAS y adquiere el 'Bloque [LOOP] Bucle Continuo' (20 tuercas). Envuelve tu circuito de transporte para que Astro 1 mantenga la máquina forjadora abastecida de forma 100% autónoma.",
-			"meta_texto": "Compra el Bloque [LOOP] en Mejoras y activa el transporte continuo",
+			"descripcion": "Abre MEJORAS y adquiere el 'Bloque [LOOP] Bucle Continuo' (20 tuercas). Envuelve tu circuito de transporte para que Astro 1 mantenga la máquina forjadora abastecida de forma 100% autónoma, acumulando stock de patas mecánicas (capacidad: 10) y reuniendo fondos para el taller.",
+			"meta_texto": "Usa el Bloque [LOOP] y acumula stock en la Forjadora",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
 			"cantidad_astronautas": 1,
 			"tamano_sector": 5,
@@ -62,9 +62,9 @@ static func obtener_hitos() -> Array[Dictionary]:
 			"mostrar_baliza": false,
 			"mostrar_meson_patas": true,
 			"tipo_meta": "ACTIVAR_BUCLE",
-			"recompensa_creditos": 30,
-			"mensaje_ada": "¡Fábrica automatizada! Astro 1 transporta insumos sin parar. La pata mecánica terminada espera en la bandeja de salida. ¡Es momento de ensamblar a Spido!",
-			"pista": "Compra el bloque Bucle en MEJORAS y agrégalo a tu algoritmo.",
+			"recompensa_creditos": 35,
+			"mensaje_ada": "¡Producción en serie imparable! La forjadora tiene suficiente stock y has reunido abundantes tuercas. Ahora compra la Mesa Central de Spido (30 tuercas) y despierta a Astro 2 (35 tuercas) en MEJORAS para comenzar el ensamblaje concurrente.",
+			"pista": "Compra el bloque Bucle en MEJORAS y agrégalo a tu algoritmo para transportar piezas en bucle.",
 			"piezas": [
 				{"tipo": "TUERCA", "celda": Vector2i(1, 0)}
 			]

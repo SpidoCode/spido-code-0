@@ -9,9 +9,11 @@ signal producto_retirado(tipo_producto: String)
 @export var tipo_estacion: String = "PATAS" # PATAS, SENSORES, BRAZOS
 @export var producto_salida: String = "PATAS"
 @export var insumo_requerido: String = "CUALQUIERA"
-@export var cantidad_requerida: int = 2
+@export var cantidad_requerida: int = 1
+@export var capacidad_almacenamiento_maxima: int = 10
 
 var insumos_actuales: int = 0
+var productos_almacenados: int = 0
 var producto_disponible: bool = false
 
 var base_malla: MeshInstance3D
@@ -154,7 +156,7 @@ func _construir_visuales_si_faltan() -> void:
 		soporte_salida.visible = false
 
 func puede_recibir_insumo(tipo_pieza: String) -> bool:
-	if producto_disponible:
+	if productos_almacenados >= capacidad_almacenamiento_maxima:
 		return false
 	if tipo_pieza != insumo_requerido and insumo_requerido != "CUALQUIERA":
 		return false
@@ -182,28 +184,31 @@ func _animar_recepcion() -> void:
 
 func _fabricar_producto() -> void:
 	insumos_actuales = 0
+	productos_almacenados = mini(productos_almacenados + 1, capacidad_almacenamiento_maxima)
+	producto_disponible = true
+
 	# Efecto de fabricación con giro y escala
 	if soporte_salida:
 		soporte_salida.scale = Vector3.ZERO
 		soporte_salida.visible = true
 		var tw = create_tween().set_parallel(true)
-		tw.tween_property(soporte_salida, "scale", Vector3.ONE, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		tw.tween_property(soporte_salida, "rotation:y", TAU, 0.4).as_relative()
+		tw.tween_property(soporte_salida, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(soporte_salida, "rotation:y", TAU, 0.3).as_relative()
 		await tw.finished
 
-	producto_disponible = true
 	producto_fabricado.emit(producto_salida)
 	_actualizar_estado_visual()
 
 func tiene_producto_listo() -> bool:
-	return producto_disponible
+	return productos_almacenados > 0
 
 func retirar_producto() -> String:
-	if not producto_disponible:
+	if productos_almacenados <= 0:
 		return ""
-	producto_disponible = false
+	productos_almacenados -= 1
+	producto_disponible = (productos_almacenados > 0)
 	var prod = producto_salida
-	if soporte_salida:
+	if productos_almacenados == 0 and soporte_salida:
 		soporte_salida.visible = false
 	_actualizar_estado_visual()
 	producto_retirado.emit(prod)
@@ -214,13 +219,21 @@ func _actualizar_estado_visual() -> void:
 
 	var nombre_estacion = "FORJADORA DE PATAS" if tipo_estacion == "PATAS" else ("MÁQUINA DE SENSORES" if tipo_estacion == "SENSORES" else "ESTACIÓN DE TRABAJO")
 
-	if producto_disponible:
-		# Verde esmeralda: Producto terminado listo para recoger
-		luz_indicador.light_color = Color(0.2, 1.0, 0.5)
-		luz_indicador.light_energy = 2.2
+	if productos_almacenados >= capacidad_almacenamiento_maxima:
+		# Rojo / Ámbar saturado: Bandeja llena al máximo
+		luz_indicador.light_color = Color(1.0, 0.35, 0.2)
+		luz_indicador.light_energy = 2.6
 		if soporte_salida: soporte_salida.visible = true
 		if panel_etiqueta:
-			panel_etiqueta.text = "%s\n[ ¡LISTO! RETIRAR %s ]" % [nombre_estacion, producto_salida]
+			panel_etiqueta.text = "%s\n[ BANDEJA LLENA: %d/%d %s ]\n¡DESAHOGAR CON ASTRO 2!" % [nombre_estacion, productos_almacenados, capacidad_almacenamiento_maxima, producto_salida]
+			panel_etiqueta.modulate = Color(1.0, 0.4, 0.3)
+	elif productos_almacenados > 0:
+		# Verde esmeralda: Hay productos listos y todavía puede seguir recibiendo
+		luz_indicador.light_color = Color(0.2, 1.0, 0.5)
+		luz_indicador.light_energy = 2.0
+		if soporte_salida: soporte_salida.visible = true
+		if panel_etiqueta:
+			panel_etiqueta.text = "%s\n[ STOCK LISTO: %d/%d %s ]" % [nombre_estacion, productos_almacenados, capacidad_almacenamiento_maxima, producto_salida]
 			panel_etiqueta.modulate = Color(0.2, 1.0, 0.6)
 	elif insumos_actuales > 0:
 		# Amarillo / Naranja: Recibiendo insumos
@@ -236,11 +249,12 @@ func _actualizar_estado_visual() -> void:
 		luz_indicador.light_energy = 1.0
 		if soporte_salida: soporte_salida.visible = false
 		if panel_etiqueta:
-			panel_etiqueta.text = "%s\n[ INSUMOS: 0 / %d ]" % [nombre_estacion, cantidad_requerida]
+			panel_etiqueta.text = "%s\n[ STOCK: 0 / %d ]" % [nombre_estacion, capacidad_almacenamiento_maxima]
 			panel_etiqueta.modulate = Color(0.3, 0.9, 1.0)
 
 func reiniciar() -> void:
 	insumos_actuales = 0
+	productos_almacenados = 0
 	producto_disponible = false
 	if soporte_salida:
 		soporte_salida.visible = false

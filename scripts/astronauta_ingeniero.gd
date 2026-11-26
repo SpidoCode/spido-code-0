@@ -352,7 +352,12 @@ func ensamblar_en_mesa() -> bool:
 				animacion_terminada.emit()
 				return true
 			else:
-				accion_fallida.emit("El mesón no requiere este insumo o su bandeja de salida está llena.")
+				var almacenados = meson.get("productos_almacenados") if "productos_almacenados" in meson else 1
+				var cap_max = meson.get("capacidad_almacenamiento_maxima") if "capacidad_almacenamiento_maxima" in meson else 10
+				if almacenados >= cap_max:
+					accion_fallida.emit("¡Bandeja de forja llena (%d/%d patas)! Despierta a Astro 2 y compra la Mesa Central de Spido en MEJORAS." % [almacenados, cap_max])
+				else:
+					accion_fallida.emit("El mesón no requiere este insumo o su bandeja de salida está llena.")
 				await _animar_duda()
 				return false
 		else:
