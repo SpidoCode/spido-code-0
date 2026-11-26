@@ -63,15 +63,15 @@ var es_ejecutando: bool = false
 var tiene_error: bool = false
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(210, 50 if tipo_forma == TipoForma.FORMA_ESTANDAR else 54)
+	custom_minimum_size = Vector2(190, 34 if tipo_forma == TipoForma.FORMA_ESTANDAR else 38)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
 	# Estilo transparente en el PanelContainer base para permitir dibujo personalizado
 	var style_empty = StyleBoxEmpty.new()
-	style_empty.content_margin_left = 26
-	style_empty.content_margin_top = 10 if tipo_forma == TipoForma.FORMA_INICIO else 7
-	style_empty.content_margin_right = 8
-	style_empty.content_margin_bottom = 7
+	style_empty.content_margin_left = 20
+	style_empty.content_margin_top = 6 if tipo_forma == TipoForma.FORMA_INICIO else 3
+	style_empty.content_margin_right = 6
+	style_empty.content_margin_bottom = 3
 	add_theme_stylebox_override("panel", style_empty)
 
 	_vincular_nodos()
@@ -198,31 +198,31 @@ func resaltar_error(activo: bool) -> void:
 func _draw() -> void:
 	var w = size.x
 	var h = size.y
-	var tab_x = 22.0
-	var tab_w = 26.0
-	var tab_d = 5.0
-	var r = 8.0
+	var tab_x = 16.0
+	var tab_w = 20.0
+	var tab_d = 4.0
+	var r = 5.0
 
 	var pts: Array[Vector2] = []
 	if tipo_forma == TipoForma.FORMA_INICIO:
-		# Hat Block estilo Scratch: arco curvado superior suave
-		pts.append(Vector2(0, 16))
-		pts.append(Vector2(8, 7))
-		pts.append(Vector2(20, 2))
-		pts.append(Vector2(45, 0))
-		pts.append(Vector2(75, 0))
-		pts.append(Vector2(105, 3))
-		pts.append(Vector2(130, 9))
-		pts.append(Vector2(150, 14))
-		pts.append(Vector2(w - r, 14))
-		pts.append(Vector2(w, 14 + r))
+		# Hat Block estilo Scratch: arco curvado superior suave y compacto
+		pts.append(Vector2(0, 11))
+		pts.append(Vector2(6, 5))
+		pts.append(Vector2(16, 2))
+		pts.append(Vector2(36, 0))
+		pts.append(Vector2(65, 0))
+		pts.append(Vector2(95, 2))
+		pts.append(Vector2(115, 6))
+		pts.append(Vector2(130, 10))
+		pts.append(Vector2(w - r, 10))
+		pts.append(Vector2(w, 10 + r))
 	else:
 		# Bloque Estándar: Muesca superior (凹) para encastrar con el bloque anterior
 		pts.append(Vector2(0, r))
 		pts.append(Vector2(r, 0))
 		pts.append(Vector2(tab_x, 0))
-		pts.append(Vector2(tab_x + 3.0, tab_d))
-		pts.append(Vector2(tab_x + tab_w - 3.0, tab_d))
+		pts.append(Vector2(tab_x + 2.5, tab_d))
+		pts.append(Vector2(tab_x + tab_w - 2.5, tab_d))
 		pts.append(Vector2(tab_x + tab_w, 0))
 		pts.append(Vector2(w - r, 0))
 		pts.append(Vector2(w, r))
@@ -233,8 +233,8 @@ func _draw() -> void:
 
 	# Borde inferior: Lengüeta de encastre hacia abajo (凸)
 	pts.append(Vector2(tab_x + tab_w, h))
-	pts.append(Vector2(tab_x + tab_w - 3.0, h + tab_d))
-	pts.append(Vector2(tab_x + 3.0, h + tab_d))
+	pts.append(Vector2(tab_x + tab_w - 2.5, h + tab_d))
+	pts.append(Vector2(tab_x + 2.5, h + tab_d))
 	pts.append(Vector2(tab_x, h))
 	pts.append(Vector2(r, h))
 	pts.append(Vector2(0, h - r))
@@ -260,13 +260,13 @@ func _draw() -> void:
 
 	# 3. Contorno de puzzle
 	var color_b = color_borde
-	var border_w = 2.0
+	var border_w = 1.8
 	if es_ejecutando:
 		color_b = Color(0.92, 1.0, 0.88, 1.0) # Brillo neón de ejecución
-		border_w = 2.8
+		border_w = 2.4
 	elif tiene_error:
 		color_b = Color(0.92, 0.42, 0.42, 1.0)
-		border_w = 2.8
+		border_w = 2.4
 
 	var outline = PackedVector2Array(packed_pts)
 	outline.append(packed_pts[0])
@@ -274,10 +274,10 @@ func _draw() -> void:
 
 	# 4. Acento decorativo sutil en la lengüeta
 	var tab_line = PackedVector2Array([
-		Vector2(tab_x + 3.0, h + tab_d - 1.0),
-		Vector2(tab_x + tab_w - 3.0, h + tab_d - 1.0)
+		Vector2(tab_x + 2.5, h + tab_d - 1.0),
+		Vector2(tab_x + tab_w - 2.5, h + tab_d - 1.0)
 	])
-	draw_polyline(tab_line, color_b.lightened(0.2), 1.5)
+	draw_polyline(tab_line, color_b.lightened(0.2), 1.2)
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if tipo_forma == TipoForma.FORMA_INICIO:

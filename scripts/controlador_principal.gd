@@ -46,6 +46,8 @@ extends Control
 # Consola Flotante y Paleta Desplegable
 @onready var consola_astronauta: PanelContainer = %ConsolaAstronauta
 @onready var btn_minimizar_consola: Button = %BtnMinimizarConsola
+@onready var btn_maximizar_consola: Button = get_node_or_null("%BtnMaximizarConsola")
+@onready var handle_resize: Button = get_node_or_null("%HandleResize")
 @onready var btn_abrir_consola_flotante: Button = %BtnAbrirConsolaFlotante
 @onready var btn_toggle_paleta: Button = %BtnTogglePaleta
 @onready var drawer_paleta: PanelContainer = %DrawerPaleta
@@ -226,18 +228,26 @@ const PASOS_GUIA = [
 	{"titulo": "4. EJECUTA & DEPURA", "texto": "Presiona 'Ejecutar' para correr tu algoritmo. También puedes usar 'Paso a Paso' para probar paso a paso."}
 ]
 
+var consola_maximizada: bool = false
+var redimensionando_consola: bool = false
+var mouse_inicio_redimension_consola: Vector2 = Vector2.ZERO
+var tamano_inicio_consola: Vector2 = Vector2.ZERO
+const TAMANO_CONSOLA_NORMAL = Vector2(660.0, 780.0)
+const TAMANO_CONSOLA_MAXIMA = Vector2(880.0, 960.0)
+const TAMANO_CONSOLA_MINIMO = Vector2(460.0, 400.0)
+
 const COMANDOS_DISPONIBLES = {
 	"AVANZAR": {"tit": "Avanzar", "prefijo": "[AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"AVANZAR_2": {"tit": "Avanzar 2 Pasos (Auto)", "prefijo": "[2x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"AVANZAR_3": {"tit": "Avanzar 3 Pasos (Auto)", "prefijo": "[3x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"RETROCEDER": {"tit": "Retroceder 1 Paso", "prefijo": "[RET]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
-	"GIRAR_DER": {"tit": "Girar Derecha 90°", "prefijo": "[DER]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRAR_IZQ": {"tit": "Girar Izquierda 90°", "prefijo": "[IZQ]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"GIRO_180": {"tit": "Girar 180°", "prefijo": "[180°]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
-	"BUCLE": {"tit": "Por Siempre (Bucle)", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
+	"AVANZAR_2": {"tit": "Avanzar 2", "prefijo": "[2x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"AVANZAR_3": {"tit": "Avanzar 3", "prefijo": "[3x AVZ]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"RETROCEDER": {"tit": "Retroceder", "prefijo": "[RET]", "cat": "movimiento", "color": Color(0.545098, 0.796078, 0.568627, 1.0)},
+	"GIRAR_DER": {"tit": "Girar Der", "prefijo": "[DER]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRAR_IZQ": {"tit": "Girar Izq", "prefijo": "[IZQ]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"GIRO_180": {"tit": "Giro 180°", "prefijo": "[180°]", "cat": "giro", "color": Color(0.631373, 0.85098, 0.65098, 1.0)},
+	"BUCLE": {"tit": "Bucle", "prefijo": "[LOOP]", "cat": "control", "color": Color(0.48, 0.55, 0.65, 1.0)},
 	"TOMAR_PIEZA": {"tit": "Tomar Pieza", "prefijo": "[TOM]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
-	"ENSAMBLAR": {"tit": "Ensamblar / Depositar", "prefijo": "[ENS]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
-	"DIAGNOSTICO": {"tit": "Diagnóstico Spido", "prefijo": "[TEST]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}
+	"ENSAMBLAR": {"tit": "Depositar", "prefijo": "[DEP]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)},
+	"DIAGNOSTICO": {"tit": "Diagnóstico", "prefijo": "[DIAG]", "cat": "accion", "color": Color(0.435294, 0.686275, 0.470588, 1.0)}
 }
 
 func _ready() -> void:
@@ -271,6 +281,12 @@ func _ready() -> void:
 	_aplicar_hito_actual()
 
 func _input(event: InputEvent) -> void:
+	if redimensionando_consola:
+		if event is InputEventMouseMotion:
+			_redimensionar_consola(get_viewport().get_mouse_position())
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			redimensionando_consola = false
+
 	if event.is_action_pressed("ui_cancel"):
 		_cambiar_estado_pausa(not menu_pausa.visible)
 		get_viewport().set_input_as_handled()
@@ -463,6 +479,10 @@ func _conectar_senales() -> void:
 
 	if btn_minimizar_consola:
 		btn_minimizar_consola.pressed.connect(func(): _plegar_consola(true))
+	if btn_maximizar_consola:
+		btn_maximizar_consola.pressed.connect(_toggle_maximizar_consola)
+	if handle_resize:
+		handle_resize.gui_input.connect(_on_handle_resize_gui_input)
 	if btn_abrir_consola_flotante:
 		btn_abrir_consola_flotante.pressed.connect(func(): _plegar_consola(false))
 
@@ -540,6 +560,36 @@ func _plegar_consola(plegar: bool) -> void:
 		consola_astronauta.visible = not plegar
 	if is_instance_valid(btn_abrir_consola_flotante):
 		btn_abrir_consola_flotante.visible = plegar
+
+func _on_handle_resize_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		redimensionando_consola = event.pressed
+		if redimensionando_consola:
+			mouse_inicio_redimension_consola = get_viewport().get_mouse_position()
+			tamano_inicio_consola = Vector2(-consola_astronauta.offset_left - 16.0, -consola_astronauta.offset_top - 16.0)
+		get_viewport().set_input_as_handled()
+
+func _redimensionar_consola(mouse_actual: Vector2) -> void:
+	if not is_instance_valid(consola_astronauta):
+		return
+	var delta = mouse_actual - mouse_inicio_redimension_consola
+	var pantalla = get_viewport().get_visible_rect().size
+	var nuevo_ancho = clampf(tamano_inicio_consola.x - delta.x, TAMANO_CONSOLA_MINIMO.x, pantalla.x - 32.0)
+	var nuevo_alto = clampf(tamano_inicio_consola.y - delta.y, TAMANO_CONSOLA_MINIMO.y, pantalla.y - 32.0)
+	consola_astronauta.offset_left = -nuevo_ancho - 16.0
+	consola_astronauta.offset_top = -nuevo_alto - 16.0
+	consola_astronauta.offset_right = -16.0
+	consola_astronauta.offset_bottom = -16.0
+
+func _toggle_maximizar_consola() -> void:
+	consola_maximizada = not consola_maximizada
+	var destino = TAMANO_CONSOLA_MAXIMA if consola_maximizada else TAMANO_CONSOLA_NORMAL
+	if is_instance_valid(btn_maximizar_consola):
+		btn_maximizar_consola.text = "REDUCIR" if consola_maximizada else "EXPANDIR"
+	if is_instance_valid(consola_astronauta):
+		var tween = create_tween().set_parallel(true)
+		tween.tween_property(consola_astronauta, "offset_left", -destino.x - 16.0, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(consola_astronauta, "offset_top", -destino.y - 16.0, 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _on_btn_codice_pressed() -> void:
 	if is_instance_valid(panel_guia):

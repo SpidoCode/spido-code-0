@@ -492,8 +492,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -580.0
-offset_top = -650.0
+offset_left = -660.0
+offset_top = -780.0
 offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 0
@@ -508,16 +508,26 @@ theme_override_constants/separation = 6
 layout_mode = 2
 theme_override_constants/separation = 8
 
+[node name="HandleResize" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1916682055]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 24)
+layout_mode = 2
+theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 13
+text = "⤢"
+tooltip_text = "Arrastra para redimensionar la consola libremente"
+mouse_default_cursor_shape = 12
+
 [node name="Titulo" type="Label" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=2126602604]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.545098, 0.796078, 0.568627, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 14
 text = "CONSOLA ASTRONAUTA"
 
 [node name="BtnPista" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1174410878]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 24)
+custom_minimum_size = Vector2(55, 24)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
 theme_override_font_sizes/font_size = 12
@@ -525,14 +535,22 @@ text = "Pista"
 
 [node name="BtnTogglePaleta" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=2085183986]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(85, 24)
+custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "BLOQUES"
 
+[node name="BtnMaximizarConsola" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=2085183987]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(85, 24)
+layout_mode = 2
+theme_type_variation = &"SecondaryButton"
+theme_override_font_sizes/font_size = 12
+text = "EXPANDIR"
+
 [node name="BtnMinimizarConsola" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=1739064218]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(75, 24)
+custom_minimum_size = Vector2(70, 24)
 layout_mode = 2
 theme_type_variation = &"SecondaryButton"
 text = "PLEGAR"
@@ -659,7 +677,7 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = -650.0
+offset_top = -780.0
 offset_right = 380.0
 offset_bottom = -16.0
 grow_vertical = 0
