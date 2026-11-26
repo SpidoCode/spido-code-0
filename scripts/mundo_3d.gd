@@ -185,7 +185,7 @@ func _inicializar_mesones() -> void:
 	if not compuerta_entrega:
 		compuerta_entrega = CompuertaEntregaClass.new()
 		compuerta_entrega.name = "CompuertaEntrega"
-		compuerta_entrega.celda = Vector2i(0, 3)
+		compuerta_entrega.celda = Vector2i(2, 3)
 		add_child(compuerta_entrega)
 		compuerta_entrega.visible = false
 
@@ -364,7 +364,7 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 			if preservar_estado and ya_estaba_activo_3:
 				astronauta_3.fijar_checkpoint_actual()
 			else:
-				astronauta_3.configurar_inicio(config.get("pos_astronauta_3", Vector2i(-1, 0)), config.get("ori_astronauta_3", 0))
+				astronauta_3.configurar_inicio(config.get("pos_astronauta_3", Vector2i(2, 1)), config.get("ori_astronauta_3", 2))
 
 	for par in [[astronauta_4, 4], [astronauta_5, 5]]:
 		var extra: AstronautaIngeniero = par[0]
@@ -382,7 +382,7 @@ func cargar_nivel(config: Dictionary, preservar_estado: bool = false) -> void:
 	# 3. Configurar mesa de ensamblaje Spido
 	var mostrar_mesa = config.get("mostrar_mesa", false)
 	if mesa_spid:
-		var pos_mesa = config.get("pos_mesa", Vector2i(0, -2))
+		var pos_mesa = config.get("pos_mesa", Vector2i(2, 2))
 		mesa_spid.posicionar_en_celda(pos_mesa)
 		mesa_spid.visible = mostrar_mesa
 		if mostrar_mesa and not preservar_estado:

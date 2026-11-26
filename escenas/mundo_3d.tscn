@@ -43,7 +43,7 @@ transform = Transform3D(1, 0, 0, 0, 0.69372237, 0.7202425, 0, -0.7202425, 0.6937
 fov = 48.0
 
 [node name="MesaEnsamblaje" parent="." unique_id=744348960 instance=ExtResource("3_mesa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
 
 [node name="BalizaMeta" parent="." unique_id=999163968 instance=ExtResource("5_baliza")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2)
@@ -56,7 +56,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 visible = false
 
 [node name="Astronauta3" parent="." unique_id=1497468332 instance=ExtResource("2_astronauta")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 2)
 visible = false
 
 [node name="Astronauta4" parent="." unique_id=1802115778 instance=ExtResource("2_astronauta")]
