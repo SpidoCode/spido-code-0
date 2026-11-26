@@ -182,12 +182,12 @@ func _inicializar_mesones() -> void:
 		mesones_por_celda[Vector2i(-1, 0)] = meson_patas
 		meson_patas.visible = false
 
-	# 2. Máquina de Cinta Automática (Fase 2: Tablero 5x5)
+	# 2. Máquina de Cinta Automática (Fase 2: Tablero 5x5 al tope arriba en Z=-2)
 	if not maquina_cinta:
 		maquina_cinta = MaquinaCintaClass.new()
 		maquina_cinta.name = "MaquinaCinta"
-		maquina_cinta.celda_entrada = Vector2i(-1, -1)
-		maquina_cinta.celda_salida = Vector2i(1, -1)
+		maquina_cinta.celda_entrada = Vector2i(-1, -2)
+		maquina_cinta.celda_salida = Vector2i(1, -2)
 		add_child(maquina_cinta)
 		maquina_cinta.visible = false
 
@@ -199,11 +199,11 @@ func _inicializar_mesones() -> void:
 		add_child(bandeja_intermedia)
 		bandeja_intermedia.visible = false
 
-	# 4. Compuerta de Entrega (Fase 3: Tablero 7x7 - Despacho al Espacio)
+	# 4. Compuerta de Entrega (Fase 3: Tablero 7x7 - Despacho al Espacio en Z=3)
 	if not compuerta_entrega:
 		compuerta_entrega = CompuertaEntregaClass.new()
 		compuerta_entrega.name = "CompuertaEntrega"
-		compuerta_entrega.celda = Vector2i(0, -3)
+		compuerta_entrega.celda = Vector2i(0, 3)
 		add_child(compuerta_entrega)
 		compuerta_entrega.visible = false
 
@@ -753,7 +753,7 @@ func obtener_producto_de_cinta(celda: Vector2i) -> Node3D:
 				var nueva_pieza = escena_p.instantiate() as PiezaTaller
 				nueva_pieza.tipo_pieza = prod_tipo
 				nueva_pieza.name = prod_tipo
-				nueva_pieza.global_position = maquina_cinta.position + Vector3(1.0, 0.8, 0)
+				nueva_pieza.global_position = Vector3(celda.x * 2.0, 0.8, celda.y * 2.0)
 				contenedor_piezas.add_child(nueva_pieza)
 				return nueva_pieza
 	return null

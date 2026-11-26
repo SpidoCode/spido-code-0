@@ -388,7 +388,7 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 
 		# Mesa de Spido solo si fue comprada en tienda
 		if mundo_3d.mesa_spid:
-			mundo_3d.mesa_spid.posicionar_en_celda(hito.get("pos_mesa", Vector2i(0, -2)))
+			mundo_3d.mesa_spid.posicionar_en_celda(hito.get("pos_mesa", Vector2i(0, 2)))
 			mundo_3d.mesa_spid.visible = ("MESA_SPIDO" in estaciones_desbloqueadas)
 
 		# Posición inicial solo al iniciar o resetear explícitamente
@@ -1321,11 +1321,11 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 			match item.id:
 				"MESA_SPIDO":
 					if mundo_3d and mundo_3d.mesa_spid:
-						mundo_3d.mesa_spid.posicionar_en_celda(Vector2i(0, -2))
+						mundo_3d.mesa_spid.posicionar_en_celda(Vector2i(0, 2))
 						mundo_3d.mesa_spid.visible = true
 						mundo_3d.mesa_spid.scale = Vector3.ZERO
 						create_tween().tween_property(mundo_3d.mesa_spid, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-					_actualizar_estado("¡Mesa Central de Spido instalada en el hangar!")
+					_actualizar_estado("¡Mesa de Ensamble Final Spido instalada en el sector de montaje!")
 				"MESON_PATAS":
 					if mundo_3d and mundo_3d.meson_patas:
 						mundo_3d.meson_patas.visible = true
@@ -1392,8 +1392,8 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 					var a_node = mundo_3d.astronauta_2 if a_id == 2 else mundo_3d.astronauta_3
 					if a_node:
 						a_node.visible = true
-						var pos_i = Vector2i(-1, -1) if a_id == 2 else Vector2i(1, -1)
-						var ori_i = 2 if a_id == 2 else 0
+						var pos_i = Vector2i(-1, -1) if a_id == 2 else Vector2i(0, 1)
+						var ori_i = 0 if a_id == 2 else 2
 						a_node.configurar_inicio(pos_i, ori_i)
 						a_node.scale = Vector3.ZERO
 						create_tween().tween_property(a_node, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
