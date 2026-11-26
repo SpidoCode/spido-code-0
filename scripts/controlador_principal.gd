@@ -93,33 +93,39 @@ const HitosSandboxClass = preload("res://scripts/hitos_sandbox.gd")
 var creditos: int = 0
 var bloques_adquiridos: Array[String] = []
 var astronautas_desbloqueados: Array[int] = [1]
-var estaciones_desbloqueadas: Array[String] = []
+var estaciones_desbloqueadas: Array[String] = ["MESON_PATAS"]
 
 const ARBOL_MEJORAS = [
 	# 1. BLOQUES DE ALGORITMIA
 	{
-		"fase": "BLOQUE [LOOP] POR SIEMPRE",
+		"fase": "BLOQUE BUCLE",
 		"desc": "Repite tu algoritmo en bucle continuo de principio a fin. ¡El corazón de la automatización!",
 		"costo": 20,
 		"cat": "bloque",
 		"id": "BLOQUE_BUCLE",
-		"desbloquea_comando": "BUCLE"
+		"desbloquea_comando": "BUCLE",
+		"indice_requerido": 1,
+		"req_texto": "Requiere forjar Patas (Fase 1)"
 	},
 	{
-		"fase": "BLOQUE [180°] GIRO TOTAL",
+		"fase": "BLOQUE GIRO 180°",
 		"desc": "Da media vuelta en un solo paso algorítmico, ahorrando bloques en tu circuito de transporte.",
 		"costo": 35,
 		"cat": "bloque",
 		"id": "BLOQUE_GIRO_180",
-		"desbloquea_comando": "GIRO_180"
+		"desbloquea_comando": "GIRO_180",
+		"indice_requerido": 2,
+		"req_texto": "Requiere automatizar Bucle (Fase 2)"
 	},
 	{
-		"fase": "BLOQUE [3x AVZ] TURBO",
+		"fase": "BLOQUE 3x AVANZAR",
 		"desc": "Avanza 3 casillas de golpe a alta velocidad. Optimiza algoritmos en hangares amplios.",
 		"costo": 45,
 		"cat": "bloque",
 		"id": "BLOQUE_AVZ_3",
-		"desbloquea_comando": "AVANZAR_3"
+		"desbloquea_comando": "AVANZAR_3",
+		"indice_requerido": 3,
+		"req_texto": "Requiere Fase 3"
 	},
 
 	# 2. ESPACIO Y TERRENO MODULAR
@@ -129,7 +135,9 @@ const ARBOL_MEJORAS = [
 		"costo": 0,
 		"cat": "espacio",
 		"id": "ESPACIO_5X5",
-		"tamano": 5
+		"tamano": 5,
+		"indice_requerido": 0,
+		"req_texto": "Inicial"
 	},
 	{
 		"fase": "EXPANSIÓN TERRENO 7x7",
@@ -137,7 +145,9 @@ const ARBOL_MEJORAS = [
 		"costo": 50,
 		"cat": "espacio",
 		"id": "ESPACIO_7X7",
-		"tamano": 7
+		"tamano": 7,
+		"indice_requerido": 3,
+		"req_texto": "Requiere acoplar Patas en Spido (Fase 3)"
 	},
 	{
 		"fase": "EXPANSIÓN TERRENO 9x9",
@@ -145,7 +155,9 @@ const ARBOL_MEJORAS = [
 		"costo": 100,
 		"cat": "espacio",
 		"id": "ESPACIO_9X9",
-		"tamano": 9
+		"tamano": 9,
+		"indice_requerido": 4,
+		"req_texto": "Requiere Sensores en Spido (Fase 4)"
 	},
 	{
 		"fase": "HANGAR COMPLETO 13x13",
@@ -153,30 +165,38 @@ const ARBOL_MEJORAS = [
 		"costo": 200,
 		"cat": "espacio",
 		"id": "ESPACIO_13X13",
-		"tamano": 13
+		"tamano": 13,
+		"indice_requerido": 5,
+		"req_texto": "Requiere Fase 5"
 	},
 
 	# 3. MESAS Y ESTACIONES DE MONTAJE
+	{
+		"fase": "MESÓN DE PATAS",
+		"desc": "Máquina industrial de trabajo que forja sistemas de tracción y extremidades mecánicas.",
+		"costo": 0,
+		"cat": "estacion",
+		"id": "MESON_PATAS",
+		"indice_requerido": 0,
+		"req_texto": "Inicial"
+	},
 	{
 		"fase": "MESA CENTRAL SPIDO",
 		"desc": "Instala la mesa central del taller donde se fija el chasis y se ensambla la estructura de Spido.",
 		"costo": 30,
 		"cat": "estacion",
-		"id": "MESA_SPIDO"
-	},
-	{
-		"fase": "MESÓN DE PATAS",
-		"desc": "Instala el mesón de trabajo que forja sistemas de tracción y extremidades mecánicas.",
-		"costo": 0,
-		"cat": "estacion",
-		"id": "MESON_PATAS"
+		"id": "MESA_SPIDO",
+		"indice_requerido": 2,
+		"req_texto": "Requiere automatizar Bucle (Fase 2)"
 	},
 	{
 		"fase": "MESÓN DE SENSORES",
 		"desc": "Instala el mesón especializado para ensamblar los circuitos de visión y sensores ópticos.",
 		"costo": 60,
 		"cat": "estacion",
-		"id": "MESON_SENSORES"
+		"id": "MESON_SENSORES",
+		"indice_requerido": 3,
+		"req_texto": "Requiere acoplar Patas en Spido (Fase 3)"
 	},
 
 	# 4. ASTRONAUTAS Y LÓGICA CONCURRENTE
@@ -186,7 +206,9 @@ const ARBOL_MEJORAS = [
 		"costo": 35,
 		"cat": "astronauta",
 		"id": "ASTRO_2",
-		"astro_id": 2
+		"astro_id": 2,
+		"indice_requerido": 2,
+		"req_texto": "Requiere automatizar Bucle (Fase 2)"
 	},
 	{
 		"fase": "ASTRO 3: SENSORES",
@@ -194,7 +216,9 @@ const ARBOL_MEJORAS = [
 		"costo": 65,
 		"cat": "astronauta",
 		"id": "ASTRO_3",
-		"astro_id": 3
+		"astro_id": 3,
+		"indice_requerido": 4,
+		"req_texto": "Requiere Mesón de Sensores (Fase 4)"
 	},
 	{
 		"fase": "ASTROS 4 & 5: ESCUADRÓN",
@@ -202,7 +226,9 @@ const ARBOL_MEJORAS = [
 		"costo": 120,
 		"cat": "astronauta",
 		"id": "ASTRO_4_5",
-		"astro_id": 4
+		"astro_id": 4,
+		"indice_requerido": 5,
+		"req_texto": "Requiere Fase 5"
 	}
 ]
 
@@ -295,9 +321,9 @@ func cambiar_hito(indice: int) -> void:
 	if indice < 0 or indice >= hitos.size():
 		return
 	indice_hito_actual = indice
-	_aplicar_hito_actual()
+	_aplicar_hito_actual(true)
 
-func _aplicar_hito_actual() -> void:
+func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 	if indice_hito_actual < 0 or indice_hito_actual >= hitos.size():
 		return
 	ha_recogido_pieza_en_fase = false
@@ -329,25 +355,25 @@ func _aplicar_hito_actual() -> void:
 	# Paleta de bloques disponibles
 	_actualizar_paleta(_obtener_bloques_disponibles_actuales())
 
-	# Visibilidad de pestañas según astronautas activos
-	var cant_astros = hito.get("cantidad_astronautas", 1)
+	# Visibilidad de pestañas según astronautas comprados en tienda
 	for i in range(1, 10):
 		var desbloqueado_por_tienda = astronautas_desbloqueados.has(i + 1)
-		tabs_codigo.set_tab_hidden(i, i >= cant_astros and not desbloqueado_por_tienda)
+		tabs_codigo.set_tab_hidden(i, not desbloqueado_por_tienda)
 
-	# Configurar mundo 3D sin destruir robot Spido
+	# Configurar mundo 3D
 	if mundo_3d:
 		mundo_3d.config_nivel_actual = hito
-		var tam_sector_hito = hito.get("tamano_sector", 3)
+		var tam_sector_hito = hito.get("tamano_sector", 5)
 		var tam_final = max(tam_sector_hito, mundo_3d.tamano_sector_actual)
 		mundo_3d.actualizar_sector(tam_final)
 
+		# Mesa de Spido solo si fue comprada en tienda
 		if mundo_3d.mesa_spid:
-			var debe_mesa = hito.get("mostrar_mesa", false) or (mundo_3d.tamano_sector_actual >= 5)
-			mundo_3d.mesa_spid.visible = debe_mesa
+			mundo_3d.mesa_spid.visible = ("MESA_SPIDO" in estaciones_desbloqueadas)
 
-		if mundo_3d.astronauta and hito.has("pos_astronauta"):
-			mundo_3d.astronauta.configurar_inicio(hito.get("pos_astronauta", Vector2i(0, 2)), hito.get("ori_astronauta", 0))
+		# Posición inicial solo al iniciar o resetear explícitamente
+		if reposicionar_astros and mundo_3d.astronauta and hito.has("pos_astronauta"):
+			mundo_3d.astronauta.configurar_inicio(hito.get("pos_astronauta", Vector2i(0, 0)), hito.get("ori_astronauta", 1))
 
 		if mundo_3d.baliza_meta:
 			var mostrar_b = hito.get("mostrar_baliza", false)
@@ -355,47 +381,41 @@ func _aplicar_hito_actual() -> void:
 			if mostrar_b:
 				mundo_3d.baliza_meta.posicionar_en_celda(hito.get("pos_baliza", Vector2i(0, -1)))
 
-		# Activación progresiva de astronautas
-		if (cant_astros >= 2 or 2 in astronautas_desbloqueados) and mundo_3d.astronauta_2 and not mundo_3d.astronauta_2.visible:
-			mundo_3d.astronauta_2.visible = true
-			mundo_3d.astronauta_2.configurar_inicio(hito.get("pos_astronauta_2", Vector2i(1, 0)), 0)
-		if (cant_astros >= 3 or 3 in astronautas_desbloqueados) and mundo_3d.astronauta_3 and not mundo_3d.astronauta_3.visible:
-			mundo_3d.astronauta_3.visible = true
-			mundo_3d.astronauta_3.configurar_inicio(hito.get("pos_astronauta_3", Vector2i(-1, 0)), 0)
-		if (cant_astros >= 4 or 4 in astronautas_desbloqueados) and mundo_3d.astronauta_4 and not mundo_3d.astronauta_4.visible:
-			mundo_3d.astronauta_4.visible = true
-			mundo_3d.astronauta_4.configurar_inicio(hito.get("pos_astronauta_4", Vector2i(2, 0)), 0)
-		if (cant_astros >= 5 or 5 in astronautas_desbloqueados) and mundo_3d.astronauta_5 and not mundo_3d.astronauta_5.visible:
-			mundo_3d.astronauta_5.visible = true
-			mundo_3d.astronauta_5.configurar_inicio(hito.get("pos_astronauta_5", Vector2i(-2, 0)), 0)
+		# Activación de astronautas SOLAMENTE si fueron comprados en tienda
+		if mundo_3d.astronauta_2:
+			mundo_3d.astronauta_2.visible = (2 in astronautas_desbloqueados)
+			if reposicionar_astros and (2 in astronautas_desbloqueados):
+				mundo_3d.astronauta_2.configurar_inicio(Vector2i(-1, -1), 2)
+		if mundo_3d.astronauta_3:
+			mundo_3d.astronauta_3.visible = (3 in astronautas_desbloqueados)
+			if reposicionar_astros and (3 in astronautas_desbloqueados):
+				mundo_3d.astronauta_3.configurar_inicio(Vector2i(1, -1), 0)
+		if mundo_3d.astronauta_4:
+			mundo_3d.astronauta_4.visible = (4 in astronautas_desbloqueados)
+		if mundo_3d.astronauta_5:
+			mundo_3d.astronauta_5.visible = (5 in astronautas_desbloqueados)
 
-		# Mostrar mesones de subensamblaje si el hito los requiere o si ya se compraron
-		if mundo_3d.nodo_tolva:
-			mundo_3d.nodo_tolva.visible = hito.get("mostrar_tolva", false)
+		# Mesones solo si fueron comprados o desbloqueados en tienda
 		if mundo_3d.meson_patas:
-			var debe_patas = ("MESON_PATAS" in estaciones_desbloqueadas) or hito.get("mostrar_meson_patas", false) or (indice_hito_actual >= 1) or (mundo_3d.tamano_sector_actual >= 7)
-			mundo_3d.meson_patas.visible = debe_patas
+			mundo_3d.meson_patas.visible = ("MESON_PATAS" in estaciones_desbloqueadas)
 		if mundo_3d.meson_sensores:
-			var debe_sensores = ("MESON_SENSORES" in estaciones_desbloqueadas) or (indice_hito_actual >= 5) or (mundo_3d.tamano_sector_actual >= 9)
-			mundo_3d.meson_sensores.visible = debe_sensores
+			mundo_3d.meson_sensores.visible = ("MESON_SENSORES" in estaciones_desbloqueadas)
 
-		if hito.has("piezas") and not hito.piezas.is_empty():
+		if reposicionar_astros and hito.has("piezas") and not hito.piezas.is_empty():
 			mundo_3d._recrear_piezas(hito.piezas, true)
 
-		if mundo_3d.astronauta:
-			mundo_3d.astronauta.fijar_checkpoint_actual()
-		if mundo_3d.astronauta_2 and mundo_3d.astronauta_2.visible:
-			mundo_3d.astronauta_2.fijar_checkpoint_actual()
-		if mundo_3d.astronauta_3 and mundo_3d.astronauta_3.visible:
-			mundo_3d.astronauta_3.fijar_checkpoint_actual()
-		if mundo_3d.astronauta_4 and mundo_3d.astronauta_4.visible:
-			mundo_3d.astronauta_4.fijar_checkpoint_actual()
-		if mundo_3d.astronauta_5 and mundo_3d.astronauta_5.visible:
-			mundo_3d.astronauta_5.fijar_checkpoint_actual()
+		if reposicionar_astros:
+			if mundo_3d.astronauta:
+				mundo_3d.astronauta.fijar_checkpoint_actual()
+			if mundo_3d.astronauta_2 and mundo_3d.astronauta_2.visible:
+				mundo_3d.astronauta_2.fijar_checkpoint_actual()
+			if mundo_3d.astronauta_3 and mundo_3d.astronauta_3.visible:
+				mundo_3d.astronauta_3.fijar_checkpoint_actual()
 
 		mundo_3d.resaltar_astronauta_seleccionado(tabs_codigo.current_tab)
 
 	_actualizar_badge_spido()
+	_renderizar_centro_mejoras()
 	_actualizar_estado("Mundo Nave Activo. Automatiza y programa a tus astronautas.")
 
 func _obtener_bloques_disponibles_actuales() -> Array:
@@ -929,30 +949,52 @@ func _verificar_hitos_sandbox(forzar: bool = false) -> void:
 		_celebrar_hito(hito)
 
 func _celebrar_hito(hito: Dictionary) -> void:
-	en_ejecucion = false
-	detener_solicitado = true
-	btn_ejecutar.text = "EJECUTAR"
-	btn_ejecutar.modulate = Color.WHITE
-	_bloquear_interfaz(false)
+	if not (indice_hito_actual in hitos_completados):
+		hitos_completados.append(indice_hito_actual)
 
-	ganar_creditos(hito.get("recompensa_creditos", 20), "¡Hito superado: %s!" % hito.titulo)
+	var recompensa = hito.get("recompensa_creditos", 20)
+	ganar_creditos(recompensa, "¡Objetivo cumplido: %s!" % hito.titulo)
 
 	if is_instance_valid(label_estado_fase):
 		label_estado_fase.text = "COMPLETADO"
 		label_estado_fase.modulate = Color(0.4, 0.95, 0.6)
 
-	if is_instance_valid(label_victoria_detalle):
-		label_victoria_detalle.text = "%s\n\nRecompensa: +%d Tuercas para Mejoras." % [hito.get("mensaje_ada", "¡Excelente!"), hito.get("recompensa_creditos", 20)]
-	panel_victoria.visible = true
+	# Si es el último hito del juego, celebramos la victoria final con el modal de Spido
+	if indice_hito_actual >= hitos.size() - 1:
+		en_ejecucion = false
+		detener_solicitado = true
+		btn_ejecutar.text = "EJECUTAR"
+		btn_ejecutar.modulate = Color.WHITE
+		_bloquear_interfaz(false)
+		if is_instance_valid(label_victoria_detalle):
+			label_victoria_detalle.text = "%s\n\n¡Has completado el ensamblaje autónomo y Spido está 100% operativo!" % hito.get("mensaje_ada", "¡Excelente!")
+		panel_victoria.visible = true
+		return
+
+	# Notificación suave de A.D.A. sin detener la ejecución (progreso continuo tipo The Farmer Was Replaced)
+	_mostrar_notificacion_hito(hito)
+
+	# Avanzar suavemente al siguiente objetivo sin reiniciar el mundo ni los astronautas
+	indice_hito_actual += 1
+	_aplicar_hito_actual(false)
+
+func _mostrar_notificacion_hito(hito: Dictionary) -> void:
+	var msg = hito.get("mensaje_ada", "¡Excelente trabajo!")
+	label_ada_texto.text = msg
+	_actualizar_estado("¡Objetivo completado! (+%d Tuercas). Nuevas mejoras desbloqueadas en MEJORAS." % hito.get("recompensa_creditos", 20))
+
+	# Efecto visual en tarjeta A.D.A.
+	if is_instance_valid(card_ada):
+		var tw = create_tween()
+		tw.tween_property(card_ada, "modulate", Color(1.3, 1.8, 1.3), 0.15)
+		tw.tween_property(card_ada, "modulate", Color.WHITE, 0.3)
 
 func _on_modal_siguiente_pressed() -> void:
 	panel_victoria.visible = false
-	if indice_hito_actual < hitos.size() - 1:
-		cambiar_hito(indice_hito_actual + 1)
-	else:
-		_actualizar_estado("¡Todas las fases del hangar completadas! Spido está ensamblado y calibrado.")
+	_actualizar_estado("¡Hangar completado! Spido está ensamblado y operativo.")
 
 func _on_modal_reintentar_pressed() -> void:
+	panel_victoria.visible = false
 	panel_victoria.visible = false
 
 func _on_pista_pressed() -> void:
@@ -999,6 +1041,29 @@ func _abrir_tienda(abrir: bool) -> void:
 			actualizar_creditos_ui()
 			_renderizar_centro_mejoras()
 
+func _esta_mejora_desbloqueada(item: Dictionary) -> bool:
+	match item.cat:
+		"bloque":
+			var cmd = item.get("desbloquea_comando", "")
+			return bloques_adquiridos.has(cmd)
+		"espacio":
+			var tam = item.get("tamano", 5)
+			if mundo_3d:
+				return mundo_3d.tamano_sector_actual >= tam
+			return false
+		"estacion":
+			return item.id in estaciones_desbloqueadas
+		"astronauta":
+			var a_id = item.get("astro_id", 2)
+			return a_id in astronautas_desbloqueados
+	return false
+
+func _esta_mejora_disponible_para_compra(item: Dictionary) -> bool:
+	var req_idx = item.get("indice_requerido", 0)
+	if req_idx <= 0:
+		return true
+	return (req_idx in hitos_completados) or (indice_hito_actual >= req_idx)
+
 func _renderizar_centro_mejoras() -> void:
 	if not is_instance_valid(grid_mejoras):
 		return
@@ -1018,85 +1083,93 @@ func _renderizar_centro_mejoras() -> void:
 		panel.custom_minimum_size = Vector2(280, 175)
 		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-		var ya_desbloqueado = false
-		match item.cat:
-			"bloque":
-				ya_desbloqueado = bloques_adquiridos.has(item.get("desbloquea_comando", ""))
-			"espacio":
-				ya_desbloqueado = (item.tamano == 5) or (mundo_3d and mundo_3d.tamano_sector_actual >= item.tamano)
-			"estacion":
-				ya_desbloqueado = estaciones_desbloqueadas.has(item.id)
-			"astronauta":
-				var a_id = item.get("astro_id", 2)
-				ya_desbloqueado = astronautas_desbloqueados.has(a_id)
+		var ya_desbloqueado = _esta_mejora_desbloqueada(item)
+		var prereq_cumplido = _esta_mejora_disponible_para_compra(item)
 
 		var st = StyleBoxFlat.new()
 		st.bg_color = SURFACE_COLOR
-		st.border_color = GREEN_DARK if (ya_desbloqueado or creditos >= item.costo) else Color(0.27, 0.30, 0.35, 1.0)
+		if ya_desbloqueado:
+			st.border_color = GREEN_DARK
+		elif not prereq_cumplido:
+			st.border_color = Color(0.22, 0.25, 0.30, 0.8)
+		elif creditos >= item.costo:
+			st.border_color = GREEN_LIGHT
+		else:
+			st.border_color = Color(0.30, 0.34, 0.40, 1.0)
+
 		st.set_border_width_all(3)
 		st.set_corner_radius_all(14)
 		st.shadow_color = SHADOW_COLOR
-		st.shadow_size = 6
+		st.shadow_size = 5
 		st.shadow_offset = Vector2(0, 4)
 		st.content_margin_left = 14
 		st.content_margin_right = 14
-		st.content_margin_top = 12
-		st.content_margin_bottom = 12
+		st.content_margin_top = 10
+		st.content_margin_bottom = 10
 		panel.add_theme_stylebox_override("panel", st)
 
 		var vbox = VBoxContainer.new()
-		vbox.add_theme_constant_override("separation", 6)
+		vbox.add_theme_constant_override("separation", 5)
 
 		var texto_cat = "[ MEJORA ]"
 		match item.cat:
-			"bloque":
-				texto_cat = "BLOQUE DE CÓDIGO"
-			"espacio":
-				texto_cat = "TERRENO MODULAR"
-			"estacion":
-				texto_cat = "ESTACIÓN DE MONTAJE"
-			"astronauta":
-				texto_cat = "ASTRONAUTA CONCURRENTE"
+			"bloque": texto_cat = "BLOQUE DE CÓDIGO"
+			"espacio": texto_cat = "TERRENO MODULAR"
+			"estacion": texto_cat = "ESTACIÓN DE MONTAJE"
+			"astronauta": texto_cat = "ASTRONAUTA CONCURRENTE"
 
 		var lbl_cat = Label.new()
 		lbl_cat.text = texto_cat
-		lbl_cat.add_theme_color_override("font_color", GREEN_LIGHT)
-		lbl_cat.add_theme_font_size_override("font_size", 11)
+		lbl_cat.add_theme_color_override("font_color", GREEN_LIGHT if prereq_cumplido else Color(0.45, 0.50, 0.55))
+		lbl_cat.add_theme_font_size_override("font_size", 10)
 		vbox.add_child(lbl_cat)
 
 		var lbl_tit = Label.new()
 		lbl_tit.text = item.fase
-		lbl_tit.add_theme_color_override("font_color", GREEN_LIGHT if ya_desbloqueado else TEXT_COLOR)
+		lbl_tit.add_theme_color_override("font_color", GREEN_LIGHT if ya_desbloqueado else (TEXT_COLOR if prereq_cumplido else Color(0.55, 0.60, 0.65)))
 		lbl_tit.add_theme_color_override("font_outline_color", SHADOW_COLOR)
 		lbl_tit.add_theme_constant_override("outline_size", 2)
-		lbl_tit.add_theme_font_size_override("font_size", 14)
+		lbl_tit.add_theme_font_size_override("font_size", 13)
 		vbox.add_child(lbl_tit)
 
 		var lbl_desc = Label.new()
 		lbl_desc.text = item.desc
-		lbl_desc.add_theme_color_override("font_color", Color(0.85, 0.90, 0.92, 1.0))
-		lbl_desc.add_theme_font_size_override("font_size", 12)
+		lbl_desc.add_theme_color_override("font_color", Color(0.80, 0.85, 0.88, 1.0) if prereq_cumplido else Color(0.50, 0.55, 0.60, 1.0))
+		lbl_desc.add_theme_font_size_override("font_size", 11)
 		lbl_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lbl_desc.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		vbox.add_child(lbl_desc)
 
 		var btn_accion = Button.new()
-		btn_accion.custom_minimum_size = Vector2(0, 42)
+		btn_accion.custom_minimum_size = Vector2(0, 38)
 		btn_accion.focus_mode = Control.FOCUS_NONE
 
 		if ya_desbloqueado:
 			btn_accion.text = "DESBLOQUEADO"
 			btn_accion.disabled = true
 			var st_dis = StyleBoxFlat.new()
-			st_dis.bg_color = Color(0.270588, 0.301961, 0.352941, 0.9)
+			st_dis.bg_color = Color(0.20, 0.24, 0.28, 0.9)
 			st_dis.border_color = GREEN_DARK
 			st_dis.set_border_width_all(2)
-			st_dis.set_corner_radius_all(12)
-			st_dis.content_margin_top = 6
-			st_dis.content_margin_bottom = 6
+			st_dis.set_corner_radius_all(10)
+			st_dis.content_margin_top = 5
+			st_dis.content_margin_bottom = 5
 			btn_accion.add_theme_stylebox_override("disabled", st_dis)
 			btn_accion.add_theme_color_override("font_disabled_color", GREEN_LIGHT)
-			btn_accion.add_theme_font_size_override("font_size", 13)
+			btn_accion.add_theme_font_size_override("font_size", 12)
+		elif not prereq_cumplido:
+			btn_accion.text = "BLOQUEADO // %s" % item.get("req_texto", "Misión previa")
+			btn_accion.disabled = true
+			var st_lock = StyleBoxFlat.new()
+			st_lock.bg_color = Color(0.18, 0.20, 0.24, 0.8)
+			st_lock.border_color = Color(0.25, 0.28, 0.33, 1.0)
+			st_lock.set_border_width_all(1)
+			st_lock.set_corner_radius_all(10)
+			st_lock.content_margin_top = 5
+			st_lock.content_margin_bottom = 5
+			btn_accion.add_theme_stylebox_override("disabled", st_lock)
+			btn_accion.add_theme_color_override("font_disabled_color", Color(0.50, 0.55, 0.60, 1.0))
+			btn_accion.add_theme_font_size_override("font_size", 11)
 		elif creditos >= item.costo:
 			btn_accion.text = "ADQUIRIR (%d Tuercas)" % item.costo
 			var st_norm = StyleBoxFlat.new()
@@ -1105,13 +1178,13 @@ func _renderizar_centro_mejoras() -> void:
 			st_norm.border_width_left = 3
 			st_norm.border_width_top = 3
 			st_norm.border_width_right = 3
-			st_norm.border_width_bottom = 6
-			st_norm.set_corner_radius_all(12)
+			st_norm.border_width_bottom = 5
+			st_norm.set_corner_radius_all(10)
 			st_norm.shadow_color = SHADOW_COLOR
 			st_norm.shadow_size = 2
-			st_norm.shadow_offset = Vector2(0, 5)
-			st_norm.content_margin_top = 5
-			st_norm.content_margin_bottom = 5
+			st_norm.shadow_offset = Vector2(0, 4)
+			st_norm.content_margin_top = 4
+			st_norm.content_margin_bottom = 4
 
 			var st_hov = StyleBoxFlat.new()
 			st_hov.bg_color = GREEN_HOVER
@@ -1119,13 +1192,13 @@ func _renderizar_centro_mejoras() -> void:
 			st_hov.border_width_left = 3
 			st_hov.border_width_top = 3
 			st_hov.border_width_right = 3
-			st_hov.border_width_bottom = 6
-			st_hov.set_corner_radius_all(12)
+			st_hov.border_width_bottom = 5
+			st_hov.set_corner_radius_all(10)
 			st_hov.shadow_color = SHADOW_COLOR
 			st_hov.shadow_size = 2
-			st_hov.shadow_offset = Vector2(0, 6)
-			st_hov.content_margin_top = 5
-			st_hov.content_margin_bottom = 5
+			st_hov.shadow_offset = Vector2(0, 5)
+			st_hov.content_margin_top = 4
+			st_hov.content_margin_bottom = 4
 
 			var st_pres = StyleBoxFlat.new()
 			st_pres.bg_color = GREEN_DARK
@@ -1134,8 +1207,8 @@ func _renderizar_centro_mejoras() -> void:
 			st_pres.border_width_top = 3
 			st_pres.border_width_right = 3
 			st_pres.border_width_bottom = 2
-			st_pres.set_corner_radius_all(12)
-			st_pres.content_margin_top = 9
+			st_pres.set_corner_radius_all(10)
+			st_pres.content_margin_top = 7
 			st_pres.content_margin_bottom = 3
 
 			btn_accion.add_theme_stylebox_override("normal", st_norm)
@@ -1145,28 +1218,35 @@ func _renderizar_centro_mejoras() -> void:
 			btn_accion.add_theme_color_override("font_hover_color", TEXT_COLOR)
 			btn_accion.add_theme_color_override("font_outline_color", SHADOW_COLOR)
 			btn_accion.add_theme_constant_override("outline_size", 2)
-			btn_accion.add_theme_font_size_override("font_size", 14)
+			btn_accion.add_theme_font_size_override("font_size", 13)
 			btn_accion.pressed.connect(func(): _comprar_mejora_arbol(item))
 		else:
 			btn_accion.text = "REQUIERE: %d Tuercas" % item.costo
 			btn_accion.disabled = true
 			var st_req = StyleBoxFlat.new()
-			st_req.bg_color = Color(0.270588, 0.301961, 0.352941, 0.7)
-			st_req.border_color = Color(0.24, 0.27, 0.32, 1.0)
+			st_req.bg_color = Color(0.24, 0.27, 0.32, 0.7)
+			st_req.border_color = Color(0.26, 0.30, 0.36, 1.0)
 			st_req.set_border_width_all(2)
-			st_req.set_corner_radius_all(12)
-			st_req.content_margin_top = 6
-			st_req.content_margin_bottom = 6
+			st_req.set_corner_radius_all(10)
+			st_req.content_margin_top = 5
+			st_req.content_margin_bottom = 5
 			btn_accion.add_theme_stylebox_override("disabled", st_req)
-			btn_accion.add_theme_color_override("font_disabled_color", Color(0.70, 0.75, 0.80, 1.0))
-			btn_accion.add_theme_font_size_override("font_size", 13)
+			btn_accion.add_theme_color_override("font_disabled_color", Color(0.65, 0.70, 0.76, 1.0))
+			btn_accion.add_theme_font_size_override("font_size", 12)
 
 		vbox.add_child(btn_accion)
 		panel.add_child(vbox)
 		grid_mejoras.add_child(panel)
 
 func _comprar_mejora_arbol(item: Dictionary) -> void:
-	if creditos < item.costo: return
+	if _esta_mejora_desbloqueada(item):
+		return
+	if not _esta_mejora_disponible_para_compra(item):
+		_actualizar_estado("Esta mejora está bloqueada. Completa primero: %s" % item.get("req_texto", "Misión previa"))
+		return
+	if creditos < item.costo:
+		return
+
 	creditos -= item.costo
 	actualizar_creditos_ui()
 
@@ -1189,14 +1269,18 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 				"MESA_SPIDO":
 					if mundo_3d and mundo_3d.mesa_spid:
 						mundo_3d.mesa_spid.visible = true
+						mundo_3d.mesa_spid.scale = Vector3.ZERO
+						create_tween().tween_property(mundo_3d.mesa_spid, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 					_actualizar_estado("¡Mesa Central de Spido instalada en el hangar!")
 				"MESON_PATAS":
 					if mundo_3d and mundo_3d.meson_patas:
 						mundo_3d.meson_patas.visible = true
-					_actualizar_estado("¡Mesón de Patas & Tracción instalado en el hangar!")
+					_actualizar_estado("¡Forjadora de Patas instalada en el hangar!")
 				"MESON_SENSORES":
 					if mundo_3d and mundo_3d.meson_sensores:
 						mundo_3d.meson_sensores.visible = true
+						mundo_3d.meson_sensores.scale = Vector3.ZERO
+						create_tween().tween_property(mundo_3d.meson_sensores, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 					_actualizar_estado("¡Mesón de Sensores Ópticos instalado en el hangar!")
 		"astronauta":
 			var a_id = item.get("astro_id", 2)
@@ -1221,14 +1305,14 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 					var a_node = mundo_3d.astronauta_2 if a_id == 2 else mundo_3d.astronauta_3
 					if a_node:
 						a_node.visible = true
-						var pos_i = Vector2i(1, 0) if a_id == 2 else Vector2i(-1, 0)
-						a_node.configurar_inicio(pos_i, 0)
+						var pos_i = Vector2i(-1, -1) if a_id == 2 else Vector2i(1, -1)
+						var ori_i = 2 if a_id == 2 else 0
+						a_node.configurar_inicio(pos_i, ori_i)
+						a_node.scale = Vector3.ZERO
+						create_tween().tween_property(a_node, "scale", Vector3.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 				_actualizar_estado("¡Astro %d activado y listo para programar!" % a_id)
 
-	_verificar_hitos_sandbox()
-	_renderizar_centro_mejoras()
-
-	_verificar_hitos_sandbox()
+	_verificar_hitos_sandbox(false)
 	_renderizar_centro_mejoras()
 
 func _limpiar_resaltados(secuencia: Array) -> void:
