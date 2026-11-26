@@ -421,7 +421,9 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 		if mundo_3d.astronauta_2:
 			mundo_3d.astronauta_2.visible = (2 in astronautas_desbloqueados)
 			if reposicionar_astros and (2 in astronautas_desbloqueados):
-				mundo_3d.astronauta_2.configurar_inicio(Vector2i(-1, -1), 2)
+				var pos_a2 = hito.get("pos_astronauta_2", Vector2i(0, -1))
+				var ori_a2 = hito.get("ori_astronauta_2", 0)
+				mundo_3d.astronauta_2.configurar_inicio(pos_a2, ori_a2)
 		if mundo_3d.astronauta_3:
 			mundo_3d.astronauta_3.visible = (3 in astronautas_desbloqueados)
 			if reposicionar_astros and (3 in astronautas_desbloqueados):
@@ -1414,7 +1416,7 @@ func _comprar_mejora_arbol(item: Dictionary) -> void:
 					var a_node = mundo_3d.astronauta_2 if a_id == 2 else mundo_3d.astronauta_3
 					if a_node:
 						a_node.visible = true
-						var pos_i = Vector2i(-1, -1) if a_id == 2 else Vector2i(0, 1)
+						var pos_i = Vector2i(0, -1) if a_id == 2 else Vector2i(0, 1)
 						var ori_i = 0 if a_id == 2 else 2
 						a_node.configurar_inicio(pos_i, ori_i)
 						a_node.scale = Vector3.ZERO
