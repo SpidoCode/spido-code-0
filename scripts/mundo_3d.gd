@@ -623,7 +623,7 @@ func _actualizar_cajas_suministros(lista_piezas: Array) -> void:
 		lbl.text = "BAHÍA DE SUMINISTROS"
 		lbl.font_size = 20
 		lbl.outline_size = 5
-		lbl.outline_color = Color(0.05, 0.08, 0.12, 0.9)
+		lbl.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 		lbl.modulate = Color(1.0, 0.85, 0.3)
 		lbl.position = Vector3(0, 1.25, 0)
 		caja_nodo.add_child(lbl)

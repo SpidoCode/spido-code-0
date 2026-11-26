@@ -111,7 +111,7 @@ func _construir_visuales_si_faltan() -> void:
 		panel_etiqueta.no_depth_test = true
 		panel_etiqueta.font_size = 24
 		panel_etiqueta.outline_size = 6
-		panel_etiqueta.outline_color = Color(0.05, 0.08, 0.12, 0.9)
+		panel_etiqueta.outline_modulate = Color(0.05, 0.08, 0.12, 0.9)
 		panel_etiqueta.modulate = Color(0.3, 0.9, 1.0, 1.0)
 		panel_etiqueta.position = Vector3(0, 1.7, 0)
 		add_child(panel_etiqueta)
