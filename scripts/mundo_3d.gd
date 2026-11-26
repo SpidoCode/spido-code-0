@@ -39,9 +39,9 @@ var idx_astronauta_activo: int = 0
 var contenedor_tablero: Node3D = null
 var contenedor_decoracion: Node3D = null
 
-# Sistema de Sectores (Plataforma y Tablero Fijo)
-var tamano_sector_actual: int = 7
-var limites_sector: Dictionary = {"min_x": -3, "max_x": 3, "min_z": -3, "max_z": 3}
+# Sistema de Sectores Progresivos (3x3 inicial -> 5x5 -> 7x7)
+var tamano_sector_actual: int = 3
+var limites_sector: Dictionary = {"min_x": -1, "max_x": 1, "min_z": -1, "max_z": 1}
 var nodo_tolva: Node3D = null
 var celda_tolva: Vector2i = Vector2i(1, 0)
 var tuercas_recolectadas_sesion: int = 0
@@ -53,14 +53,13 @@ func _ready() -> void:
 	_inicializar_mesones()
 	_construir_decoracion_nave()
 	_construir_tolva()
-	actualizar_sector(7)
+	actualizar_sector(3)
 
 func _process(_delta: float) -> void:
 	pass
 
-func actualizar_sector(tamano: int = 7) -> void:
-	# Mantener el tablero y límites en una medida fija (mínimo 7x7) para cubrir todas las estaciones
-	tamano_sector_actual = max(7, tamano)
+func actualizar_sector(tamano: int = 3) -> void:
+	tamano_sector_actual = tamano
 	var radio = int(tamano_sector_actual / 2.0)
 	limites_sector = {"min_x": -radio, "max_x": radio, "min_z": -radio, "max_z": radio}
 
