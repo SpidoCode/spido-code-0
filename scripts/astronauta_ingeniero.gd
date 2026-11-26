@@ -336,7 +336,7 @@ func ensamblar_en_mesa() -> bool:
 
 		if meson:
 			var tipo_pieza = pieza_en_mano.get("tipo_pieza") if "tipo_pieza" in pieza_en_mano else "COMPONENTE"
-			var exito = meson.recibir_insumo(tipo_pieza)
+			var exito = await meson.recibir_insumo(tipo_pieza)
 			if exito:
 				pieza_en_mano.queue_free()
 				pieza_en_mano = null
