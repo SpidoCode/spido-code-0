@@ -19,11 +19,13 @@ extends Control
 @onready var mundo_3d: Mundo3D = %Mundo3D
 
 # Botones Superiores (Cápsulas Verdes)
+@onready var btn_fases: Button = get_node_or_null("%BtnFases")
 @onready var btn_tienda: Button = %BtnTienda
 @onready var btn_codice: Button = %BtnCodice
 @onready var btn_guia: Button = %BtnGuia
 
 # Tarjeta de Misión / Fase
+@onready var tarjeta_mision: PanelContainer = get_node_or_null("%TarjetaMision")
 @onready var label_nivel_titulo: Label = %LabelNivelTitulo
 @onready var btn_nivel_prev: Button = get_node_or_null("%BtnNivelPrev")
 @onready var btn_nivel_next: Button = get_node_or_null("%BtnNivelNext")
@@ -363,7 +365,7 @@ func _aplicar_hito_actual(reposicionar_astros: bool = true) -> void:
 	var hito = hitos[indice_hito_actual]
 
 	# Cabecera de la Tarjeta de Misión
-	label_nivel_titulo.text = "FASE %d: %s" % [indice_hito_actual, hito.titulo.to_upper()]
+	label_nivel_titulo.text = hito.titulo.to_upper()
 	label_concepto.text = hito.meta_texto.to_upper()
 	if is_instance_valid(label_mision_desc):
 		label_mision_desc.text = hito.descripcion
@@ -510,6 +512,12 @@ func _conectar_senales() -> void:
 	btn_duplicar.pressed.connect(_on_duplicar_pressed)
 	if btn_velocidad:
 		btn_velocidad.pressed.connect(_on_velocidad_pressed)
+
+	if btn_fases and tarjeta_mision:
+		btn_fases.pressed.connect(func():
+			tarjeta_mision.visible = not tarjeta_mision.visible
+			btn_fases.text = "FASES  ▲" if tarjeta_mision.visible else "FASES  ▼"
+		)
 
 	if btn_tienda:
 		btn_tienda.pressed.connect(func(): _abrir_tienda(true))
