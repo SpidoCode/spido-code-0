@@ -6,7 +6,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 1,
 			"clave": "PRIMEROS_PASOS",
-			"titulo": "1. Fase 1: Abastecedor (Tablero 3x3)",
+			"titulo": "1. Fase 1: Abastecedor",
 			"descripcion": "Abastece la Mesa Inicial con materia prima. Recoge una tuerca de la Caja de Suministros y llévala a la mesa para comenzar la producción.",
 			"meta_texto": "Lleva una tuerca de la Caja de Suministros a la Mesa Inicial",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
@@ -28,7 +28,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 2,
 			"clave": "FRICCION_Y_REPETICION",
-			"titulo": "2. Fabricación Base: Segunda Entrega (3x3)",
+			"titulo": "2. Fabricación Base: Segunda Entrega",
 			"descripcion": "La forja requiere otro insumo para completar la fabricación. Realiza una segunda entrega desde la caja de suministros hasta la mesa inicial.",
 			"meta_texto": "Lleva la 2ª tuerca a la Mesa Inicial para fabricar la Pieza Base",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
@@ -50,7 +50,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 3,
 			"clave": "BUCLE_FARMEO",
-			"titulo": "3. Automatización Continua: El Bucle (3x3)",
+			"titulo": "3. Automatización Continua: El Bucle",
 			"descripcion": "Automatiza el ciclo de transporte para que Astro 1 mantenga la Mesa Inicial abastecida de forma continua sin tener que programar cada viaje a mano.",
 			"meta_texto": "Automatiza el ciclo continuo de abastecimiento en la Mesa Inicial",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
@@ -72,7 +72,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 4,
 			"clave": "OPERADOR_CINTA_5X5",
-			"titulo": "4. Fase 2: Operador de Cinta Automática (5x5)",
+			"titulo": "4. Fase 2: Operador de Cinta Automática",
 			"descripcion": "Conecta la producción con la Máquina de Cinta. Coordina a Astro 2 para retirar piezas de la mesa inicial, procesarlas en la cinta y recoger los componentes terminados por la salida.",
 			"meta_texto": "Procesa componentes a través de la Cinta Automática",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],
@@ -96,7 +96,7 @@ static func obtener_hitos() -> Array[Dictionary]:
 		{
 			"id": 5,
 			"clave": "ENSAMBLADOR_FINAL_7X7",
-			"titulo": "5. Fase 3: Ensamblador Final en Spido (7x7)",
+			"titulo": "5. Fase 3: Ensamblador Final en Spido",
 			"descripcion": "Inicia el ensamblaje robótico en el banco central. Coordina a Astro 3 para trasladar los componentes procesados hacia Spido hasta completar su estructura de 6 piezas.",
 			"meta_texto": "Completa el ensamblaje de 6 piezas en Spido",
 			"bloques_disponibles": ["AVANZAR", "GIRAR_IZQ", "GIRAR_DER", "TOMAR_PIEZA", "ENSAMBLAR"],

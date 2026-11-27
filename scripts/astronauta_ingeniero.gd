@@ -179,7 +179,7 @@ func avanzar(tiempo_custom: float = -1.0) -> bool:
 			return false
 	elif nueva_x < -6 or nueva_x > 6 or nueva_z < -6 or nueva_z > 6:
 		await _animar_choque()
-		accion_fallida.emit("El astronauta alcanzó el límite del tablero de 13x13.")
+		accion_fallida.emit("El astronauta alcanzó el límite del tablero.")
 		return false
 
 	grid_x = nueva_x

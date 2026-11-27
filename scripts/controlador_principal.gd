@@ -131,10 +131,10 @@ const ARBOL_MEJORAS = [
 		"req_texto": "Requiere Fase 3"
 	},
 
-	# 2. ESPACIO Y TERRENO MODULAR (GDD §03: 3x3 -> 5x5 -> 7x7)
+	# 2. ESPACIO Y TERRENO MODULAR
 	{
-		"fase": "TERRENO BASE 3x3",
-		"desc": "Plataforma inicial de 3x3 casillas para abastecimiento y calibración.",
+		"fase": "TERRENO BASE",
+		"desc": "Plataforma inicial de trabajo para abastecimiento y calibración.",
 		"costo": 0,
 		"cat": "espacio",
 		"id": "ESPACIO_3X3",
@@ -143,8 +143,8 @@ const ARBOL_MEJORAS = [
 		"req_texto": "Inicial"
 	},
 	{
-		"fase": "EXPANSIÓN TERRENO 5x5",
-		"desc": "Expande el taller a 5x5 casillas para instalar la Máquina de Cinta y a Astro 2.",
+		"fase": "EXPANSIÓN DE TALLER: SECTOR 2",
+		"desc": "Expande el taller para instalar la Máquina de Cinta y a Astro 2.",
 		"costo": 40,
 		"cat": "espacio",
 		"id": "ESPACIO_5X5",
@@ -153,8 +153,8 @@ const ARBOL_MEJORAS = [
 		"req_texto": "Requiere Bucle Continuo (Fase 1)"
 	},
 	{
-		"fase": "EXPANSIÓN TERRENO 7x7",
-		"desc": "Expande el taller a 7x7 casillas para la Mesa de Ensamble Final y la Compuerta.",
+		"fase": "EXPANSIÓN DE TALLER: SECTOR 3",
+		"desc": "Expande el taller para la Mesa de Ensamble Final y la Compuerta.",
 		"costo": 70,
 		"cat": "espacio",
 		"id": "ESPACIO_7X7",
@@ -180,7 +180,7 @@ const ARBOL_MEJORAS = [
 		"cat": "estacion",
 		"id": "MAQUINA_CINTA",
 		"indice_requerido": 2,
-		"req_texto": "Requiere Expansión 5x5 (Fase 2)"
+		"req_texto": "Requiere Expansión Sector 2"
 	},
 	{
 		"fase": "BANDEJA INTERMEDIA",
@@ -189,7 +189,7 @@ const ARBOL_MEJORAS = [
 		"cat": "estacion",
 		"id": "BANDEJA_INTERMEDIA",
 		"indice_requerido": 3,
-		"req_texto": "Requiere Máquina de Cinta (Fase 2)"
+		"req_texto": "Requiere Máquina de Cinta"
 	},
 	{
 		"fase": "MESA DE ENSAMBLE FINAL",
@@ -198,7 +198,7 @@ const ARBOL_MEJORAS = [
 		"cat": "estacion",
 		"id": "MESA_SPIDO",
 		"indice_requerido": 3,
-		"req_texto": "Requiere Expansión 7x7 (Fase 3)"
+		"req_texto": "Requiere Expansión Sector 3"
 	},
 	{
 		"fase": "COMPUERTA DE ENTREGA",
@@ -207,7 +207,7 @@ const ARBOL_MEJORAS = [
 		"cat": "estacion",
 		"id": "COMPUERTA_ENTREGA",
 		"indice_requerido": 4,
-		"req_texto": "Requiere Mesa de Ensamble Final (Fase 3)"
+		"req_texto": "Requiere Mesa de Ensamble Final"
 	},
 
 	# 4. ASTRONAUTAS Y LÓGICA CONCURRENTE
@@ -219,7 +219,7 @@ const ARBOL_MEJORAS = [
 		"id": "ASTRO_2",
 		"astro_id": 2,
 		"indice_requerido": 2,
-		"req_texto": "Requiere Expansión 5x5 (Fase 2)"
+		"req_texto": "Requiere Expansión Sector 2"
 	},
 	{
 		"fase": "ASTRO 3: ENSAMBLADOR FINAL",
@@ -229,7 +229,7 @@ const ARBOL_MEJORAS = [
 		"id": "ASTRO_3",
 		"astro_id": 3,
 		"indice_requerido": 4,
-		"req_texto": "Requiere Expansión 7x7 (Fase 3)"
+		"req_texto": "Requiere Expansión Sector 3"
 	},
 
 	# 5. MEJORAS FÍSICAS Y HARDWARE (GDD §06)
