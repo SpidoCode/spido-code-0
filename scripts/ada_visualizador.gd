@@ -16,16 +16,17 @@ func _draw() -> void:
 	if ancho < 10 or alto < 10:
 		return
 
-	# Ondas de sonido / barras de ecualizador de A.D.A.
-	var cant_barras = 15
-	var separacion = 5.0
-	var ancho_barra = 4.0
-	var ancho_total = cant_barras * ancho_barra + (cant_barras - 1) * separacion
-	var inicio_x = (ancho - ancho_total) * 0.5
+	# Ondas de sonido / espectro de audio de A.D.A. a lo ancho de la tarjeta
+	var cant_barras = 25
+	var margen_lateral = 8.0
+	var espacio_util = ancho - (margen_lateral * 2.0)
+	var paso_x = espacio_util / float(cant_barras - 1)
 	var base_y = alto * 0.5
 	var verde_brillante := Color(0.7608, 0.937, 0.775, 0.95)
 
 	for indice in range(cant_barras):
-		var altura: float = 3.5 + abs(sin(tiempo * 5.0 + indice * 0.6)) * (alto * 0.38)
-		var bx = inicio_x + indice * (ancho_barra + separacion)
-		draw_line(Vector2(bx, base_y - altura), Vector2(bx, base_y + altura), verde_brillante, 2.5, false)
+		var factor_centro = sin(PI * float(indice) / float(cant_barras - 1))
+		var oscilacion = abs(sin(tiempo * 5.0 + indice * 0.5) * cos(tiempo * 2.5 + indice * 0.25))
+		var altura: float = 3.5 + (factor_centro * 0.35 + 0.65) * oscilacion * (alto * 0.42)
+		var bx = margen_lateral + indice * paso_x
+		draw_line(Vector2(bx, base_y - altura), Vector2(bx, base_y + altura), verde_brillante, 3.0, false)

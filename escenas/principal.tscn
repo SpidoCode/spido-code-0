@@ -499,7 +499,7 @@ text = "Unidad astronauta, enlace establecido. Soy A.D.A., tu asistente de ensam
 autowrap_mode = 3
 
 [node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1739255826]
-custom_minimum_size = Vector2(0, 36)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 script = ExtResource("6_adaviz")
 
