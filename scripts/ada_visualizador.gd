@@ -1,17 +1,13 @@
 class_name ADAVisualizador
 extends Control
 
-@export var color_primario: Color = Color(0.35, 0.95, 0.65, 0.9)
-@export var color_secundario: Color = Color(0.2, 0.6, 0.45, 0.4)
+var tiempo: float = 0.0
 
-var alturas_barras: Array[float] = [0.2, 0.5, 0.8, 0.4, 0.9, 0.6, 0.3, 0.7, 0.5, 0.8, 0.3, 0.6]
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta: float) -> void:
-	var t = Time.get_ticks_msec() * 0.005
-	for i in range(alturas_barras.size()):
-		var target = 0.2 + 0.7 * abs(sin(t + i * 0.8))
-		alturas_barras[i] = lerp(alturas_barras[i], target, clamp(delta * 12.0, 0.0, 1.0))
-
+	tiempo += delta
 	queue_redraw()
 
 func _draw() -> void:
@@ -20,20 +16,36 @@ func _draw() -> void:
 	if ancho < 10 or alto < 10:
 		return
 
-	# Barras de frecuencia de audio ecualizador centradas horizontalmente
-	var cant_barras = alturas_barras.size()
-	var separacion = 4.0
-	var margen_lateral = 12.0
-	var espacio_util = max(20.0, ancho - (margen_lateral * 2.0))
-	var ancho_barra = max(4.0, (espacio_util - (cant_barras - 1) * separacion) / cant_barras)
-	var ancho_total = cant_barras * ancho_barra + (cant_barras - 1) * separacion
-	var inicio_x = max(margen_lateral, (ancho - ancho_total) * 0.5)
-	var base_y = alto * 0.5
+	# 1. Avatar Holográfico de A.D.A. (Orbe con pulsos concéntricos y rayos)
+	var centro := Vector2(ancho * 0.5, alto * 0.42)
+	var pulso: float = sin(tiempo * 2.4) * 0.5 + 0.5
+	var verde_brillante := Color(0.7608, 0.937, 0.775, 0.95)
+	var verde_borde := Color(0.3745, 0.5937, 0.4192, 0.85)
+	var verde_suave := Color(0.3745, 0.5937, 0.4192, 0.22)
+	var verde_texto := Color(0.8651, 1.0, 0.8664, 0.95)
 
-	for i in range(cant_barras):
-		var bx = inicio_x + i * (ancho_barra + separacion)
-		var h = alturas_barras[i] * (alto * 0.4)
-		var rect_barra = Rect2(bx, base_y - h, ancho_barra, max(4.0, h * 2.0))
-		var col_b = color_primario
-		col_b.a = 0.45 + (alturas_barras[i] * 0.55)
-		draw_rect(rect_barra, col_b, true)
+	# Orbe y aros concéntricos
+	draw_circle(centro, 34.0 + pulso * 3.0, verde_suave)
+	draw_arc(centro, 40.0, tiempo, tiempo + 4.5, 42, verde_borde, 2.0, false)
+	draw_arc(centro, 49.0, -tiempo * 0.7, -tiempo * 0.7 + 3.4, 42, Color(0.3745, 0.5937, 0.4192, 0.55), 2.0, false)
+	draw_circle(centro, 12.0 + pulso * 2.0, verde_texto)
+	draw_circle(centro, 5.0, Color.WHITE)
+
+	# 8 Rayos/Ticks giratorios alrededor del orbe
+	for indice in range(8):
+		var angulo: float = TAU * float(indice) / 8.0 + tiempo * 0.15
+		var inicio := centro + Vector2.from_angle(angulo) * 53.0
+		var final := centro + Vector2.from_angle(angulo) * 61.0
+		draw_line(inicio, final, verde_brillante, 2.0, false)
+
+	# 2. Ondas de sonido / barras de ecualizador abajo
+	var base_y: float = alto - 18.0
+	var cant_barras = 11
+	var paso_x = 7.5
+	var ancho_total = (cant_barras - 1) * paso_x
+	var inicio_x = centro.x - (ancho_total * 0.5)
+
+	for indice in range(cant_barras):
+		var altura: float = 4.0 + abs(sin(tiempo * 5.0 + indice * 0.8)) * 13.0
+		var x: float = inicio_x + indice * paso_x
+		draw_line(Vector2(x, base_y - altura), Vector2(x, base_y + altura), verde_brillante, 2.0, false)

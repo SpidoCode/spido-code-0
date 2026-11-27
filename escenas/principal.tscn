@@ -157,6 +157,10 @@ shadow_color = Color(0.12549, 0.156863, 0.2, 0.95)
 shadow_size = 4
 shadow_offset = Vector2(8, 8)
 
+[sub_resource type="StyleBoxLine" id="StyleSeparadorADA"]
+color = Color(0.545098, 0.796078, 0.568627, 0.75)
+thickness = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Consola"]
 content_margin_left = 12.0
 content_margin_top = 10.0
@@ -448,48 +452,69 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_CardADA")
 
 [node name="VBox" type="VBoxContainer" parent="HUD/RightSidebarADA/CardADA" unique_id=494084703]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
 [node name="HBoxHeader" type="HBoxContainer" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1744191824]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="BarraAcento" type="ColorRect" parent="HUD/RightSidebarADA/CardADA/VBox/HBoxHeader" unique_id=1122334455]
-custom_minimum_size = Vector2(4, 16)
+custom_minimum_size = Vector2(6, 18)
 layout_mode = 2
-color = Color(0.545098, 0.796078, 0.568627, 1)
+color = Color(0.7608, 0.937, 0.775, 1)
 
 [node name="LabelTituloADA" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox/HBoxHeader" unique_id=1290208081]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.96, 0.98, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
 text = "A.D.A."
 
 [node name="LabelEstadoADA" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox/HBoxHeader" unique_id=781667830]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.35, 0.95, 0.55, 1)
-theme_override_font_sizes/font_size = 12
-text = "EN CURSO"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7608, 0.937, 0.775, 1)
+theme_override_font_sizes/font_size = 13
+text = "● EN CURSO"
+horizontal_alignment = 2
 
-[node name="LabelADATexto" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=790022577]
+[node name="Separador" type="HSeparator" parent="HUD/RightSidebarADA/CardADA/VBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleSeparadorADA")
+
+[node name="Cuerpo" type="HBoxContainer" parent="HUD/RightSidebarADA/CardADA/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox/Cuerpo" unique_id=1739255826]
+custom_minimum_size = Vector2(96, 200)
+layout_mode = 2
+script = ExtResource("6_adaviz")
+
+[node name="LabelADATexto" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox/Cuerpo" unique_id=790022577]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.9, 0.92, 1)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/line_separation = 3
 theme_override_font_sizes/font_size = 13
 text = "Unidad astronauta, enlace establecido. Soy A.D.A., tu asistente de ensamblaje en el hangar."
 autowrap_mode = 3
 
-[node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1739255826]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-script = ExtResource("6_adaviz")
-
 [node name="LabelCanal" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1904918761]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.55, 0.6, 1)
-theme_override_font_sizes/font_size = 11
-text = "CANAL NAVE 01 // SEÑAL ESTABLE"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+theme_override_font_sizes/font_size = 12
+text = "CANAL NAVE 01  //  SEÑAL ESTABLE"
+horizontal_alignment = 2
 
 [node name="ConsolaAstronauta" type="PanelContainer" parent="HUD" unique_id=702950994]
 unique_name_in_owner = true
