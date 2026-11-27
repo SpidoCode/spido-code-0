@@ -486,10 +486,10 @@ theme_override_styles/separator = SubResource("StyleSeparadorADA")
 [node name="Cuerpo" type="HBoxContainer" parent="HUD/RightSidebarADA/CardADA/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 12
+theme_override_constants/separation = 4
 
 [node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox/Cuerpo" unique_id=1739255826]
-custom_minimum_size = Vector2(96, 200)
+custom_minimum_size = Vector2(70, 200)
 layout_mode = 2
 script = ExtResource("6_adaviz")
 
