@@ -483,20 +483,9 @@ horizontal_alignment = 2
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleSeparadorADA")
 
-[node name="Cuerpo" type="HBoxContainer" parent="HUD/RightSidebarADA/CardADA/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 4
-
-[node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox/Cuerpo" unique_id=1739255826]
-custom_minimum_size = Vector2(70, 200)
-layout_mode = 2
-script = ExtResource("6_adaviz")
-
-[node name="LabelADATexto" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox/Cuerpo" unique_id=790022577]
+[node name="LabelADATexto" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=790022577]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
 theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
@@ -504,10 +493,15 @@ theme_override_colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
 theme_override_constants/outline_size = 1
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_constants/line_separation = 3
+theme_override_constants/line_separation = 4
 theme_override_font_sizes/font_size = 13
 text = "Unidad astronauta, enlace establecido. Soy A.D.A., tu asistente de ensamblaje en el hangar."
 autowrap_mode = 3
+
+[node name="VisualizadorADA" type="Control" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1739255826]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+script = ExtResource("6_adaviz")
 
 [node name="LabelCanal" type="Label" parent="HUD/RightSidebarADA/CardADA/VBox" unique_id=1904918761]
 layout_mode = 2
