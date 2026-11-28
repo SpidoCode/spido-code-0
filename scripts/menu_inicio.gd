@@ -8,6 +8,7 @@ const ESCENA_AUTH := "res://escenas/auth.tscn"
 @onready var identidad: Label = $PanelPerfil/ContenedorPerfil/Identidad
 
 func _ready() -> void:
+	preload("res://scripts/primary_button.gd").apply(dialogo.get_ok_button())
 	AuthService.session_changed.connect(_actualizar_perfil)
 	AuthService.busy_changed.connect(_actualizar_perfil)
 	_actualizar_perfil()

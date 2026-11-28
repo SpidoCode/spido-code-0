@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://b806q7f5msmcp" path="res://assets/fonts/Poppins-Medium.ttf" id="2_poppins"]
 
-[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+[sub_resource type="StyleBoxFlat" id="SecondaryDisabled"]
 content_margin_left = 18.0
 content_margin_top = 10.0
 content_margin_right = 18.0
@@ -13,60 +13,6 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 5
 border_color = Color(0.270588, 0.301961, 0.352941, 0.9)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-
-[sub_resource type="StyleBoxFlat" id="ButtonHover"]
-content_margin_left = 18.0
-content_margin_top = 10.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-bg_color = Color(0.631373, 0.85098, 0.65098, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 5
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
-shadow_size = 2
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
-content_margin_left = 18.0
-content_margin_top = 10.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-bg_color = Color(0.545098, 0.796078, 0.568627, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 5
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
-shadow_size = 2
-shadow_offset = Vector2(0, 5)
-
-[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
-content_margin_left = 18.0
-content_margin_top = 13.0
-content_margin_right = 18.0
-content_margin_bottom = 9.0
-bg_color = Color(0.435294, 0.686275, 0.470588, 1)
-border_width_left = 3
-border_width_top = 5
-border_width_right = 3
-border_width_bottom = 2
-border_color = Color(0.345098, 0.564706, 0.384314, 1)
 corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
@@ -231,21 +177,103 @@ corner_radius_bottom_left = 10
 shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
 shadow_offset = Vector2(4, 4)
 
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.50196078, 0.73725490, 0.52941176, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.37647059, 0.59215686, 0.41176471, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
+shadow_size = 2
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.40392157, 0.66274510, 0.45882353, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.71372549, 0.87058824, 0.75294118, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
+shadow_size = 2
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+content_margin_left = 18.0
+content_margin_top = 13.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+bg_color = Color(0.43921569, 0.66274510, 0.47058824, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.31372549, 0.49019608, 0.34509804, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.22352941, 0.26274510, 0.30980392, 1)
+border_color = Color(0.18823529, 0.25098039, 0.29411765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+draw_center = false
+border_color = Color(0.09019608, 0.16470588, 0.12549020, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
 [resource]
 default_font = ExtResource("2_poppins")
 default_font_size = 15
-Button/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
-Button/colors/font_disabled_color = Color(0.75, 0.78, 0.78, 0.9)
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.65098039, 0.67843137, 0.70980392, 1)
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
-Button/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 0.8)
-Button/colors/font_pressed_color = Color(0.956863, 0.964706, 0.94902, 1)
-Button/colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
-Button/constants/outline_size = 2
-Button/constants/shadow_offset_x = 2
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_shadow_color = Color(0.18823529, 0.30588235, 0.22352941, 1)
 Button/constants/shadow_offset_y = 2
+Button/constants/outline_size = 0
 Button/font_sizes/font_size = 18
 Button/styles/disabled = SubResource("ButtonDisabled")
-Button/styles/focus = SubResource("ButtonHover")
+Button/styles/focus = SubResource("ButtonFocus")
 Button/styles/hover = SubResource("ButtonHover")
 Button/styles/normal = SubResource("ButtonNormal")
 Button/styles/pressed = SubResource("ButtonPressed")
@@ -278,7 +306,18 @@ RichTextLabel/constants/shadow_offset_x = 2
 RichTextLabel/constants/shadow_offset_y = 2
 RichTextLabel/font_sizes/normal_font_size = 16
 SecondaryButton/base_type = &"Button"
-SecondaryButton/styles/disabled = SubResource("ButtonDisabled")
+SecondaryButton/colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
+SecondaryButton/colors/font_disabled_color = Color(0.75, 0.78, 0.78, 0.9)
+SecondaryButton/colors/font_hover_color = Color(1, 1, 1, 1)
+SecondaryButton/colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 0.8)
+SecondaryButton/colors/font_pressed_color = Color(0.956863, 0.964706, 0.94902, 1)
+SecondaryButton/colors/font_shadow_color = Color(0.05, 0.07, 0.1, 0.9)
+SecondaryButton/constants/outline_size = 2
+SecondaryButton/constants/shadow_offset_x = 2
+SecondaryButton/constants/shadow_offset_y = 2
+SecondaryButton/colors/font_focus_color = Color(0.956863, 0.964706, 0.94902, 1)
+SecondaryButton/colors/font_hover_pressed_color = Color(0.956863, 0.964706, 0.94902, 1)
+SecondaryButton/styles/disabled = SubResource("SecondaryDisabled")
 SecondaryButton/styles/focus = SubResource("SecondaryHover")
 SecondaryButton/styles/hover = SubResource("SecondaryHover")
 SecondaryButton/styles/normal = SubResource("SecondaryNormal")

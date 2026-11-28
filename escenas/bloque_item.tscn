@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://df24k8b6lm001"]
+[gd_scene load_steps=3 format=3 uid="uid://df24k8b6lm001"]
 
 [ext_resource type="Script" path="res://scripts/bloque_item.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/primary_button.gd" id="primary_button"]
 
 [node name="BloqueItem" type="PanelContainer"]
 custom_minimum_size = Vector2(190, 34)
@@ -44,6 +45,7 @@ layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="BtnMenos" type="Button" parent="Margin/HBox/BoxParametro"]
+script = ExtResource("primary_button")
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
@@ -59,6 +61,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BtnMas" type="Button" parent="Margin/HBox/BoxParametro"]
+script = ExtResource("primary_button")
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
@@ -74,6 +77,7 @@ vertical_alignment = 1
 [node name="BtnEliminar" type="Button" parent="Margin/HBox"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+theme_type_variation = &"SecondaryButton"
 theme_override_colors/font_color = Color(0.75, 0.78, 0.78, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 13
