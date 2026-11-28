@@ -12,7 +12,7 @@ static func apply(button: Button) -> void:
 	_update_cursor(button)
 	button.draw.connect(_update_cursor.bind(button))
 	# Icon buttons retain the native text layout around their icon.
-	if button.icon != null or button.get_theme_icon(&"icon") != null:
+	if button.icon != null or (not button is OptionButton and button.get_theme_icon(&"icon") != null):
 		return
 	# Keep the native text for sizing and accessibility, but draw its visible
 	# glyphs with a shadow. Button's native theme only supports text outlines.
@@ -45,6 +45,8 @@ static func _draw_text(button: Button, disabled_color: Color) -> void:
 	line.add_string(button.tr(button.text), font, font_size)
 	var content_size := button.size - box.get_minimum_size()
 	var origin := box.get_offset() + (content_size - line.get_size()) * 0.5
+	if button is OptionButton:
+		origin.x = box.get_margin(SIDE_LEFT)
 	if not button.disabled:
 		var offset := button.get_theme_constant(&"shadow_offset_y")
 		line.draw(button.get_canvas_item(), origin + Vector2(0, offset),

@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]
 
+DisplaySettings="*res://scripts/display_settings.gd"
 AuthService="*res://scripts/auth_service.gd"
 
 [display]

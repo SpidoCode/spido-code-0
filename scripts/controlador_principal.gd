@@ -343,14 +343,6 @@ func _input(event: InputEvent) -> void:
 		_cambiar_estado_pausa(not menu_pausa.visible)
 		get_viewport().set_input_as_handled()
 
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F11 or (event.keycode == KEY_ENTER and event.alt_pressed):
-			var cur_mode = DisplayServer.window_get_mode()
-			if cur_mode == DisplayServer.WINDOW_MODE_MAXIMIZED or cur_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
-				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			else:
-				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
-			get_viewport().set_input_as_handled()
 
 func cambiar_hito(indice: int) -> void:
 	if indice < 0 or indice >= hitos.size():
