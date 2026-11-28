@@ -1153,7 +1153,6 @@ func _renderizar_centro_mejoras() -> void:
 	var SURFACE_COLOR := Color(0.34902, 0.388235, 0.447059, 1.0)
 	var GREEN_DARK := Color(0.435294, 0.686275, 0.470588, 1.0)
 	var GREEN_LIGHT := Color(0.545098, 0.796078, 0.568627, 1.0)
-	var GREEN_HOVER := Color(0.631373, 0.85098, 0.65098, 1.0)
 	var TEXT_COLOR := Color(0.956863, 0.964706, 0.94902, 1.0)
 	var SHADOW_COLOR := Color(0.12549, 0.156863, 0.2, 0.95)
 
@@ -1251,52 +1250,7 @@ func _renderizar_centro_mejoras() -> void:
 			btn_accion.add_theme_font_size_override("font_size", 11)
 		elif creditos >= item.costo:
 			btn_accion.text = "ADQUIRIR (%d Tuercas)" % item.costo
-			var st_norm = StyleBoxFlat.new()
-			st_norm.bg_color = GREEN_LIGHT
-			st_norm.border_color = GREEN_DARK
-			st_norm.border_width_left = 3
-			st_norm.border_width_top = 3
-			st_norm.border_width_right = 3
-			st_norm.border_width_bottom = 5
-			st_norm.set_corner_radius_all(10)
-			st_norm.shadow_color = SHADOW_COLOR
-			st_norm.shadow_size = 2
-			st_norm.shadow_offset = Vector2(0, 4)
-			st_norm.content_margin_top = 4
-			st_norm.content_margin_bottom = 4
-
-			var st_hov = StyleBoxFlat.new()
-			st_hov.bg_color = GREEN_HOVER
-			st_hov.border_color = GREEN_DARK
-			st_hov.border_width_left = 3
-			st_hov.border_width_top = 3
-			st_hov.border_width_right = 3
-			st_hov.border_width_bottom = 5
-			st_hov.set_corner_radius_all(10)
-			st_hov.shadow_color = SHADOW_COLOR
-			st_hov.shadow_size = 2
-			st_hov.shadow_offset = Vector2(0, 5)
-			st_hov.content_margin_top = 4
-			st_hov.content_margin_bottom = 4
-
-			var st_pres = StyleBoxFlat.new()
-			st_pres.bg_color = GREEN_DARK
-			st_pres.border_color = GREEN_DARK
-			st_pres.border_width_left = 3
-			st_pres.border_width_top = 3
-			st_pres.border_width_right = 3
-			st_pres.border_width_bottom = 2
-			st_pres.set_corner_radius_all(10)
-			st_pres.content_margin_top = 7
-			st_pres.content_margin_bottom = 3
-
-			btn_accion.add_theme_stylebox_override("normal", st_norm)
-			btn_accion.add_theme_stylebox_override("hover", st_hov)
-			btn_accion.add_theme_stylebox_override("pressed", st_pres)
-			btn_accion.add_theme_color_override("font_color", TEXT_COLOR)
-			btn_accion.add_theme_color_override("font_hover_color", TEXT_COLOR)
-			btn_accion.add_theme_color_override("font_outline_color", SHADOW_COLOR)
-			btn_accion.add_theme_constant_override("outline_size", 2)
+			btn_accion.ready.connect(preload("res://scripts/primary_button.gd").apply.bind(btn_accion))
 			btn_accion.add_theme_font_size_override("font_size", 13)
 			btn_accion.pressed.connect(func(): _comprar_mejora_arbol(item))
 		else:

@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://byer3tm7qo247" path="res://assets/tema_global.tres" id="7_tema"]
 [ext_resource type="Texture2D" uid="uid://cnqxjbt5caor1" path="res://assets/ui/icono_pieza.png" id="8_pieza"]
 [ext_resource type="Texture2D" uid="uid://boikltqn7yv03" path="res://assets/ui/icono_tuerca.png" id="9_tuerca"]
+[ext_resource type="Script" path="res://scripts/primary_button.gd" id="primary_button"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardMision"]
 content_margin_left = 14.0
@@ -76,67 +77,6 @@ corner_radius_bottom_left = 16
 shadow_color = Color(0.12549, 0.156863, 0.2, 0.9)
 shadow_size = 6
 shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_normal"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(0.545098, 0.796078, 0.568627, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 6
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
-shadow_size = 2
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_hover"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(0.631373, 0.85098, 0.65098, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 6
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
-shadow_size = 2
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ada_btn_pressed"]
-content_margin_left = 8.0
-content_margin_top = 10.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-bg_color = Color(0.435294, 0.686275, 0.470588, 1)
-border_width_left = 3
-border_width_top = 5
-border_width_right = 3
-border_width_bottom = 2
-border_color = Color(0.345098, 0.564706, 0.384314, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
-shadow_size = 1
-shadow_offset = Vector2(0, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardADA"]
 content_margin_left = 16.0
@@ -266,24 +206,28 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="BtnFases" type="Button" parent="HUD/TopLeftContainer/HBoxCapsulas" unique_id=1192837465]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(90, 34)
 layout_mode = 2
 text = "FASES  ▲"
 
 [node name="BtnTienda" type="Button" parent="HUD/TopLeftContainer/HBoxCapsulas" unique_id=2047849241]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 34)
 layout_mode = 2
 text = "MEJORAS"
 
 [node name="BtnCodice" type="Button" parent="HUD/TopLeftContainer/HBoxCapsulas" unique_id=1205038407]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(90, 34)
 layout_mode = 2
 text = "CÓDICE"
 
 [node name="BtnGuia" type="Button" parent="HUD/TopLeftContainer/HBoxCapsulas" unique_id=797899911]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 34)
 layout_mode = 2
@@ -431,17 +375,12 @@ grow_horizontal = 0
 theme_override_constants/separation = 10
 
 [node name="BtnToggleADA" type="Button" parent="HUD/RightSidebarADA" unique_id=1547970552]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 tooltip_text = "Mostrar u ocultar los mensajes del sistema A.D.A."
-theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
-theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
-theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 17
-theme_override_styles/normal = SubResource("StyleBoxFlat_ada_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ada_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ada_btn_pressed")
 text = "SISTEMA ADA  ▲"
 
 [node name="CardADA" type="PanelContainer" parent="HUD/RightSidebarADA" unique_id=627830607]
@@ -560,6 +499,7 @@ theme_override_font_sizes/font_size = 12
 text = "Pista"
 
 [node name="BtnTogglePaleta" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaTop" unique_id=2085183986]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
@@ -696,6 +636,7 @@ theme_override_font_sizes/font_size = 12
 text = "PASO"
 
 [node name="BtnEjecutar" type="Button" parent="HUD/ConsolaAstronauta/VBox/HBoxConsolaBottom" unique_id=522079552]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(85, 34)
 layout_mode = 2
@@ -747,6 +688,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="BtnAbrirPaletaFlotante" type="Button" parent="HUD" unique_id=1797948005]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(144, 38)
@@ -762,6 +704,7 @@ grow_vertical = 0
 text = "BLOQUES"
 
 [node name="BtnAbrirConsolaFlotante" type="Button" parent="HUD" unique_id=1867511666]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(144, 38)
@@ -951,6 +894,7 @@ text = "1. Observa el objetivo en la tarjeta de misión.
 autowrap_mode = 3
 
 [node name="BtnGuiaContinuar" type="Button" parent="HUD/PanelGuia/VBox" unique_id=595021958]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
@@ -1007,6 +951,7 @@ theme_type_variation = &"SecondaryButton"
 text = "Revisar Código"
 
 [node name="BtnModalSiguiente" type="Button" parent="HUD/ModalVictoria/VBox/HBox" unique_id=1586079839]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1052,6 +997,7 @@ text = "PAUSA"
 horizontal_alignment = 1
 
 [node name="BtnContinuar" type="Button" parent="HUD/MenuPausa/VBox" unique_id=664844712]
+script = ExtResource("primary_button")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2

@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/menu_inicio.gd" id="1_menu"]
 [ext_resource type="Texture2D" path="res://assets/menu/fondo_spidocode_0.png" id="2_fondo"]
 [ext_resource type="FontFile" uid="uid://dngowim4rpcq" path="res://assets/fonts/PixelifySans.ttf" id="3_pixelify"]
+[ext_resource type="Script" path="res://scripts/primary_button.gd" id="primary_button"]
 
 [sub_resource type="StyleBoxFlat" id="PanelMenu"]
 content_margin_left = 16.0
@@ -22,64 +23,6 @@ corner_radius_bottom_left = 22
 shadow_color = Color(0.12549, 0.156863, 0.2, 0.95)
 shadow_size = 4
 shadow_offset = Vector2(8, 8)
-
-[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
-content_margin_left = 14.0
-content_margin_top = 9.0
-content_margin_right = 14.0
-content_margin_bottom = 9.0
-bg_color = Color(0.545098, 0.796078, 0.568627, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 6
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
-shadow_size = 2
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
-content_margin_left = 14.0
-content_margin_top = 9.0
-content_margin_right = 14.0
-content_margin_bottom = 9.0
-bg_color = Color(0.435294, 0.686275, 0.470588, 1)
-border_width_left = 3
-border_width_top = 5
-border_width_right = 3
-border_width_bottom = 2
-border_color = Color(0.345098, 0.564706, 0.384314, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="ButtonHover"]
-content_margin_left = 14.0
-content_margin_top = 9.0
-content_margin_right = 14.0
-content_margin_bottom = 9.0
-bg_color = Color(0.631373, 0.85098, 0.65098, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 6
-border_color = Color(0.435294, 0.686275, 0.470588, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-shadow_color = Color(0.12549, 0.156863, 0.2, 0.92)
-shadow_size = 2
-shadow_offset = Vector2(0, 7)
 
 [sub_resource type="StyleBoxFlat" id="PanelPerfil"]
 content_margin_left = 14.0
@@ -155,14 +98,9 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="BotonJugar" type="Button" parent="PanelMenu/ContenedorPrincipal"]
+script = ExtResource("primary_button")
 layout_mode = 2
-theme_override_colors/font_color = Color(0.956863, 0.964706, 0.94902, 1)
-theme_override_colors/font_outline_color = Color(0.12549, 0.156863, 0.2, 1)
-theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("ButtonNormal")
-theme_override_styles/pressed = SubResource("ButtonPressed")
-theme_override_styles/hover = SubResource("ButtonHover")
 text = "Nueva Partida"
 
 [node name="BotonConfiguracion" type="Button" parent="PanelMenu/ContenedorPrincipal"]
